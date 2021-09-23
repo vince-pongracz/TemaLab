@@ -213,7 +213,7 @@
 											"font": "Arial;13;1",
 											"left": 464,
 											"top": 413,
-											"width": 184,
+											"width": 233.22021484375,
 											"height": 13,
 											"text": "Ship"
 										},
@@ -239,7 +239,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 436,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -254,7 +254,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 451,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -269,7 +269,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 466,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -284,7 +284,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 481,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -299,7 +299,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 496,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -314,7 +314,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 511,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -329,7 +329,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 526,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -344,7 +344,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 541,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -359,7 +359,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 556,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -374,7 +374,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 571,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -389,7 +389,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 586,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -404,7 +404,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 601,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -419,7 +419,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 616,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -434,7 +434,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 631,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -449,7 +449,7 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 646,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												},
 												{
@@ -464,21 +464,21 @@
 													"font": "Arial;13;0",
 													"left": 469,
 													"top": 661,
-													"width": 174,
+													"width": 223.22021484375,
 													"height": 13
 												}
 											],
 											"font": "Arial;13;0",
 											"left": 464,
 											"top": 431,
-											"width": 184,
+											"width": 233.22021484375,
 											"height": 248
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 464,
 									"top": 408,
-									"width": 184,
+									"width": 233.22021484375,
 									"height": 271,
 									"nameLabel": {
 										"$ref": "AAAAAAF8A1KHsHyXces="
@@ -506,7 +506,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": 272,
-											"top": 411,
+											"top": 419,
 											"height": 13,
 											"alpha": 1.5707963267948966,
 											"distance": 15,
@@ -542,7 +542,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 412,
-											"top": 411,
+											"top": 419,
 											"width": 52.7490234375,
 											"height": 13,
 											"alpha": -0.5235987755982988,
@@ -561,7 +561,7 @@
 										"$ref": "AAAAAAF8A06g63xiiK0="
 									},
 									"lineStyle": 2,
-									"points": "272:215;272:432;464:432",
+									"points": "272:215;272:440;464:440",
 									"nameLabel": {
 										"$ref": "AAAAAAF8A1i/bH0skfo="
 									},
@@ -1104,8 +1104,8 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 337,
-											"top": 123,
+											"left": 375,
+											"top": 107,
 											"height": 13,
 											"alpha": 1.5707963267948966,
 											"distance": 15,
@@ -1122,7 +1122,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 312,
-											"top": 111,
+											"top": 107,
 											"height": 13,
 											"alpha": 0.5235987755982988,
 											"distance": 30,
@@ -1156,7 +1156,7 @@
 										"$ref": "AAAAAAF8A06g63xiiK0="
 									},
 									"lineStyle": 2,
-									"points": "287:132;352:132;352:128;464:128",
+									"points": "287:128;464:128",
 									"nameLabel": {
 										"$ref": "AAAAAAF8A2Jus34ptgE="
 									},
@@ -1282,6 +1282,7 @@
 										"$ref": "AAAAAAF8A06g6XxgB9I="
 									},
 									"name": "passw",
+									"type": "VARCHAR",
 									"length": 0
 								},
 								{
@@ -1291,6 +1292,7 @@
 										"$ref": "AAAAAAF8A06g6XxgB9I="
 									},
 									"name": "personID",
+									"type": "INTEGER",
 									"length": 0,
 									"primaryKey": true
 								},
@@ -1301,6 +1303,7 @@
 										"$ref": "AAAAAAF8A06g6XxgB9I="
 									},
 									"name": "mail",
+									"type": "VARCHAR",
 									"length": 0
 								},
 								{
@@ -1310,6 +1313,7 @@
 										"$ref": "AAAAAAF8A06g6XxgB9I="
 									},
 									"name": "tel",
+									"type": "INTEGER",
 									"length": 0
 								},
 								{
@@ -1319,7 +1323,9 @@
 										"$ref": "AAAAAAF8A06g6XxgB9I="
 									},
 									"name": "fb",
-									"length": 0
+									"type": "VARCHAR",
+									"length": 0,
+									"nullable": true
 								},
 								{
 									"_type": "ERDColumn",
@@ -1328,7 +1334,9 @@
 										"$ref": "AAAAAAF8A06g6XxgB9I="
 									},
 									"name": "insta",
-									"length": 0
+									"type": "VARCHAR",
+									"length": 0,
+									"nullable": true
 								}
 							]
 						},
@@ -1405,6 +1413,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "shipID",
+									"type": "INTEGER",
 									"length": 0,
 									"primaryKey": true
 								},
@@ -1415,6 +1424,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "name",
+									"type": "VARCHAR",
 									"length": 0
 								},
 								{
@@ -1424,6 +1434,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "lenght",
+									"type": "DOUBLE",
 									"length": 0
 								},
 								{
@@ -1433,6 +1444,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "prodYear",
+									"type": "INTEGER",
 									"length": 0
 								},
 								{
@@ -1442,6 +1454,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "port",
+									"type": "VARCHAR",
 									"length": 0
 								},
 								{
@@ -1451,6 +1464,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "weight",
+									"type": "DOUBLE",
 									"length": 0
 								},
 								{
@@ -1460,6 +1474,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "ferohely",
+									"type": "INTEGER",
 									"length": 0
 								},
 								{
@@ -1469,6 +1484,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "type",
+									"type": "VARCHAR",
 									"length": 0
 								},
 								{
@@ -1478,6 +1494,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "merules",
+									"type": "DOUBLE",
 									"length": 0
 								},
 								{
@@ -1487,6 +1504,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "width",
+									"type": "DOUBLE",
 									"length": 0
 								},
 								{
@@ -1496,6 +1514,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "description",
+									"type": "VARCHAR",
 									"length": 0
 								},
 								{
@@ -1505,6 +1524,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "manufacturer",
+									"type": "VARCHAR",
 									"length": 0
 								},
 								{
@@ -1514,6 +1534,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "priceAtWeekdays",
+									"type": "DECIMAL",
 									"length": 0
 								},
 								{
@@ -1523,6 +1544,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "priceAtWeekends",
+									"type": "DECIMAL",
 									"length": 0
 								},
 								{
@@ -1532,6 +1554,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "caution",
+									"type": "DECIMAL",
 									"length": 0
 								},
 								{
@@ -1541,6 +1564,7 @@
 										"$ref": "AAAAAAF8A1KHsHyUvbc="
 									},
 									"name": "personID",
+									"type": "INTEGER",
 									"length": 0,
 									"foreignKey": true,
 									"unique": true
@@ -1563,6 +1587,7 @@
 									},
 									"name": "personID",
 									"documentation": "Aki foglal",
+									"type": "INTEGER",
 									"length": 0,
 									"foreignKey": true
 								},
@@ -1573,6 +1598,7 @@
 										"$ref": "AAAAAAF8A1mNCX0/iXg="
 									},
 									"name": "shipID",
+									"type": "INTEGER",
 									"length": 0,
 									"foreignKey": true
 								},
@@ -1583,6 +1609,7 @@
 										"$ref": "AAAAAAF8A1mNCX0/iXg="
 									},
 									"name": "fromDate",
+									"type": "DATE",
 									"length": 0
 								},
 								{
@@ -1592,6 +1619,7 @@
 										"$ref": "AAAAAAF8A1mNCX0/iXg="
 									},
 									"name": "toDate",
+									"type": "DATE",
 									"length": 0
 								},
 								{
@@ -1601,6 +1629,7 @@
 										"$ref": "AAAAAAF8A1mNCX0/iXg="
 									},
 									"name": "reservationID",
+									"type": "INTEGER",
 									"length": 0,
 									"primaryKey": true
 								}
@@ -1651,6 +1680,7 @@
 										"$ref": "AAAAAAF8A12iJH2hjNE="
 									},
 									"name": "rankingID",
+									"type": "INTEGER",
 									"length": 0,
 									"primaryKey": true
 								},
@@ -1662,6 +1692,7 @@
 									},
 									"name": "personID",
 									"documentation": "Aki értékeli",
+									"type": "INTEGER",
 									"length": 0,
 									"foreignKey": true
 								},
@@ -1682,6 +1713,7 @@
 										"$ref": "AAAAAAF8A12iJH2hjNE="
 									},
 									"name": "shipID",
+									"type": "INTEGER",
 									"length": 0,
 									"foreignKey": true
 								},
@@ -1692,6 +1724,7 @@
 										"$ref": "AAAAAAF8A12iJH2hjNE="
 									},
 									"name": "date",
+									"type": "DATE",
 									"length": 0
 								},
 								{
@@ -1701,7 +1734,9 @@
 										"$ref": "AAAAAAF8A12iJH2hjNE="
 									},
 									"name": "comment",
-									"length": 0
+									"type": "VARCHAR",
+									"length": 0,
+									"nullable": true
 								}
 							]
 						}
