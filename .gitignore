@@ -1,2 +1,5 @@
-sourcecode/YachtingAirBnb/YachtingAirBnb/obj/*
+sourcecode/YachtingAirBnb/obj/*
 [Oo]bj/
+[Bb]in/
+[Ll]og/
+*.vs/
