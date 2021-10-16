@@ -10,7 +10,7 @@ namespace WebProject.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RankingsController : ControllerBase
+   public class RankingsController : ControllerBase
     {
         //mock data
         List<Ranking> rankings = new List<Ranking>
