@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using WebProject.Client.Services;
 
 namespace WebProject.Client
 {
@@ -18,13 +19,17 @@ namespace WebProject.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddHttpClient("WebProject.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+           builder.Services.AddHttpClient("WebProject.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-
+           
             // Supply HttpClient instances that include access tokens when making requests to the server project
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("WebProject.ServerAPI"));
 
+            
+
             builder.Services.AddApiAuthorization();
+
+            builder.Services.AddScoped<IReservationService, ReservationService>();
 
             await builder.Build().RunAsync();
         }

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProject.Server", "WebProject\Server\WebProject.Server.csproj", "{8DC9A8A3-D4DE-49A8-AAE4-69064113165C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProject.Server", "WebProject\Server\WebProject.Server.csproj", "{8DC9A8A3-D4DE-49A8-AAE4-69064113165C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProject.Client", "WebProject\Client\WebProject.Client.csproj", "{4E0D1DDF-694A-4834-9C9A-0E2CC45CAD7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProject.Client", "WebProject\Client\WebProject.Client.csproj", "{4E0D1DDF-694A-4834-9C9A-0E2CC45CAD7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProject.Shared", "WebProject\Shared\WebProject.Shared.csproj", "{90C0986B-D13C-43D5-B85B-084B71A6F91E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProject.Shared", "WebProject\Shared\WebProject.Shared.csproj", "{90C0986B-D13C-43D5-B85B-084B71A6F91E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

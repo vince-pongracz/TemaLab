@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace WebProject.Shared
 {
-    class Ranking
+    public class Ranking
     {
+        public int Id { get; set; }
+
+        public int PersonID { get; set; }
+
+        public int Stars { get; set; }
+
+        public int ShipId { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public string Comment { get; set; }
     }
 }

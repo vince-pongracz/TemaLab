@@ -1,0 +1,54 @@
+﻿@page "/rankings"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WebProject.Shared
+@inject HttpClient Http
+
+<h1>Rankings</h1>
+
+@if (rankings == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>pers id. (C)</th>
+                <th>ship id. (F)</th>
+                <th>stars</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in rankings)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.PersonID</td>
+                    <td>@item.ShipId</td>
+                    <td>@item.Stars</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    List<Ranking> rankings = new List<Ranking>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            rankings = await Http.GetFromJsonAsync<List<Ranking>>("api/rankings");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+}
