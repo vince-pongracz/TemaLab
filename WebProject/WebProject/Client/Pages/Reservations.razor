@@ -1,0 +1,46 @@
+﻿@page "/reservations"
+@inject IReservationService ReservationService 
+
+<h3>Reservations</h3>
+
+@if (reservations.Count == 0)
+{
+    <span>Loading reservations...</span>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Nr.</th>
+                <th>Ship ID</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Person ID</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ( var item in reservations)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.ShipId</td>
+                    <td>@item.FromDate</td>
+                    <td>@item.ToDate</td>
+                    <td>@item.PersonId</td>
+                    <td>@item.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {     
+    List<Reservation> reservations = new List<Reservation>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        reservations = await ReservationService.GetReservations();
+    }
+}
