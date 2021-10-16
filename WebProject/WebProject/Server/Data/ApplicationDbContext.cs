@@ -17,5 +17,10 @@ namespace WebProject.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<Ranking> Rankings { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Ship> Ships { get; set; }
     }
 }
