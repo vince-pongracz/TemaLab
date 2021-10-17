@@ -30,6 +30,7 @@ namespace WebProject.Client
             builder.Services.AddApiAuthorization();
 
             builder.Services.AddScoped<IReservationService, ReservationService>();
+            builder.Services.AddScoped<IShipSearchService, ShipSearchService>();
 
             await builder.Build().RunAsync();
         }

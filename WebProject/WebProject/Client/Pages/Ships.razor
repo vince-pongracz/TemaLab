@@ -1,0 +1,50 @@
+﻿@page "/ships"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WebProject.Shared
+@attribute [Authorize]
+@inject IShipSearchService ShipSearchService
+
+<h3>Ships/Search</h3>
+
+@if (ships.Count == 0)
+{
+    <span>Loading ships...</span>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nr.</th>
+                <th>port</th>
+                <th>available</th>
+                <th>name</th>
+                <th>pers max</th>
+                <th>price WD</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ships)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.HomePort</td>
+                    <td>@item.IsAvailable</td>
+                    <td>@item.Name</td>
+                    <td>@item.PersonsMax</td>
+                    <td>@item.PriceAtWeekDays</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Ship> ships = new List<Ship>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ships = await ShipSearchService.GetShips();
+    }
+}
