@@ -4,6 +4,7 @@
 @using WebProject.Shared
 @attribute [Authorize]
 @inject IShipSearchService ShipSearchService
+@inject NavigationManager NavigationManager
 
 <h3>Ships/Search</h3>
 
@@ -22,6 +23,7 @@ else
                 <th>name</th>
                 <th>pers max</th>
                 <th>price WD</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +36,9 @@ else
                     <td>@item.Name</td>
                     <td>@item.PersonsMax</td>
                     <td>@item.PriceAtWeekDays</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="(() => ShowShip(item.Id))">Show</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -46,5 +51,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         ships = await ShipSearchService.GetShips();
+    }
+
+    void ShowShip(int id)
+    {
+        NavigationManager.NavigateTo($"ships/{id}");
     }
 }

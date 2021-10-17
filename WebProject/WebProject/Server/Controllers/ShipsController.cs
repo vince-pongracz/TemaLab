@@ -19,9 +19,19 @@ namespace WebProject.Server.Controllers
             new Ship { Id = 2, Caution = 80000, Description = "it's a ship", Drought = 6, HomePort = "Sopron", IsAvailable  = true, IsDeleted = false, Lenght = 15, Manufacturer = "ship2.kft", Name = "Awesome", PersonId = 2, PersonsMax = 7, PriceAtWeekDays = 20000, PriceAtWeekEnds = 22000, ProductionYear = 2010, ShipType = "very fancy", Weight = 3600, Width = 7},
         };
 
+        [HttpGet]
         public async Task<IActionResult> GetShips()
         {
             return Ok(ships);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSingleShip(int id)
+        {
+            Ship ship = ships.FirstOrDefault(s => s.Id == id);
+            if (ship == null)
+                return NotFound("Ship was not found");
+            return Ok(ship);
         }
     }
 }

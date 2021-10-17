@@ -17,6 +17,11 @@ namespace WebProject.Client.Services
             _httpClient = httpClient;
         }
 
+        public async Task<Ship> GetShip(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<Ship>($"api/ships/{id}");
+        }
+
         public async Task<List<Ship>> GetShips()
         {
             return await _httpClient.GetFromJsonAsync<List<Ship>>("api/ships");
