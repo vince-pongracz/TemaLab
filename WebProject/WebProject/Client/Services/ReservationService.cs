@@ -17,6 +17,13 @@ namespace WebProject.Client.Services
             _httpClient = httpClient;
         }
 
+        public async Task<List<Reservation>> CreateReservation(Reservation reserv)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/reservations", reserv);
+            var reservations = await result.Content.ReadFromJsonAsync<List<Reservation>>();
+            return reservations;
+        }
+
         public async Task<List<Reservation>> GetReservations()
         {
             return await _httpClient.GetFromJsonAsync<List<Reservation>>("api/reservations");

@@ -9,5 +9,7 @@ namespace WebProject.Client.Services
     public interface IReservationService
     {
         Task<List<Reservation>> GetReservations();
+
+        Task<List<Reservation>> CreateReservation(Reservation reserv);
     }
 }
