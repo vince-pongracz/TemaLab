@@ -22,6 +22,7 @@ else
                 <th>To</th>
                 <th>Person ID</th>
                 <th>Price</th>
+                <th>Cancel Reservation</th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +35,9 @@ else
                     <td>@item.ToDate</td>
                     <td>@item.PersonId</td>
                     <td>@item.Price</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="(() => DeleteReservation(item.Id))">Cancel</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -46,5 +50,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         reservations = await ReservationService.GetReservations();
+    }
+
+    void DeleteReservation(int id)
+    {
+        ReservationService.DeleteReservation(id);
     }
 }

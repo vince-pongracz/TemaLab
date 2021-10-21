@@ -11,5 +11,7 @@ namespace WebProject.Client.Services
         Task<List<Reservation>> GetReservations();
 
         Task<List<Reservation>> CreateReservation(Reservation reserv);
+
+        Task<List<Reservation>> DeleteReservation(int id);
     }
 }

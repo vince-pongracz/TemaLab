@@ -31,5 +31,16 @@ namespace WebProject.Server.Controllers
             reservations.Add(reserv);
             return Ok(reservations);
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteReservation(int id)
+        {
+            var reservation = reservations.FirstOrDefault(h => h.Id == id);
+            if (reservation == null)
+                return NotFound("Reservation was not found");
+
+            reservations.Remove(reservation);
+            return Ok(reservations);
+        }
     }
 }
