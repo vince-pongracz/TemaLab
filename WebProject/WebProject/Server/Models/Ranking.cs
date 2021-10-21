@@ -12,8 +12,11 @@ namespace WebProject.Server.Models
         public int PersonID { get; set; }
 
         public int Stars { get; set; }
+
         public int ShipId { get; set; }
+
         public DateTime Date { get; set; }
+
         public string Comment { get; set; }
     }
 }

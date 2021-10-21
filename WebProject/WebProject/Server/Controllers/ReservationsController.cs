@@ -13,10 +13,10 @@ namespace WebProject.Server.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        static List<Reservation> reservations = new List<Reservation>
+        static List<ReservationDTO> reservations = new List<ReservationDTO>
         {
-            new Reservation { Id = 1, FromDate = new DateTime(2021,10,16), PersonId = 2, Price = 50000, ShipId = 3, ToDate = new DateTime(2021,10,18)},
-            new Reservation { Id = 2, FromDate = new DateTime(2021,9,16), PersonId = 1, Price = 70000, ShipId = 2, ToDate = new DateTime(2021,9,18)},
+            new ReservationDTO { Id = 1, FromDate = new DateTime(2021,10,16), PersonId = 2, Price = 50000, ShipId = 3, ToDate = new DateTime(2021,10,18)},
+            new ReservationDTO { Id = 2, FromDate = new DateTime(2021,9,16), PersonId = 1, Price = 70000, ShipId = 2, ToDate = new DateTime(2021,9,18)},
         };
 
         [HttpGet]
@@ -26,7 +26,7 @@ namespace WebProject.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReservation(Reservation reserv)
+        public async Task<IActionResult> CreateReservation(ReservationDTO reserv)
         {
             reservations.Add(reserv);
             return Ok(reservations);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebProject.Shared
 {
-    public class Ranking
+    public class RankingDTO
     {
         public int Id { get; set; }
 

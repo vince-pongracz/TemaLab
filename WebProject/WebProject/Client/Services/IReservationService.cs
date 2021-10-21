@@ -8,10 +8,10 @@ namespace WebProject.Client.Services
 {
     public interface IReservationService
     {
-        Task<List<Reservation>> GetReservations();
+        Task<List<ReservationDTO>> GetReservations();
 
-        Task<List<Reservation>> CreateReservation(Reservation reserv);
+        Task<List<ReservationDTO>> CreateReservation(ReservationDTO reserv);
 
-        Task<List<Reservation>> DeleteReservation(int id);
+        Task<List<ReservationDTO>> DeleteReservation(int id);
     }
 }

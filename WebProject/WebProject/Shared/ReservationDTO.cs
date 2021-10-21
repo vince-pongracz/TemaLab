@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebProject.Shared
 {
-    public class Reservation
+    public class ReservationDTO
     {
         public int Id { get; set; }
 

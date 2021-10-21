@@ -8,11 +8,13 @@ namespace WebProject.Server.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public string FacebookLink { get; set; }
-        public string InstagramLink { get; set; }
         public ApplicationUser(string userName) : base(userName)
         {
             this.UserName = userName;
         }
+
+        public string FacebookLink { get; set; }
+
+        public string InstagramLink { get; set; }
     }
 }
