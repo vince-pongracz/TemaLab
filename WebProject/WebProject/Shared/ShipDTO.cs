@@ -38,10 +38,12 @@ namespace WebProject.Shared
 
         public decimal Caution { get; set; }
 
-        public int PersonId { get; set; }
-
         public bool IsAvailable { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public ApplicationUserDTO Owner { get; set; }
+
+        public List<ReservationDTO> Reservations { get; set; }
     }
 }

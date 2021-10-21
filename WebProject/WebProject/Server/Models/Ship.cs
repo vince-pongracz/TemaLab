@@ -41,10 +41,12 @@ namespace WebProject.Server.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Caution { get; set; }
 
-        public int PersonId { get; set; }
-
         public bool IsAvailable { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public List<Reservation> Reservations { get; set; }
+
+        public ApplicationUser Owner { get; set; }
     }
 }

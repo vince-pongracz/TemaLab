@@ -15,8 +15,8 @@ namespace WebProject.Server.Controllers
     {
         static List<ReservationDTO> reservations = new List<ReservationDTO>
         {
-            new ReservationDTO { Id = 1, FromDate = new DateTime(2021,10,16), PersonId = 2, Price = 50000, ShipId = 3, ToDate = new DateTime(2021,10,18)},
-            new ReservationDTO { Id = 2, FromDate = new DateTime(2021,9,16), PersonId = 1, Price = 70000, ShipId = 2, ToDate = new DateTime(2021,9,18)},
+            new ReservationDTO { Id = 1, FromDate = new DateTime(2021,10,16), Price = 50000, ToDate = new DateTime(2021,10,18)},
+            new ReservationDTO { Id = 2, FromDate = new DateTime(2021,9,16),  Price = 70000, ToDate = new DateTime(2021,9,18)},
         };
 
         [HttpGet]

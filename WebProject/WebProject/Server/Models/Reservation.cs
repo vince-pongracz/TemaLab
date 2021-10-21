@@ -17,8 +17,8 @@ namespace WebProject.Server.Models
 
         public DateTime ToDate { get; set; }
 
-        public int ShipId { get; set; }
+        public Ship Ship { get; set; }
 
-        public int PersonId { get; set; }
+        public ApplicationUser Person { get; set; }
     }
 }

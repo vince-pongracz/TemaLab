@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace WebProject.Shared
 {
-    class ApplicationUserDTO
+    public class ApplicationUserDTO
     {
-        public int UserName { get; set; }
+        public string UserName { get; set; }
 
-        public int Email { get; set; }
+        public string Email { get; set; }
 
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string FacebookLink { get; set; }
 
         public string InstagramLink { get; set; }
+
+        public List<RankingDTO> Rankings { get; set; }
+
+        public List<ReservationDTO> Reservations { get; set; }
+
+        public List<ShipDTO> OwnedShips { get; set; }
     }
 }
