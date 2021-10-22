@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebProject.Server.Data;
 using WebProject.Server.Models;
 
 namespace WebProject.Server.Controllers
@@ -12,23 +14,23 @@ namespace WebProject.Server.Controllers
     [ApiController]
     public class ShipsController : ControllerBase
     {
-        //mock data
-        List<Ship> ships = new List<Ship>
+        private readonly ApplicationDbContext _context;
+
+        public ShipsController(ApplicationDbContext context)
         {
-            new Ship { Id = 1, Caution = 50000, Description = "it's a ship", Drought = 5, HomePort = "Balatonfured", IsAvailable  = true, IsDeleted = false, Lenght = 12, Manufacturer = "ship.kft", Name = "Carol", PersonsMax = 5, PriceAtWeekDays = 10000, PriceAtWeekEnds = 12000, ProductionYear = 2005, ShipType = "fancy", Weight = 2600, Width = 5},
-            new Ship { Id = 2, Caution = 80000, Description = "it's a ship", Drought = 6, HomePort = "Sopron", IsAvailable  = true, IsDeleted = false, Lenght = 15, Manufacturer = "ship2.kft", Name = "Awesome", PersonsMax = 7, PriceAtWeekDays = 20000, PriceAtWeekEnds = 22000, ProductionYear = 2010, ShipType = "very fancy", Weight = 3600, Width = 7},
-        };
+            _context = context;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetShips()
         {
-            return Ok(ships);
+            return Ok(await _context.Ships.ToListAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSingleShip(int id)
         {
-            Ship ship = ships.FirstOrDefault(s => s.Id == id);
+            Ship ship = await _context.Ships.FirstOrDefaultAsync(s => s.Id == id);
             if (ship == null)
                 return NotFound("Ship was not found");
             return Ok(ship);

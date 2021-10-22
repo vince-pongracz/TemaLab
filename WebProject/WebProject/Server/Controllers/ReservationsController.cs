@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebProject.Server.Data;
+using WebProject.Server.Models;
 using WebProject.Shared;
 
 
@@ -12,35 +15,39 @@ namespace WebProject.Server.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ReservationsController : ControllerBase
-    {
-        static List<ReservationDTO> reservations = new List<ReservationDTO>
+    { 
+        private readonly ApplicationDbContext _context;
+
+        public ReservationsController(ApplicationDbContext context)
         {
-            new ReservationDTO { Id = 1, FromDate = new DateTime(2021,10,16), Price = 50000, ToDate = new DateTime(2021,10,18)},
-            new ReservationDTO { Id = 2, FromDate = new DateTime(2021,9,16),  Price = 70000, ToDate = new DateTime(2021,9,18)},
-        };
+            _context = context;
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetReservations()
         {
-            return Ok(reservations);
+            return Ok(await _context.Reservations.ToListAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReservation(ReservationDTO reserv)
+        public async Task<IActionResult> CreateReservation(Reservation reserv)
         {
-            reservations.Add(reserv);
-            return Ok(reservations);
+            _context.Reservations.Add(reserv);
+            await _context.SaveChangesAsync();
+            return Ok(await _context.Reservations.ToListAsync());
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteReservation(int id)
         {
-            var reservation = reservations.FirstOrDefault(h => h.Id == id);
+            var reservation = await _context.Reservations.FirstOrDefaultAsync(h => h.Id == id);
             if (reservation == null)
                 return NotFound("Reservation was not found");
 
-            reservations.Remove(reservation);
-            return Ok(reservations);
+            _context.Reservations.Remove(reservation);
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.Reservations.ToListAsync());
         }
     }
 }

@@ -29,7 +29,6 @@
 
     async void HandleSubmit()
     {
-        Console.WriteLine("loveeee");
         await JSRuntime.InvokeVoidAsync("console.log", r);
 
         await ReservationService.CreateReservation(r);
