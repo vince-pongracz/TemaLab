@@ -6,7 +6,8 @@
 @inject IShipSearchService ShipSearchService
 @inject NavigationManager NavigationManager
 
-<h3>Ships/Search</h3>
+<h3>Ship Search</h3>
+<br>
 
 @if (ships.Count == 0)
 {
@@ -14,41 +15,52 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nr.</th>
-                <th>port</th>
-                <th>available</th>
-                <th>name</th>
-                <th>pers max</th>
-                <th>price WD</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in ships)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.HomePort</td>
-                    <td>@item.IsAvailable</td>
-                    <td>@item.Name</td>
-                    <td>@item.PersonsMax</td>
-                    <td>@item.PriceAtWeekDays</td>
-                    <td>
-                        <button class="btn btn-primary" @onclick="(() => ShowShip(item.Id))">Show</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @foreach (var item in ships)
+    {
+        <div class="card">
+            <h5 class="card-header">@item.Name</h5>
+            <div class="card-body" style="clear: left">
+                <p style="float: left;"></p>
+                    <img src="https://www.vitorlazas.hu/nodepic/950x607/301539.jpg" alt="Image of the ship" style="width: 20%; height: auto ">
+                    <table style="width: 100%; border:thin">
+                        <tr>
+                            <td>Port: </td>
+                            <td>@item.HomePort</td>
+                            <td>Ranking: </td>
+                            <td> ...</td>
+                        </tr>
+                        <tr>
+                            <td>Capacity: </td>
+                            <td>Max @item.PersonsMax people</td>
+                            <td>Ship type: </td>
+                            <td>@item.ShipType</td>
+                        </tr>
+                        <tr>
+                            <td>Price at Weekends: </td>
+                            <td>@item.PriceAtWeekEnds</td>
+                            <td>Price at Weekdays: </td>
+                            <td>@item.PriceAtWeekDays</td>
+                        </tr>
+                        <tr style="text-align: right">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-dark" @onclick="(() => ShowShip(item.Id))">Show</button>
+                            </td>
+                        </tr>
+                    </table>
+
+            </div>
+        </div>
+        <br>
+    }
 }
 
 @code {
-    List<ShipDTO> ships = new List<ShipDTO>();
+        List<ShipDTO> ships = new List<ShipDTO>();
 
-    protected override async Task OnInitializedAsync()
+protected override async Task OnInitializedAsync()
     {
         ships = await ShipSearchService.GetShips();
     }
