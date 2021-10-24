@@ -5,43 +5,30 @@
 
 <p style="text-align:center">Welcome to our new Yacht renting website!</p>
 <br>
-    <div class="bd-example" style="margin: auto;width: 70%;">
-        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://picsum.photos/id/196/1920/1080" class="d-block w-100">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://picsum.photos/id/1057/1920/1080" class="d-block w-100">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="https://picsum.photos/id/1067/1920/1080" class="d-block w-100">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                    </div>
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
+
+
+<BlazorStrap.BSCarousel NumberOfItems="3" Fade="true" style="width: 70%; margin:auto;" >
+    <BlazorStrap.BSCarouselIndicators ActiveIndexChangedEvent="@indexChanged"/>
+    <div class="carousel-inner">
+
+        <BlazorStrap.BSCarouselItem Src="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" Alt="it is an image">
+            <BlazorStrap.BSCarouselCaption CaptionText="Experience the adventure on our ships" HeaderText="Adventure" />
+        </BlazorStrap.BSCarouselItem>
+        <BlazorStrap.BSCarouselItem Src="https://images.pexels.com/photos/2071518/pexels-photo-2071518.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" Alt="it is an image">
+        <BlazorStrap.BSCarouselCaption CaptionText="See the lakes, oceans from totally new perspective" HeaderText="Perspective" />
+        </BlazorStrap.BSCarouselItem>
+        <BlazorStrap.BSCarouselItem Src="https://images.pexels.com/photos/1143379/pexels-photo-1143379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" Alt="it is an image">
+        <BlazorStrap.BSCarouselCaption CaptionText="Explore new places with our ships" HeaderText="Explore" />
+        </BlazorStrap.BSCarouselItem>
     </div>
+        <BlazorStrap.BSCarouselControl CarouselDirection="BlazorStrap.CarouselDirection.Previous" NumberOfItems="3"/>
+        <BlazorStrap.BSCarouselControl CarouselDirection="BlazorStrap.CarouselDirection.Next" NumberOfItems="3"/>
+</BlazorStrap.BSCarousel>
+
+
+@code {
+    private void indexChanged(int index)
+    {
+        Console.WriteLine("Index Changed: " + index);
+    }
+}
