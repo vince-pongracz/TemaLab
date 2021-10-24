@@ -60,9 +60,9 @@ else
     List<ShipDTO> ships = new List<ShipDTO>();
 
     protected override async Task OnInitializedAsync()
-    {
-        ships = await ShipSearchService.GetShips();
-    }
+        {
+            ships = await ShipSearchService.GetShips();
+        }
 
     void ShowShip(int id)
     {
