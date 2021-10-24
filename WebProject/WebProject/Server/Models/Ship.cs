@@ -48,5 +48,9 @@ namespace WebProject.Server.Models
         public List<Reservation> Reservations { get; set; }
 
         public ApplicationUser Owner { get; set; }
+
+        public List<Ranking> Rankings { get; set; }
+
+        public string RouteToPic { get; set; }
     }
 }

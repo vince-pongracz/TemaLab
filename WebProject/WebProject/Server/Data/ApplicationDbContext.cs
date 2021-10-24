@@ -12,7 +12,7 @@ namespace WebProject.Server.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions options,IOptions<OperationalStoreOptions> operationalStoreOptions) 
+        public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
             : base(options, operationalStoreOptions)
         {
 
@@ -32,12 +32,28 @@ namespace WebProject.Server.Data
                 new Ship { Id = 2, Caution = 80000, Description = "it's a ship", Drought = 6, HomePort = "Sopron", IsAvailable = true, IsDeleted = false, Lenght = 15, Manufacturer = "ship2.kft", Name = "Awesome", PersonsMax = 7, PriceAtWeekDays = 20000, PriceAtWeekEnds = 22000, ProductionYear = 2010, ShipType = "very fancy", Weight = 3600, Width = 7 }
             );
 
-            modelBuilder.Entity<Reservation>() //TODO ilyenből még kell a többi is
-                .HasOne(r => r.Ship)
-                .WithMany(s => s.Reservations);
+            //TODO PV ez reflexiv kell, vagyis oda vissza irányokba kell a binding?
+            //Reservation bindings
+            modelBuilder.Entity<Reservation>().HasOne(r => r.Ship).WithMany(s => s.Reservations);
+            modelBuilder.Entity<Reservation>().HasOne(u => u.Person).WithMany(r => r.Reservations);
+
+            //User bindings
+            modelBuilder.Entity<ApplicationUser>().HasMany(s => s.OwnedShips).WithOne(u => u.Owner);
+            modelBuilder.Entity<ApplicationUser>().HasMany(r => r.Rankings).WithOne(u => u.Person);
+            modelBuilder.Entity<ApplicationUser>().HasMany(res => res.Reservations).WithOne(u => u.Person);
+
+            //Ranking bindings
+            modelBuilder.Entity<Ranking>().HasOne(s => s.Ship).WithMany(r => r.Rankings);
+            modelBuilder.Entity<Ranking>().HasOne(u => u.Person).WithMany(r => r.Rankings);
+
+            //Ship binding
+            modelBuilder.Entity<Ship>().HasMany(res => res.Reservations).WithOne(s => s.Ship);
+            modelBuilder.Entity<Ship>().HasOne(u => u.Owner).WithMany(s => s.OwnedShips);
+            modelBuilder.Entity<Ship>().HasMany(r => r.Rankings).WithOne(s => s.Ship);
+
         }
 
-        public DbSet<ApplicationUser>  Users { get; set; } 
+        public DbSet<ApplicationUser> Users { get; set; }
 
         public DbSet<Ranking> Rankings { get; set; }
 

@@ -15,10 +15,6 @@ namespace WebProject.Server.Models
 
         }
 
-        public string FacebookLink { get; set; }
-
-        public string InstagramLink { get; set; }
-
         public List<Ranking> Rankings { get; set; }
 
         public List<Reservation> Reservations { get; set; }

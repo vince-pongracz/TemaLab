@@ -40,8 +40,6 @@ namespace WebProject.Shared
 
         public bool IsAvailable { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public ApplicationUserDTO Owner { get; set; }
 
         public List<ReservationDTO> Reservations { get; set; }

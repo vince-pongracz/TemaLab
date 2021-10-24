@@ -10,7 +10,7 @@ namespace WebProject.Client.Services
     {
         Task<List<ReservationDTO>> GetReservations();
 
-        Task<List<ReservationDTO>> CreateReservation(ReservationDTO reserv);
+        Task<List<ReservationDTO>> CreateReservation(ReservationDTO reservation);
 
         Task<List<ReservationDTO>> DeleteReservation(int id);
     }
