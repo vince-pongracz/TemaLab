@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebProject.Shared
 {
-    public class Ship
+    public class ShipDTO
     {
         public int Id { get; set; }
 
@@ -38,10 +38,12 @@ namespace WebProject.Shared
 
         public decimal Caution { get; set; }
 
-        public int PersonId { get; set; }
-
         public bool IsAvailable { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public ApplicationUserDTO Owner { get; set; }
+
+        public List<ReservationDTO> Reservations { get; set; }
     }
 }

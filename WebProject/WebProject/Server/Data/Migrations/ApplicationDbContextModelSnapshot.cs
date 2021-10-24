@@ -341,16 +341,20 @@ namespace WebProject.Server.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonID")
-                        .HasColumnType("int");
+                    b.Property<string>("PersonId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ShipId")
+                    b.Property<int?>("ShipId")
                         .HasColumnType("int");
 
                     b.Property<int>("Stars")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.HasIndex("ShipId");
 
                     b.ToTable("Rankings");
                 });
@@ -365,13 +369,13 @@ namespace WebProject.Server.Data.Migrations
                     b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                    b.Property<string>("PersonId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ShipId")
+                    b.Property<int?>("ShipId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ToDate")
@@ -379,7 +383,27 @@ namespace WebProject.Server.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PersonId");
+
+                    b.HasIndex("ShipId");
+
                     b.ToTable("Reservations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FromDate = new DateTime(2021, 10, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 50000m,
+                            ToDate = new DateTime(2021, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FromDate = new DateTime(2021, 9, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Price = 70000m,
+                            ToDate = new DateTime(2021, 9, 18, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("WebProject.Server.Models.Ship", b =>
@@ -416,8 +440,8 @@ namespace WebProject.Server.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PersonsMax")
                         .HasColumnType("int");
@@ -442,7 +466,51 @@ namespace WebProject.Server.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("Ships");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Caution = 50000m,
+                            Description = "it's a ship",
+                            Drought = 5.0,
+                            HomePort = "Balatonfured",
+                            IsAvailable = true,
+                            IsDeleted = false,
+                            Lenght = 12.0,
+                            Manufacturer = "ship.kft",
+                            Name = "Carol",
+                            PersonsMax = 5,
+                            PriceAtWeekDays = 10000m,
+                            PriceAtWeekEnds = 12000m,
+                            ProductionYear = 2005,
+                            ShipType = "fancy",
+                            Weight = 2600.0,
+                            Width = 5.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Caution = 80000m,
+                            Description = "it's a ship",
+                            Drought = 6.0,
+                            HomePort = "Sopron",
+                            IsAvailable = true,
+                            IsDeleted = false,
+                            Lenght = 15.0,
+                            Manufacturer = "ship2.kft",
+                            Name = "Awesome",
+                            PersonsMax = 7,
+                            PriceAtWeekDays = 20000m,
+                            PriceAtWeekEnds = 22000m,
+                            ProductionYear = 2010,
+                            ShipType = "very fancy",
+                            Weight = 3600.0,
+                            Width = 7.0
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -494,6 +562,59 @@ namespace WebProject.Server.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WebProject.Server.Models.Ranking", b =>
+                {
+                    b.HasOne("WebProject.Server.Models.ApplicationUser", "Person")
+                        .WithMany("Rankings")
+                        .HasForeignKey("PersonId");
+
+                    b.HasOne("WebProject.Server.Models.Ship", "Ship")
+                        .WithMany()
+                        .HasForeignKey("ShipId");
+
+                    b.Navigation("Person");
+
+                    b.Navigation("Ship");
+                });
+
+            modelBuilder.Entity("WebProject.Server.Models.Reservation", b =>
+                {
+                    b.HasOne("WebProject.Server.Models.ApplicationUser", "Person")
+                        .WithMany("Reservations")
+                        .HasForeignKey("PersonId");
+
+                    b.HasOne("WebProject.Server.Models.Ship", "Ship")
+                        .WithMany("Reservations")
+                        .HasForeignKey("ShipId");
+
+                    b.Navigation("Person");
+
+                    b.Navigation("Ship");
+                });
+
+            modelBuilder.Entity("WebProject.Server.Models.Ship", b =>
+                {
+                    b.HasOne("WebProject.Server.Models.ApplicationUser", "Owner")
+                        .WithMany("OwnedShips")
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("WebProject.Server.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("OwnedShips");
+
+                    b.Navigation("Rankings");
+
+                    b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("WebProject.Server.Models.Ship", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

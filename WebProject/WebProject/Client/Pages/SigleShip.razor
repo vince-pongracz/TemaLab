@@ -49,10 +49,6 @@ else
             <td>@ship.Lenght</td>
         </tr>
         <tr>
-            <td>PersonId</td>
-            <td>@ship.PersonId</td>
-        </tr>
-        <tr>
             <td>PersonsMax</td>
             <td>@ship.PersonsMax</td>
         </tr>
@@ -81,6 +77,8 @@ else
             <td>@ship.Width</td>
         </tr>
     </table>
+
+    <EditReservation></EditReservation>
 }
 
 
@@ -88,7 +86,7 @@ else
     [Parameter]
     public int Id { get; set; }
 
-    Ship ship = null;
+    ShipDTO ship = null;
 
     protected override async Task OnInitializedAsync()
     {

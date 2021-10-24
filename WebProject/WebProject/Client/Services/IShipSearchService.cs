@@ -8,8 +8,8 @@ namespace WebProject.Client.Services
 {
     public interface IShipSearchService
     {
-        Task<List<Ship>> GetShips();
+        Task<List<ShipDTO>> GetShips();
 
-        Task<Ship> GetShip(int id);
+        Task<ShipDTO> GetShip(int id);
     }
 }

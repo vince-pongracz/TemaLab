@@ -17,11 +17,10 @@ else
         <thead>
             <tr>
                 <th>Nr.</th>
-                <th>Ship ID</th>
                 <th>From</th>
                 <th>To</th>
-                <th>Person ID</th>
                 <th>Price</th>
+                <th>Cancel Reservation</th>
             </tr>
         </thead>
         <tbody>
@@ -29,11 +28,12 @@ else
             {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@item.ShipId</td>
                     <td>@item.FromDate</td>
                     <td>@item.ToDate</td>
-                    <td>@item.PersonId</td>
                     <td>@item.Price</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="(() => DeleteReservation(item.Id))">Cancel</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -41,10 +41,15 @@ else
 }
 
 @code {
-    List<Reservation> reservations = new List<Reservation>();
+    List<ReservationDTO> reservations = new List<ReservationDTO>();
 
     protected override async Task OnInitializedAsync()
     {
         reservations = await ReservationService.GetReservations();
+    }
+
+    void DeleteReservation(int id)
+    {
+        ReservationService.DeleteReservation(id);
     }
 }

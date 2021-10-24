@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebProject.Shared
 {
-    public class Reservation
+    public class ReservationDTO
     {
         public int Id { get; set; }
 
@@ -16,8 +16,8 @@ namespace WebProject.Shared
 
         public DateTime ToDate { get; set; }
 
-        public int ShipId { get; set; }
+        public ShipDTO Ship { get; set; }
 
-        public int PersonId { get; set; }
+        public ApplicationUserDTO Person { get; set; }
     }
 }
