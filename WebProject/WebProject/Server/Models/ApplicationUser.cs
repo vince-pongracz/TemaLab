@@ -10,9 +10,9 @@ namespace WebProject.Server.Models
     {
         public string FacebookLink { get; set; }
         public string InstagramLink { get; set; }
-        public ApplicationUser(string userName) : base(userName)
+        public ApplicationUser()
         {
-            this.UserName = userName;
+
         }
     }
 }
