@@ -1,0 +1,12 @@
+﻿.ship-img {
+    position: absolute;
+    width: 20%;
+    height: 60%;
+}
+
+.card-table {
+    width: 80%;
+    position: relative;
+    margin-left: 23%;
+    line-height: 2;
+}

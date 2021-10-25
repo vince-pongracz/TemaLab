@@ -17,13 +17,13 @@ else
 {
     foreach (var item in ships)
     {
-        <div class="card" style=" box-shadow: 0 0 20px 8px #d0d0d0;">
+        <div class="card own-card-style">
             <h5 class="card-header">@item.Name</h5>
             <div class="card-body">
 
-                <img src="https://www.vitorlazas.hu/nodepic/950x607/301539.jpg" alt="Image of the ship" style=" position:absolute; width: 20%; height: 60% ">
+                <img class="ship-img" src="https://www.vitorlazas.hu/nodepic/950x607/301539.jpg" alt="Image of the ship">
 
-                <table style="width: 80%; position:relative; margin-left:23%; line-height:2">
+                <table class="card-table">
                     <tr>
                         <td>Port: </td>
                         <td>@item.HomePort</td>
@@ -60,9 +60,9 @@ else
     List<ShipDTO> ships = new List<ShipDTO>();
 
     protected override async Task OnInitializedAsync()
-        {
-            ships = await ShipSearchService.GetShips();
-        }
+    {
+        ships = await ShipSearchService.GetShips();
+    }
 
     void ShowShip(int id)
     {

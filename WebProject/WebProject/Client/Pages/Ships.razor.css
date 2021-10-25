@@ -1,0 +1,16 @@
+﻿.own-card-style {
+    box-shadow: 0 0 20px 8px #d0d0d0;
+}
+
+.ship-img {
+    position: absolute;
+    width: 20%;
+    height: 60%;
+}
+
+.card-table {
+    width: 80%;
+    position: relative;
+    margin-left: 23%;
+    line-height: 2;
+}
