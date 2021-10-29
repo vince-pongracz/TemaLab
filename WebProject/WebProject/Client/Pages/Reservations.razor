@@ -7,9 +7,13 @@
 
 <h3>Reservations</h3>
 
-@if (reservations.Count == 0)
+@if (reservations == null)
 {
     <span>Loading reservations...</span>
+}
+else if (reservations.Count == 0)
+{
+    <span>It seems like you haven't any reservation for now...</span>
 }
 else
 {
@@ -41,7 +45,7 @@ else
 }
 
 @code {
-    List<ReservationDTO> reservations = new List<ReservationDTO>();
+    List<ReservationGetDTO> reservations = null;
 
     protected override async Task OnInitializedAsync()
     {

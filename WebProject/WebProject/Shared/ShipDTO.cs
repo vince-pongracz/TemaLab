@@ -42,6 +42,8 @@ namespace WebProject.Shared
 
         public ApplicationUserDTO Owner { get; set; }
 
-        public List<ReservationDTO> Reservations { get; set; }
+        public List<ReservationGetDTO> Reservations { get; set; }
+        public List<RankingDTO> Rankings { get; set; }
+        public string RouteToPic { get; set; }
     }
 }

@@ -455,6 +455,9 @@ namespace WebProject.Server.Data.Migrations
                     b.Property<int>("ProductionYear")
                         .HasColumnType("int");
 
+                    b.Property<string>("RouteToPic")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ShipType")
                         .HasColumnType("nvarchar(max)");
 
@@ -571,7 +574,7 @@ namespace WebProject.Server.Data.Migrations
                         .HasForeignKey("PersonId");
 
                     b.HasOne("WebProject.Server.Models.Ship", "Ship")
-                        .WithMany()
+                        .WithMany("Rankings")
                         .HasForeignKey("ShipId");
 
                     b.Navigation("Person");
@@ -614,6 +617,8 @@ namespace WebProject.Server.Data.Migrations
 
             modelBuilder.Entity("WebProject.Server.Models.Ship", b =>
                 {
+                    b.Navigation("Rankings");
+
                     b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618

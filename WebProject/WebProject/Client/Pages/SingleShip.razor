@@ -85,7 +85,8 @@ else
     <p>@ship.Description</p>
     <br>
 
-    <EditReservation></EditReservation>
+    //TODO here user is also required !!! (or an username/userid pass is required)
+    <EditReservation SelectedShip="@ship"></EditReservation>
 }
 
 
@@ -93,7 +94,7 @@ else
     [Parameter]
     public int Id { get; set; }
 
-    ShipDTO ship = null;
+    public ShipDTO ship = null;
 
     protected override async Task OnInitializedAsync()
     {

@@ -8,6 +8,8 @@ namespace WebProject.Shared
 {
     public class RankingDTO
     {
+        public RankingDTO() { }
+
         public int Id { get; set; }
 
         public int Stars { get; set; }

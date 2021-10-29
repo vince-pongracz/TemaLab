@@ -20,7 +20,7 @@ namespace WebProject.Shared
 
         public List<RankingDTO> Rankings { get; set; }
 
-        public List<ReservationDTO> Reservations { get; set; }
+        public List<ReservationGetDTO> Reservations { get; set; }
 
         public List<ShipDTO> OwnedShips { get; set; }
     }

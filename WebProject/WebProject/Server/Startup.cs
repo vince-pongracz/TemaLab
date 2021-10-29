@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using WebProject.Server.Data;
 using WebProject.Server.Models;
+using WebProject.Server.Services;
 
 namespace WebProject.Server
 {
@@ -43,6 +44,8 @@ namespace WebProject.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAutoMapper(typeof(MapperConfig));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
