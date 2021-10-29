@@ -1,23 +1,30 @@
 ﻿@inject IJSRuntime JSRuntime
 @inject IReservationService ReservationService
 
-<h3>Book a reservation</h3>
 
-<EditForm Model="@r" OnSubmit="@HandleSubmit">
-    <div class="form-group">
-        <label>Ship ID</label>
-        <InputNumber @bind-Value="SelectedShip.Id" class="form-control"></InputNumber>
+<div class="card" style="width: 30%; box-shadow: 0 0 20px 8px #d0d0d0; margin-left:48%; position:absolute">
+    <div class="card-body">
+        <h5 class="card-title">Book a ship</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Enter the dates for the reservation here:</h6>
+        <EditForm Model="@r" OnSubmit="@HandleSubmit">
+            <div class="form-group">
+                <label>Ship ID</label>
+                <InputNumber @bind-Value="SelectedShip.Id" class="form-control"></InputNumber>
+            </div>
+            <div class="form-group">
+                <label>Book from:</label>
+                <InputDate @bind-Value="r.FromDate" class="form-control"></InputDate>
+            </div>
+            <div class="form-group">
+                <label>Book until</label>
+                <InputDate @bind-Value="r.ToDate" class="form-control"></InputDate>
+            </div>
+            <button type="submit" class="btn btn-outline-dark">Book this! </button>
+        </EditForm>
     </div>
-    <div class="form-group">
-        <label>Book from:</label>
-        <InputDate @bind-Value="r.FromDate" class="form-control"></InputDate>
-    </div>
-    <div class="form-group">
-        <label>Book until</label>
-        <InputDate @bind-Value="r.ToDate" class="form-control"></InputDate>
-    </div>
-    <button type="submit" class="btn btn-primary">Book this!</button>
-</EditForm>
+</div>
+
+
 
 
 @code {
