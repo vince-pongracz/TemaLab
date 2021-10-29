@@ -27,7 +27,7 @@ namespace WebProject.Server.Controllers
         public ReservationsController(ApplicationDbContext context)
         {
             _context = context;
-            Mapper = new Mapper(new MapperConfiguration(c => c.AddProfile(new MapperConfig())));
+            Mapper = new Mapper(new MapperConfiguration(c => c.AddProfile(new MapperConfigService())));
         }
 
         [HttpGet]
@@ -43,8 +43,7 @@ namespace WebProject.Server.Controllers
             _context.Reservations.Add(Mapper.Map(reservationDTO,new Reservation()));
             await _context.SaveChangesAsync();
 
-            var reservations = await _context.Reservations.ToListAsync();
-            return Ok(Mapper.Map(reservations, new List<ReservationGetDTO>()));
+            return await GetReservations();
         }
 
         [HttpDelete("{id:int}")]
@@ -57,8 +56,7 @@ namespace WebProject.Server.Controllers
             _context.Reservations.Remove(reservation);
             await _context.SaveChangesAsync();
 
-            var reservations = await _context.Reservations.ToListAsync();
-            return Ok(Mapper.Map(reservations, new List<ReservationGetDTO>()));
+            return await GetReservations();
         }
     }
 }
