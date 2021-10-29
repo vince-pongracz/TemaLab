@@ -1,0 +1,32 @@
+﻿@page
+@model SocialMediaModel
+@{
+    ViewData["Title"] = "Social Media";
+    ViewData["ActivePage"] = ManageNavPages.SocialMedia;
+}
+
+<h4>Set your password</h4>
+<partial name="_StatusMessage" for="StatusMessage" />
+<p class="text-info">
+    Add facebook and instagram links if you want ;)
+</p>
+<div class="row">
+    <div class="col-md-6">
+        <form id="set-password-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.FacebookLink"></label>
+                <input asp-for="Input.FacebookLink" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.InstagramLink"></label>
+                <input asp-for="Input.InstagramLink" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Set social media links</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

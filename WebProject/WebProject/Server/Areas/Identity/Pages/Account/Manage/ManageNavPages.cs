@@ -23,6 +23,7 @@ namespace WebProject.Server.Areas.Identity.Pages.Account.Manage
         public static string PersonalData => "PersonalData";
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
+        public static string SocialMedia => "SocialMedia";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -39,6 +40,7 @@ namespace WebProject.Server.Areas.Identity.Pages.Account.Manage
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
+        public static string SocialMediaNavClass(ViewContext viewContext) => PageNavClass(viewContext, SocialMedia);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

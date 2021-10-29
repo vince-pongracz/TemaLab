@@ -12,10 +12,13 @@
     <link rel="stylesheet" href="~/Identity/css/site.css" />
 </head>
 <body>
+    <div class="sidebar">
+        <NavMenu />
+    </div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" href="~/">Yacht AirBnb</a>
+                <a class="navbar-brand" href="~/">YachtAirBnb</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,9 +44,6 @@
 
     <div class="container">
         <main role="main" class="pb-3">
-            <div class="sidebar">
-                <NavMenu />
-            </div>
             <div>
                 @RenderBody()
             </div>
