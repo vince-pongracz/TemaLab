@@ -1,0 +1,59 @@
+﻿@page "/reservations"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WebProject.Shared
+@attribute [Authorize]
+@inject IReservationService ReservationService
+
+<h3>Reservations</h3>
+
+@if (reservations == null)
+{
+    <span>Loading reservations...</span>
+}
+else if (reservations.Count == 0)
+{
+    <span>It seems like you haven't got any reservation for now...</span>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nr.</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Price</th>
+                <th>Cancel Reservation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in reservations)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.FromDate</td>
+                    <td>@item.ToDate</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="(() => DeleteReservation(item.Id))">Cancel</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<ReservationGetDTO> reservations = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        reservations = await ReservationService.GetReservations();
+    }
+
+    void DeleteReservation(int id)
+    {
+        ReservationService.DeleteReservation(id);
+    }
+}

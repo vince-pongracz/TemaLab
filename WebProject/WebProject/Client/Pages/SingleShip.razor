@@ -1,0 +1,106 @@
+﻿@page "/ships/{id:int}"
+@using Microsoft.AspNetCore.Authorization
+@inject IShipSearchService ShipSearchService
+@attribute [Authorize]
+
+@if (ship == null)
+{
+    <span>Ship is loading...</span>
+}
+else
+{
+    <h3>This is the detailed page of the ship "@ship.Name"</h3>
+    <br>
+
+    <img style="width: 25%; position:absolute" src="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="img of the ship" />
+
+    <table class="table" style="width: 67%; position: relative; margin-left: 33%; line-height: 2;">
+        <tr>
+            <td>Name: </td>
+            <td>@ship.Name</td>
+            <td>Capacity: </td>
+            <td> @ship.PersonsMax</td>
+
+        </tr>
+        <tr>
+            <td>Caution: </td>
+            <td>@ship.Caution</td>
+            <td>Port: </td>
+            <td>@ship.HomePort</td>
+        </tr>
+        <tr>
+            <td>Price at Weekends: </td>
+            <td>@ship.PriceAtWeekEnds</td>
+            <td>Price at Weekdays: </td>
+            <td>@ship.PriceAtWeekDays</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <br>
+
+    //TODO here user is also required !!! (or an username/userid pass is required)
+    <EditReservation SelectedShip="@ship"></EditReservation>
+
+    <h4>Dimensions</h4>
+    <table class="table" style="width: 50%">
+        <tr>
+            <td>Legth: </td>
+            <td>@ship.Lenght</td>
+            <td>Width: </td>
+            <td>@ship.Width</td>
+
+        </tr>
+        <tr>
+            <td>Drought:</td>
+            <td>@ship.Drought</td>
+            <td>Weight: </td>
+            <td>@ship.Weight</td>
+        </tr>
+
+    </table>
+    <br>
+    <h4>Other details</h4>
+
+    <table class="table" style="width: 50%">
+        <tr>
+            <td>Manufecturer: </td>
+            <td>@ship.Manufacturer</td>
+            <td>Type: </td>
+            <td>@ship.ShipType</td>
+
+        </tr>
+        <tr>
+            <td>Production Year:: </td>
+            <td>@ship.ProductionYear</td>
+            <td>Overall Ranking: </td>
+            <td>...</td>
+        </tr>
+    </table>
+    <br>
+    <h4>Description</h4>
+    <p>@ship.Description</p>
+    <br>
+
+
+}
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public ShipDTO ship = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ship = await ShipSearchService.GetShip(Id);
+    }
+}
