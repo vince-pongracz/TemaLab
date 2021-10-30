@@ -13,12 +13,17 @@
                         <InputRadioGroup @bind-Value="_rating">
                             @for (int i = 1; i < 6; i++)
                             {
-                                <InputRadio Value="i">☆</InputRadio>
+                                <div id="i">
+                                    <InputRadio Value="i">☆</InputRadio>
+                                </div>
                             }
                         </InputRadioGroup>
 
                     </div>
-                    <div class="comment-area"> <textarea class="form-control" placeholder="what is your view?" rows="4"></textarea> </div>
+                    <div class="comment-area">
+                        <textarea class="form-control" placeholder="what is your view?" rows="4">
+                        </textarea>
+                    </div>
                     <div class="comment-btns mt-2">
                         <div class="row">
                             <div class="col-6">
@@ -48,158 +53,101 @@
 @code {
     private int _rating;
     public int Rating => _rating % 6;
+    public string Comment { get; set; }
 
     async void HandleSubmit()
     {
         await JSRuntime.InvokeVoidAsync("console.log");
-
-        //await ReservationService.CreateReservation(r);
     }
     async void HandleReset()
     {
         await JSRuntime.InvokeVoidAsync("console.log");
 
-        //       await ReservationService.CreateReservation(r);
+        _rating = 0;
+        Comment = default;
     }
 }
 
-
-
 <style>
-        /*
-        Image credits:
-        uifaces.com (http://uifaces.com/authorized)
-    */
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        padding: 20px;
+        width: 450px;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border-radius: 6px;
+        -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1)
+    }
 
-        #login {
-            display: none;
-        }
+    .comment-box {
+        padding: 5px
+    }
 
-        .login,
-        .logout {
-            position: absolute;
-            top: -3px;
-            right: 0;
-        }
+    .comment-area textarea {
+        resize: none;
+        border: 1px solid #ad9f9f
+    }
 
-        .page-header {
-            position: relative;
-        }
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #ffffff;
+        outline: 0;
+        box-shadow: 0 0 0 1px rgb(255, 0, 0) !important
+    }
 
-        .reviews {
-            color: #555;
-            font-weight: bold;
-            margin: 10px auto 20px;
-        }
+    .send {
+        color: #fff;
+        background-color: #ff0000;
+        border-color: #ff0000
+    }
 
-        .notes {
-            color: #999;
-            font-size: 12px;
-        }
-
-        .media .media-object {
-            max-width: 120px;
-        }
-
-        .media-body {
-            position: relative;
-        }
-
-        .media-date {
-            position: absolute;
-            right: 25px;
-            top: 25px;
-        }
-
-            .media-date li {
-                padding: 0;
-            }
-
-                .media-date li:first-child:before {
-                    content: '';
-                }
-
-                .media-date li:before {
-                    content: '.';
-                    margin-left: -2px;
-                    margin-right: 2px;
-                }
-
-        .media-comment {
-            margin-bottom: 20px;
-        }
-
-        .media-replied {
-            margin: 0 0 20px 50px;
-        }
-
-            .media-replied .media-heading {
-                padding-left: 6px;
-            }
-
-        .btn-circle {
-            font-weight: bold;
-            font-size: 12px;
-            padding: 6px 15px;
-            border-radius: 20px;
-        }
-
-            .btn-circle span {
-                padding-right: 6px;
-            }
-
-        .embed-responsive {
-            margin-bottom: 20px;
-        }
-
-        .tab-content {
-            padding: 50px 15px;
-            border: 1px solid #ddd;
-            border-top: 0;
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 4px;
-        }
-
-        .custom-input-file {
-            overflow: hidden;
-            position: relative;
-            width: 120px;
-            height: 120px;
-            background: #eee url('https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/128.jpg');
-            background-size: 120px;
-            border-radius: 120px;
-        }
-
-        input[type="file"] {
-            z-index: 999;
-            line-height: 0;
-            font-size: 0;
-            position: absolute;
-            opacity: 0;
-            filter: alpha(opacity = 0);
-            -ms-filter: "alpha(opacity=0)";
-            margin: 0;
-            padding: 0;
-            left: 0;
-        }
-
-        .uploadPhoto {
-            position: absolute;
-            top: 25%;
-            left: 25%;
-            display: none;
-            width: 50%;
-            height: 50%;
+        .send:hover {
             color: #fff;
-            text-align: center;
-            line-height: 60px;
-            text-transform: uppercase;
-            background-color: rgba(0,0,0,.3);
-            border-radius: 50px;
-            cursor: pointer;
+            background-color: #f50202;
+            border-color: #f50202
         }
 
-        .custom-input-file:hover .uploadPhoto {
-            display: block;
+    .rating {
+        display: flex;
+        margin-top: -10px;
+        flex-direction: row-reverse;
+        margin-left: -4px;
+        float: left
+    }
+
+        .rating > input {
+            display: none
+        }
+
+        .rating > label {
+            position: relative;
+            width: 19px;
+            font-size: 25px;
+            color: #ff0000;
+            cursor: pointer
+        }
+
+            .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0
+            }
+
+            .rating > label:hover:before,
+            .rating > label:hover ~ label:before {
+                opacity: 1 !important
+            }
+
+        .rating > input:checked ~ label:before {
+            opacity: 1
+        }
+
+        .rating:hover > input:checked ~ label:before {
+            opacity: 0.4
         }
 </style>
