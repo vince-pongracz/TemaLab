@@ -17,7 +17,7 @@ else
 {
     foreach (var item in ships)
     {
-        <div class="card own-card-style">
+        <div class="card own-card-style ">
             <h5 class="card-header">@item.Name</h5>
             <div class="card-body">
 
@@ -29,26 +29,30 @@ else
                         <td>@item.HomePort</td>
                         <td>Ranking: </td>
                         <td> ...</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>Capacity: </td>
                         <td>Max @item.PersonsMax people</td>
                         <td>Ship type: </td>
                         <td>@item.ShipType</td>
+                        <td><button class="btn btn-dark" style="padding-left: 40px; padding-right: 40px" @onclick="(() => ShowShip(item.Id))">Show</button></td>
                     </tr>
                     <tr>
                         <td>Price at Weekends: </td>
                         <td>@item.PriceAtWeekEnds</td>
                         <td>Price at Weekdays: </td>
                         <td>@item.PriceAtWeekDays</td>
+                        <td></td>
                     </tr>
+                </table>
+                <table> <!--just for styling-->
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>
-                            <button class="btn btn-dark" @onclick="(() => ShowShip(item.Id))">Show</button>
-                        </td>
+                        <td> </td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
