@@ -1,7 +1,7 @@
 ﻿@inject IJSRuntime JSRuntime
-@inject IReservationService ReservationService
+@inject IShipSearchService SearchService
 
-<h3>Book a reservation</h3>
+<h3>Search</h3>>
 
 <EditForm Model="@r" OnSubmit="@HandleSubmit">
     <div class="form-group">
@@ -24,6 +24,7 @@
     [Parameter]
     public ApplicationUserDTO PersonLoggedOn { get; set; }
 
+    //TODO is it ok as static field?
     [Parameter]
     public ShipDTO SelectedShip { get; set; }
 
@@ -32,13 +33,5 @@
         FromDate = DateTime.Today,
         ToDate = DateTime.Today.AddDays(1),
         //TODO get and set the current Ship and Person here
-    };
-
-
-    async void HandleSubmit()
-    {
-        await JSRuntime.InvokeVoidAsync("console.log", r);
-
-        await ReservationService.CreateReservation(r);
-    }
+    }; 
 }

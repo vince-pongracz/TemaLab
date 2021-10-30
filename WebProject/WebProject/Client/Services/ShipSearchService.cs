@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -24,7 +25,13 @@ namespace WebProject.Client.Services
 
         public async Task<List<ShipDTO>> GetShips()
         {
-            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>("api/ships");
+            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships");
+        }
+
+        public async Task<List<ShipDTO>> GetShips(Expression queryExp)
+        {
+            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships/{queryExp}");
+            //TODO how to pass a query?
         }
     }
 }
