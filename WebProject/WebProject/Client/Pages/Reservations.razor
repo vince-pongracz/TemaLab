@@ -32,8 +32,8 @@ else
             {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@item.FromDate</td>
-                    <td>@item.ToDate</td>
+                    <td>@item.FromDate.ToShortDateString()</td>
+                    <td>@item.ToDate.ToShortDateString()</td>
                     <td>@item.Price</td>
                     <td>
                         <button class="btn btn-primary" @onclick="(() => DeleteReservation(item.Id))">Cancel</button>
@@ -52,8 +52,10 @@ else
         reservations = await ReservationService.GetReservations();
     }
 
-    void DeleteReservation(int id)
+    async void DeleteReservation(int id)
     {
-        ReservationService.DeleteReservation(id);
+        await ReservationService.DeleteReservation(id);
+        //TODO make it work
+        //reservations = await ReservationService.GetReservations();
     }
 }

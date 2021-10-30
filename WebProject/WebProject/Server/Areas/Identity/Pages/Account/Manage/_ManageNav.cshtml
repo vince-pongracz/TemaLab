@@ -2,6 +2,11 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
+
+<head>
+    <link rel="stylesheet" href="@Url.Content("./css/_Layout.cshtml.css")" type="text/css"/>
+    <link rel="stylesheet" href="@Url.Content("./css/_ManageNav.cshtml.css")" type="text/css" />
+</head>
 <ul class="nav nav-pills flex-column">
     <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
