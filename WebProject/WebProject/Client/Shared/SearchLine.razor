@@ -33,5 +33,12 @@
         FromDate = DateTime.Today,
         ToDate = DateTime.Today.AddDays(1),
         //TODO get and set the current Ship and Person here
-    }; 
+    };
+
+    async void HandleSubmit()
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", r);
+
+        await SearchService.GetShips();
+    }
 }
