@@ -6,17 +6,24 @@
     <div class="card-body">
         <h5 class="card-title">Book a ship</h5>
         <h6 class="card-subtitle mb-2 text-muted">Enter the dates for the reservation here:</h6>
-        <EditForm Model="@r" OnSubmit="@HandleSubmit">
+        <EditForm Model="@reservation" OnSubmit="@HandleSubmit">
             <div class="form-group">
                 <label>Book from:</label>
-                <InputDate @bind-Value="r.FromDate" class="form-control"></InputDate>
+                <InputDate @bind-Value="reservation.FromDate" class="form-control"></InputDate>
             </div>
             <div class="form-group">
                 <label>Book until</label>
-                <InputDate @bind-Value="r.ToDate" class="form-control"></InputDate>
+                <InputDate @bind-Value="reservation.ToDate" class="form-control"></InputDate>
             </div>
             <div class="form-group">
-                <label>Total price: @CalculatePrice() Ft</label>
+                @if (CalculatePrice() < 0)
+                {
+                    <label>Total price: Invalid Date Interval</label>
+                }
+                else
+                {
+                    <label>Total price: @CalculatePrice()</label>
+                }
             </div>
             <button type="submit" class="btn btn-teal">Book this ship </button>
         </EditForm>
@@ -31,7 +38,7 @@
     [Parameter]
     public ShipDTO SelectedShip { get; set; }
 
-    private ReservationPostDTO r = new ReservationPostDTO
+    private ReservationPostDTO reservation = new ReservationPostDTO
     {
         FromDate = DateTime.Today,
         ToDate = DateTime.Today.AddDays(1),
@@ -41,27 +48,38 @@
 
     async void HandleSubmit()
     {
-        await JSRuntime.InvokeVoidAsync("console.log", r);
+        await JSRuntime.InvokeVoidAsync("console.log", reservation);
 
-        await ReservationService.CreateReservation(r);
+        if (CalculatePrice() > 0)
+            await ReservationService.CreateReservation(reservation);
     }
 
     decimal CalculatePrice()
     {
-        TimeSpan timeSpan = r.ToDate - r.FromDate;
-        decimal result = numOfWeekdays(timeSpan) * SelectedShip.PriceAtWeekDays;
-        result += numOfWeekendDays(timeSpan) * SelectedShip.PriceAtWeekDays;
+        decimal result = numOfWeekdays() * SelectedShip.PriceAtWeekDays;
+        result += numOfWeekendDays() * SelectedShip.PriceAtWeekEnds;
         Console.WriteLine(SelectedShip.Name);
         return result;
     }
 
-    int numOfWeekdays(TimeSpan timeSpan) //TODO Helyesen kiszamolni a hétköznapok számát
+    int numOfWeekdays()
     {
-        return timeSpan.Days;
+        int totalDays = 0;
+        for (DateTime date = reservation.FromDate; date < reservation.ToDate; date = date.AddDays(1))
+        {
+            if (date.DayOfWeek != DayOfWeek.Saturday
+                && date.DayOfWeek != DayOfWeek.Sunday)
+                totalDays++;
+        }
+        Console.WriteLine(totalDays);
+        return totalDays;
+
+
     }
 
-    int numOfWeekendDays(TimeSpan timeSpan)
+    int numOfWeekendDays()
     {
-        return timeSpan.Days - numOfWeekdays(timeSpan);
+        TimeSpan timeSpan = reservation.ToDate - reservation.FromDate;
+        return timeSpan.Days - numOfWeekdays();
     }
 }
