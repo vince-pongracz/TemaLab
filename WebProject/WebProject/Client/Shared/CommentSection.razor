@@ -1,0 +1,85 @@
+﻿<!--
+    https://bbbootstrap.com/snippets/bootstrap-comment-section-form-ratings-98792632
+-->
+@inject IJSRuntime JSRuntime
+
+<br>
+<br>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5 col-md-6 col-12 pb-4">
+                <h1>Comments</h1>
+                @for (int i = 0; i < Rankings.Count(); i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        <div class="comment mt-4 text-justify">
+                            <h4 class="title-dark">Jhon Doe</h4><span> - @Rankings[i].Date.ToLongDateString()</span> <br>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="darker mt-4 text-justify">
+                            <h4 class="title-hell">Rob Simpson</h4><span> - @Rankings[i].Date.ToLongDateString()</span> <br>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                <form id="algin-form">
+                    <div class="form-group">
+                        <h4>Leave a comment</h4>
+                        <p class="message">Message</p>
+                        <textarea placeholder="Type your comment here" name="msg" id="" msg cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="wrapper">
+                        <input type="radio" id="r1" name="rg1" @onclick="(() => StarClicked(5))"><!--Fordított sorrendben rajzolja ki őket azert megy az érték 5-től 1-ig-->
+                        <label for="r1">&#9733;</label>
+                        <input type="radio" id="r2" name="rg1" @onclick="(() => StarClicked(4))">
+                        <label for="r2">&#9733;</label>
+                        <input type="radio" id="r3" name="rg1" @onclick="(() => StarClicked(3))">
+                        <label for="r3">&#9733;</label>
+                        <input type="radio" id="r4" name="rg1" @onclick="(() => StarClicked(2))">
+                        <label for="r4">&#9733;</label>
+                        <input type="radio" id="r5" name="rg1" @onclick="(() => StarClicked(1))">
+                        <label for="r5">&#9733;</label>
+                    </div>
+                    <div class="form-group">
+                        <button @onclick="(() => HandleSubmit())" type="submit" id="post" class="btn">Post Comment</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@code {
+    public List<RankingDTO> Rankings { get; set; } = new List<RankingDTO>()
+{
+        new RankingDTO(){ Id = 1, Comment = "sfgdgjkosjjj", Date = new DateTime(2021, 08, 21), Stars = 4},
+        new RankingDTO(){ Id = 2, Comment = "dgfdfgfgdfgj", Date = new DateTime(2020, 09, 22), Stars = 3},
+        new RankingDTO(){ Id = 3, Comment = "jklkolllllll", Date = new DateTime(2021, 05, 11), Stars = 1},
+
+    };
+
+    public int Rating { get; set; } = 1;
+    public string Comment { get; set; }
+
+    void HandleSubmit()
+    {
+
+    }
+
+
+    void StarClicked(int rating)
+    {
+        Rating = rating;
+        Console.WriteLine(Rating);
+    }
+}

@@ -3,12 +3,6 @@
 @inject IShipSearchService ShipSearchService
 @attribute [Authorize]
 
-@using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-
-@inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
-
 @if (ship == null)
 {
     <span>Ship is loading...</span>
@@ -86,7 +80,7 @@ else
     <br>
 
     <div class="comment">
-        <CommentInput />
+        <CommentSection/>
     </div>
 
 }
