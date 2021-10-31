@@ -2,15 +2,11 @@
 @inject IReservationService ReservationService
 
 
-<div class="card" style="width: 26%; box-shadow: 0 0 20px 8px #d0d0d0; margin-left:50%; position:absolute">
+<div class="card reservation-card">
     <div class="card-body">
         <h5 class="card-title">Book a ship</h5>
         <h6 class="card-subtitle mb-2 text-muted">Enter the dates for the reservation here:</h6>
         <EditForm Model="@r" OnSubmit="@HandleSubmit">
-            <div class="form-group">
-                <label>Ship ID</label>
-                <InputNumber @bind-Value="SelectedShip.Id" class="form-control"></InputNumber>
-            </div>
             <div class="form-group">
                 <label>Book from:</label>
                 <InputDate @bind-Value="r.FromDate" class="form-control"></InputDate>
@@ -19,12 +15,13 @@
                 <label>Book until</label>
                 <InputDate @bind-Value="r.ToDate" class="form-control"></InputDate>
             </div>
-            <button type="submit" class="btn btn-outline-dark">Book this! </button>
+            <div class="form-group">
+                <label>Total price: @CalculatePrice() Ft</label>
+            </div>
+            <button type="submit" class="btn btn-teal">Book this ship </button>
         </EditForm>
     </div>
 </div>
-
-
 
 
 @code {
@@ -47,5 +44,24 @@
         await JSRuntime.InvokeVoidAsync("console.log", r);
 
         await ReservationService.CreateReservation(r);
+    }
+
+    decimal CalculatePrice()
+    {
+        TimeSpan timeSpan = r.ToDate - r.FromDate;
+        decimal result = numOfWeekdays(timeSpan) * SelectedShip.PriceAtWeekDays;
+        result += numOfWeekendDays(timeSpan) * SelectedShip.PriceAtWeekDays;
+        Console.WriteLine(SelectedShip.Name);
+        return result;
+    }
+
+    int numOfWeekdays(TimeSpan timeSpan) //TODO Helyesen kiszamolni a hétköznapok számát
+    {
+        return timeSpan.Days;
+    }
+
+    int numOfWeekendDays(TimeSpan timeSpan)
+    {
+        return timeSpan.Days - numOfWeekdays(timeSpan);
     }
 }

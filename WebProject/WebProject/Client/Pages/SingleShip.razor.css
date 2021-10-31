@@ -3,15 +3,15 @@
 }
 
 .first-table {
-    width: 67%; 
-    position: relative; 
-    margin-left: 33%; 
+    width: 67%;
+    position: relative;
+    margin-left: 33%;
     line-height: 2.2;
 }
 
 .main-img {
-    width: 23%; 
-    position:absolute;
+    width: 23%;
+    position: absolute;
     border-radius: 2%;
 }
 

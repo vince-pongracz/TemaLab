@@ -3,6 +3,12 @@
 @inject IShipSearchService ShipSearchService
 @attribute [Authorize]
 
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
 @if (ship == null)
 {
     <span>Ship is loading...</span>
@@ -10,7 +16,7 @@
 else
 {
     <img class="main-img" src="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="img of the ship" />
-    
+
     <h3 class="title"> This is the detailed page of the ship "@ship.Name"</h3>
 
     <table class="table first-table">
@@ -36,9 +42,8 @@ else
 
     <br>
     <br>
-
-    //TODO here user is also required !!! (or an username/userid pass is required)
-    <EditReservation SelectedShip="@ship"></EditReservation>
+            //TODO here user is also required !!! (or an username/userid pass is required)
+            <EditReservation SelectedShip="@ship"></EditReservation>
 
     <h4>Dimensions</h4>
     <table class="table own-table">
