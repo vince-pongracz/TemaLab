@@ -9,18 +9,16 @@
 }
 else
 {
-    <h3>This is the detailed page of the ship "@ship.Name"</h3>
-    <br>
+    <img class="main-img" src="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="img of the ship" />
+    
+    <h3 class="title"> This is the detailed page of the ship "@ship.Name"</h3>
 
-    <img style="width: 25%; position:absolute" src="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="img of the ship" />
-
-    <table class="table" style="width: 67%; position: relative; margin-left: 33%; line-height: 2;">
+    <table class="table first-table">
         <tr>
             <td>Name: </td>
             <td>@ship.Name</td>
             <td>Capacity: </td>
             <td> @ship.PersonsMax</td>
-
         </tr>
         <tr>
             <td>Caution: </td>
@@ -34,15 +32,8 @@ else
             <td>Price at Weekdays: </td>
             <td>@ship.PriceAtWeekDays</td>
         </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-            </td>
-        </tr>
     </table>
-    <br>
+
     <br>
     <br>
 
@@ -50,7 +41,7 @@ else
     <EditReservation SelectedShip="@ship"></EditReservation>
 
     <h4>Dimensions</h4>
-    <table class="table" style="width: 50%">
+    <table class="table own-table">
         <tr>
             <td>Legth: </td>
             <td>@ship.Lenght</td>
@@ -69,7 +60,7 @@ else
     <br>
     <h4>Other details</h4>
 
-    <table class="table" style="width: 50%">
+    <table class="table own-table">
         <tr>
             <td>Manufecturer: </td>
             <td>@ship.Manufacturer</td>
@@ -92,7 +83,7 @@ else
     <div class="comment">
         <CommentInput />
     </div>
-    
+
 }
 
 

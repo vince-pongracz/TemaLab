@@ -12,10 +12,6 @@
     width: 80%;
     position: relative;
     margin-left: 23%;
-    line-height: 2;
+    line-height: 2.5;
 }
 
-.btn-own{
-    padding: 10px 50px 10px 50px;
-    background-color: red;
-}

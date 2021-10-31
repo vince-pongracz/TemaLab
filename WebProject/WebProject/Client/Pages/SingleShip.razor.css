@@ -1,12 +1,28 @@
-﻿.ship-img {
-    position: absolute;
-    width: 20%;
-    height: 60%;
+﻿table {
+    border-top-color: white;
 }
 
-.card-table {
-    width: 80%;
-    position: relative;
-    margin-left: 23%;
-    line-height: 2;
+.first-table {
+    width: 67%; 
+    position: relative; 
+    margin-left: 33%; 
+    line-height: 2.2;
+}
+
+.main-img {
+    width: 23%; 
+    position:absolute;
+    border-radius: 2%;
+}
+
+.own-table {
+    width: 50%;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+.title {
+    padding-left: 33%;
 }
