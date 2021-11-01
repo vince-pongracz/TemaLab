@@ -8,6 +8,10 @@ namespace WebProject.Client.Services
 {
     public interface IReservationService
     {
+        event Action OnChange;
+
+        List<ReservationGetDTO> reservations { get; set; }
+
         Task<List<ReservationGetDTO>> GetReservations();
 
         Task<List<ReservationGetDTO>> CreateReservation(ReservationPostDTO reservation);

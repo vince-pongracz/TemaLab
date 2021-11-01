@@ -4,14 +4,15 @@
 @using WebProject.Shared
 @attribute [Authorize]
 @inject IReservationService ReservationService
+@implements IDisposable
 
 <h3>Reservations</h3>
 
-@if (reservations == null)
+@if (ReservationService.reservations == null)
 {
     <span>Loading reservations...</span>
 }
-else if (reservations.Count == 0)
+else if (ReservationService.reservations.Count == 0)
 {
     <span>It seems like you haven't got any reservation for now...</span>
 }
@@ -28,7 +29,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in reservations)
+            @foreach (var item in ReservationService.reservations)
             {
                 <tr>
                     <td>@item.Id</td>
@@ -45,17 +46,20 @@ else
 }
 
 @code {
-    List<ReservationGetDTO> reservations = null;
-
     protected override async Task OnInitializedAsync()
     {
-        reservations = await ReservationService.GetReservations();
+        await ReservationService.GetReservations();
+        ReservationService.OnChange += StateHasChanged;
     }
 
     async void DeleteReservation(int id)
     {
         await ReservationService.DeleteReservation(id);
-        //TODO make it work
-        //reservations = await ReservationService.GetReservations();
+
+    }
+
+    public void Dispose()
+    {
+        ReservationService.OnChange -= StateHasChanged;
     }
 }
