@@ -20,10 +20,13 @@ namespace WebProject.Client.Services.RankingService
 
         public List<RankingDTO> rankings { get; set; } = new List<RankingDTO>();
 
+        public event Action OnChange;
+
         public async Task<List<RankingDTO>> CreateRanking(RankingDTO ranking)
         {
             var result = await _httpClient.PostAsJsonAsync("api/rankings", ranking);
             rankings = await result.Content.ReadFromJsonAsync<List<RankingDTO>>();
+            OnChange.Invoke();
             return rankings;
         }
 

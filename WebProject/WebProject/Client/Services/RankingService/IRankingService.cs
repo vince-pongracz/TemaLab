@@ -8,6 +8,8 @@ namespace WebProject.Client.Services.RankingService
 {
     public interface IRankingService
     {
+        event Action OnChange;
+
         List<RankingDTO> rankings { get; set; }
 
         Task<List<RankingDTO>> GetRankings();

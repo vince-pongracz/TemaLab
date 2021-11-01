@@ -1,8 +1,6 @@
-﻿<!--
-    https://bbbootstrap.com/snippets/bootstrap-comment-section-form-ratings-98792632
--->
-@using WebProject.Client.Services.RankingService
+﻿@using WebProject.Client.Services.RankingService
 @inject IRankingService RankingService
+@implements IDisposable
 
 <br>
 <br>
@@ -85,6 +83,7 @@
     protected override async Task OnInitializedAsync()
     {
         await RankingService.GetRankings();
+        RankingService.OnChange += StateHasChanged;
     }
 
     async void HandleSubmit()
@@ -100,5 +99,10 @@
     void StarClicked(int rating)
     {
         rankingNew.Stars = rating;
+    }
+
+    public void Dispose()
+    {
+        RankingService.OnChange -= StateHasChanged;
     }
 }
