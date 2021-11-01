@@ -32,6 +32,15 @@ namespace WebProject.Server.Data
                 new Ship { Id = 2, Caution = 80000, Description = "it's a ship", Drought = 6, HomePort = "Sopron", IsAvailable = true, IsDeleted = false, Lenght = 15, Manufacturer = "ship2.kft", Name = "Awesome", PersonsMax = 7, PriceAtWeekDays = 20000, PriceAtWeekEnds = 22000, ProductionYear = 2010, ShipType = "very fancy", Weight = 3600, Width = 7 }
             );
 
+            modelBuilder.Entity<Ranking>().HasData(
+                new Ranking { Id = 1, Date = new DateTime(2021, 01, 02), Comment = "fhjfghjfghj", Stars = 4},
+                new Ranking { Id = 2, Date = new DateTime(2021, 01, 05), Comment = "fhjfghjfghj", Stars = 5},
+                new Ranking { Id = 3, Date = new DateTime(2021, 01, 08), Comment = "fhjfghjfghj", Stars = 1},
+                new Ranking { Id = 4, Date = new DateTime(2021, 01, 09), Comment = "fhjfghjfghj", Stars = 3},
+                new Ranking { Id = 5, Date = new DateTime(2021, 01, 11), Comment = "fhjfghjfghj", Stars = 4},
+                new Ranking { Id = 6, Date = new DateTime(2021, 01, 22), Comment = "fhjfghjfghj", Stars = 5}
+            );
+
             //TODO PV ez reflexiv kell, vagyis oda vissza irányokba kell a binding?
             //Reservation bindings
             modelBuilder.Entity<Reservation>().HasOne(r => r.Ship).WithMany(s => s.Reservations);

@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WebProject.Client.Services;
+using WebProject.Client.Services.RankingService;
 
 namespace WebProject.Client
 {
@@ -29,6 +30,7 @@ namespace WebProject.Client
 
             builder.Services.AddScoped<IReservationService, ReservationService>();
             builder.Services.AddScoped<IShipSearchService, ShipSearchService>();
+            builder.Services.AddScoped<IRankingService, RankingService>();
 
             await builder.Build().RunAsync();
         }

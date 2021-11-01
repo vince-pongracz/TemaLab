@@ -29,7 +29,7 @@
     background-color: unset
 }
 
-#post {
+.btn-comment {
     margin-top: 10px;
     padding-top: 7px;
     padding-bottom: 7px;
@@ -48,7 +48,7 @@
 .darker {
     border: 1px solid;
     background-color: #252b33;
-    float: right;
+    float: left;
     border-radius: 5px;
     padding-left: 40px;
     padding-right: 30px;
@@ -126,7 +126,7 @@ form {
     box-shadow: 0 0 20px 8px #d0d0d0;
     width: 100%;
     margin-left: 7%;
-    margin-top: 20px;
+    margin-top: 55px;
     position: absolute;
 }
 
@@ -147,5 +147,9 @@ label {
 }
 
 input:checked ~ label {
-    color: rgb(238 235 52)
+    color: rgb(238 235 52);
+}
+
+.star-color {
+    color: rgb(238 235 52);
 }

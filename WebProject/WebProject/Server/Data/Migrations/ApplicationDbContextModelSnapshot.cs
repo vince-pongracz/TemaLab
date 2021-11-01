@@ -357,6 +357,50 @@ namespace WebProject.Server.Data.Migrations
                     b.HasIndex("ShipId");
 
                     b.ToTable("Rankings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Comment = "fhjfghjfghj",
+                            Date = new DateTime(2021, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Stars = 4
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Comment = "fhjfghjfghj",
+                            Date = new DateTime(2021, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Stars = 5
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Comment = "fhjfghjfghj",
+                            Date = new DateTime(2021, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Stars = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Comment = "fhjfghjfghj",
+                            Date = new DateTime(2021, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Stars = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Comment = "fhjfghjfghj",
+                            Date = new DateTime(2021, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Stars = 4
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Comment = "fhjfghjfghj",
+                            Date = new DateTime(2021, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Stars = 5
+                        });
                 });
 
             modelBuilder.Entity("WebProject.Server.Models.Reservation", b =>
