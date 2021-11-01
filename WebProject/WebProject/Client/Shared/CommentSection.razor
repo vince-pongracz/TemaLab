@@ -2,7 +2,6 @@
     https://bbbootstrap.com/snippets/bootstrap-comment-section-form-ratings-98792632
 -->
 @using WebProject.Client.Services.RankingService
-@inject IJSRuntime JSRuntime
 @inject IRankingService RankingService
 
 <br>
@@ -13,18 +12,18 @@
         <div class="row">
             <div class="col-sm-5 col-md-6 col-12 pb-4">
                 <h1>Comments</h1>
-                @for (int i = 0; i < rankings.Count(); i++)
+                @for (int i = 0; i < RankingService.rankings.Count; i++)
                 {
                     if (i % 2 == 0)
                     {
                         <div class="comment mt-4 text-justify">
-                            <h4 class="title-dark">Jhon Doe</h4><span> - @rankings[i].Date.ToLongDateString()</span> <br>
-                            <p>@rankings[i].Comment</p>
-                            @for (int j = 0; j < rankings[i].Stars; j++) //yellow stars = actual ranking
+                            <h4 class="title-dark">Jhon Doe</h4><span> - @RankingService.rankings[i].Date.ToLongDateString()</span> <br>
+                            <p>@RankingService.rankings[i].Comment</p>
+                            @for (int j = 0; j < RankingService.rankings[i].Stars; j++) //yellow stars = actual ranking
                             {
                                 <label class="star-color">&#9733;</label>
                             }
-                            @for (int j = 0; j < 5 - rankings[i].Stars; j++) // the rest is white stars
+                            @for (int j = 0; j < 5 - RankingService.rankings[i].Stars; j++) // the rest is white stars
                             {
                                 <label>&#9733;</label>
                             }
@@ -33,13 +32,13 @@
                     else
                     {
                         <div class="darker mt-4 text-justify">
-                            <h4 class="title-hell">Rob Simpson</h4><span> - @rankings[i].Date.ToLongDateString()</span> <br>
-                            <p>@rankings[i].Comment</p>
-                            @for (int j = 0; j < rankings[i].Stars; j++) //yellow stars = actual ranking
+                            <h4 class="title-hell">Rob Simpson</h4><span> - @RankingService.rankings[i].Date.ToLongDateString()</span> <br>
+                            <p>@RankingService.rankings[i].Comment</p>
+                            @for (int j = 0; j < RankingService.rankings[i].Stars; j++) //yellow stars = actual ranking
                             {
                                 <label class="star-color">&#9733;</label>
                             }
-                            @for (int j = 0; j < 5 - rankings[i].Stars; j++) // the rest is white stars
+                            @for (int j = 0; j < 5 - RankingService.rankings[i].Stars; j++) // the rest is white stars
                             {
                                 <label>&#9733;</label>
                             }
@@ -53,24 +52,24 @@
                     <div class="form-group">
                         <h4>Leave a comment</h4>
                         <p class="message">Message</p>
-                        <EditForm Model="@rankingNew">
-                            <InputTextArea @bind-Value="rankingNew.Comment" placeholder="Type your comment here" cols="30" rows="5" class="form-control" />
+                        <EditForm Model="@rankingNew" OnSubmit="@HandleSubmit">
+                            <InputTextArea @bind-Value="rankingNew.Comment" placeholder="Type your comment here" cols="30" rows="5" class="form-control"></InputTextArea>
+                            <div class="wrapper">
+                                <input type="radio" id="r1" @onclick="(() => StarClicked(5))"><!--Fordított sorrendben rajzolja ki őket azert megy az érték 5-től 1-ig-->
+                                <label for="r1">&#9733;</label>
+                                <input type="radio" id="r2" @onclick="(() => StarClicked(4))">
+                                <label for="r2">&#9733;</label>
+                                <input type="radio" id="r3" @onclick="(() => StarClicked(3))">
+                                <label for="r3">&#9733;</label>
+                                <input type="radio" id="r4" @onclick="(() => StarClicked(2))">
+                                <label for="r4">&#9733;</label>
+                                <input type="radio" id="r5" @onclick="(() => StarClicked(1))">
+                                <label for="r5">&#9733;</label>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-comment">Post Comment</button>
+                            </div>
                         </EditForm>
-                    </div>
-                    <div class="wrapper">
-                        <input type="radio" id="r1" @onclick="(() => StarClicked(5))"><!--Fordított sorrendben rajzolja ki őket azert megy az érték 5-től 1-ig-->
-                        <label for="r1">&#9733;</label>
-                        <input type="radio" id="r2" @onclick="(() => StarClicked(4))">
-                        <label for="r2">&#9733;</label>
-                        <input type="radio" id="r3" @onclick="(() => StarClicked(3))">
-                        <label for="r3">&#9733;</label>
-                        <input type="radio" id="r4" @onclick="(() => StarClicked(2))">
-                        <label for="r4">&#9733;</label>
-                        <input type="radio" id="r5" @onclick="(() => StarClicked(1))">
-                        <label for="r5">&#9733;</label>
-                    </div>
-                    <div class="form-group">
-                        <button @onclick="(() => HandleSubmit())" type="submit" class="btn btn-comment">Post Comment</button>
                     </div>
                 </form>
             </div>
@@ -81,18 +80,21 @@
 
 @code {
 
-    List<RankingDTO> rankings = new List<RankingDTO>();
     RankingDTO rankingNew { get; set; } = new RankingDTO();
 
     protected override async Task OnInitializedAsync()
     {
-        rankings = await RankingService.GetRankings();
+        await RankingService.GetRankings();
     }
 
     async void HandleSubmit()
     {
-        rankingNew.Date = DateTime.Now;
-        await RankingService.CreateRanking(rankingNew);
+        if (rankingNew.Comment != null && rankingNew.Stars > 0)
+        {
+            rankingNew.Date = DateTime.Now;
+            await RankingService.CreateRanking(rankingNew);
+            rankingNew = new RankingDTO();
+        }
     }
 
     void StarClicked(int rating)

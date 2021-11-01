@@ -33,7 +33,8 @@ namespace WebProject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRankings()
         {
-            return Ok(Mapper.Map(await _context.Rankings.ToListAsync(), new List<RankingDTO>()));
+            var rankings = await _context.Rankings.ToListAsync();
+            return Ok(Mapper.Map(rankings, new List<RankingDTO>()));
         }
 
         [HttpPost]

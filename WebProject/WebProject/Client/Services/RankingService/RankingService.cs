@@ -18,16 +18,19 @@ namespace WebProject.Client.Services.RankingService
             _httpClient = httpClient;
         }
 
+        public List<RankingDTO> rankings { get; set; } = new List<RankingDTO>();
+
         public async Task<List<RankingDTO>> CreateRanking(RankingDTO ranking)
         {
             var result = await _httpClient.PostAsJsonAsync("api/rankings", ranking);
-            var rankings = await result.Content.ReadFromJsonAsync<List<RankingDTO>>();
+            rankings = await result.Content.ReadFromJsonAsync<List<RankingDTO>>();
             return rankings;
         }
 
         public async  Task<List<RankingDTO>> GetRankings()
         {
-            return await _httpClient.GetFromJsonAsync<List<RankingDTO>>($"api/rankings");
+            rankings = await _httpClient.GetFromJsonAsync<List<RankingDTO>>("api/rankings");
+            return rankings;
         }
     }
 }

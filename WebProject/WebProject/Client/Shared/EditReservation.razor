@@ -58,7 +58,6 @@
     {
         decimal result = numOfWeekdays() * SelectedShip.PriceAtWeekDays;
         result += numOfWeekendDays() * SelectedShip.PriceAtWeekEnds;
-        Console.WriteLine(SelectedShip.Name);
         return result;
     }
 
@@ -71,10 +70,7 @@
                 && date.DayOfWeek != DayOfWeek.Sunday)
                 totalDays++;
         }
-        Console.WriteLine(totalDays);
         return totalDays;
-
-
     }
 
     int numOfWeekendDays()
