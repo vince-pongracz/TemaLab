@@ -28,10 +28,9 @@ namespace WebProject.Client.Services
             return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships");
         }
 
-        public async Task<List<ShipDTO>> GetShips(Expression queryExp)
+        public async Task<List<ShipDTO>> SearchShips(string query)
         {
-            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships/{queryExp}");
-            //TODO how to pass a query?
+            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/search/{query}");
         }
     }
 }

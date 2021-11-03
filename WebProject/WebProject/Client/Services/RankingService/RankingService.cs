@@ -30,9 +30,15 @@ namespace WebProject.Client.Services.RankingService
             return rankings;
         }
 
-        public async  Task<List<RankingDTO>> GetRankings()
+        public async Task<List<RankingDTO>> GetRankings()
         {
             rankings = await _httpClient.GetFromJsonAsync<List<RankingDTO>>("api/rankings");
+            return rankings;
+        }
+
+        public async Task<List<RankingDTO>> GetRankingsForShip(int shipid)
+        {
+            rankings = await _httpClient.GetFromJsonAsync<List<RankingDTO>>($"api/rankings/{shipid}");
             return rankings;
         }
     }

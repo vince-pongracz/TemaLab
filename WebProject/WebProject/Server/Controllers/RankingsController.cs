@@ -37,6 +37,13 @@ namespace WebProject.Server.Controllers
             return Ok(Mapper.Map(rankings, new List<RankingDTO>()));
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetRankingsForShip(int shipid)
+        {
+            var rankings = await _context.Ships.Where(x => x.Id == shipid).Select(x => x.Rankings).ToListAsync();
+            return Ok(Mapper.Map(rankings, new List<RankingDTO>()));
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateRanking(RankingDTO rankingDTO)
         {

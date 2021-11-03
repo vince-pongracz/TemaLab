@@ -13,6 +13,6 @@ namespace WebProject.Client.Services
 
         Task<ShipDTO> GetShip(int id);
 
-        Task<List<ShipDTO>> GetShips(Expression queryExp);
+        Task<List<ShipDTO>> SearchShips(string query);
     }
 }

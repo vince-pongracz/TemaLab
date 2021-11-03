@@ -1,5 +1,6 @@
 ﻿@using WebProject.Client.Services.RankingService
 @inject IRankingService RankingService
+@inject IShipSearchService ShipSearchService
 @implements IDisposable
 
 <br>
@@ -78,11 +79,17 @@
 
 @code {
 
+    [Parameter]
+    public int currentShipIdFromParentPage { get; set; }
+
+    //TODO get current logged on person here
     RankingDTO rankingNew { get; set; } = new RankingDTO();
+
+    private List<RankingDTO> rankings { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await RankingService.GetRankings();
+        rankings = await RankingService.GetRankingsForShip(currentShipIdFromParentPage);
         RankingService.OnChange += StateHasChanged;
     }
 
@@ -91,7 +98,7 @@
         if (rankingNew.Comment != null && rankingNew.Stars > 0)
         {
             rankingNew.Date = DateTime.Now;
-            await RankingService.CreateRanking(rankingNew);
+            rankings = await RankingService.CreateRanking(rankingNew);
             rankingNew = new RankingDTO();
         }
     }
