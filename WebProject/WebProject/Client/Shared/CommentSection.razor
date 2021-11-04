@@ -95,7 +95,7 @@
 
     async void HandleSubmit()
     {
-        if (rankingNew.Comment != null && rankingNew.Stars > 0)
+        if (rankingNew.Stars > 0)
         {
             rankingNew.Date = DateTime.Now;
             rankings = await RankingService.CreateRanking(rankingNew);

@@ -4,6 +4,7 @@
 @using WebProject.Shared
 @attribute [Authorize]
 @inject IReservationService ReservationService
+@inject IJSRuntime JsRuntime
 @implements IDisposable
 
 <h3>Reservations</h3>
@@ -54,8 +55,8 @@ else
 
     async void DeleteReservation(int id)
     {
-        await ReservationService.DeleteReservation(id);
-
+        if (await JsRuntime.InvokeAsync<bool>("confirm", $"Are sure you want to delete the reservation #{ReservationService.reservations.Find(x => x.Id == id).Id}"))
+            await ReservationService.DeleteReservation(id);
     }
 
     public void Dispose()

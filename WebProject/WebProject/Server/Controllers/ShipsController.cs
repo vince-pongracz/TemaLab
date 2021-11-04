@@ -77,7 +77,7 @@ namespace WebProject.Server.Controllers
             if (QueryHelpers.ParseQuery(query).TryGetValue("persons", out var paramPersons))
             {
                 persons = int.Parse(paramPersons.First());
-                if (persons != default) queryResult = queryResult.Where(x => x.PersonsMax <= persons.Value);
+                if (persons != default) queryResult = queryResult.Where(x => x.MaxPeople <= persons.Value);
             }
             if (QueryHelpers.ParseQuery(query).TryGetValue("port", out var paramPort))
             {

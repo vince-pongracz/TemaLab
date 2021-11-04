@@ -336,7 +336,8 @@ namespace WebProject.Server.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -461,13 +462,16 @@ namespace WebProject.Server.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
-                    b.Property<double>("Drought")
+                    b.Property<double>("Draught")
                         .HasColumnType("float");
 
                     b.Property<string>("HomePort")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
@@ -475,20 +479,23 @@ namespace WebProject.Server.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Lenght")
+                    b.Property<double>("Length")
                         .HasColumnType("float");
 
                     b.Property<string>("Manufacturer")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("MaxPeople")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("OwnerId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("PersonsMax")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("PriceAtWeekDays")
                         .HasColumnType("decimal(18,2)");
@@ -503,7 +510,8 @@ namespace WebProject.Server.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShipType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");
@@ -523,14 +531,14 @@ namespace WebProject.Server.Data.Migrations
                             Id = 1,
                             Caution = 50000m,
                             Description = "it's a ship",
-                            Drought = 5.0,
+                            Draught = 5.0,
                             HomePort = "Balatonfured",
                             IsAvailable = true,
                             IsDeleted = false,
-                            Lenght = 12.0,
+                            Length = 12.0,
                             Manufacturer = "ship.kft",
+                            MaxPeople = 5,
                             Name = "Carol",
-                            PersonsMax = 5,
                             PriceAtWeekDays = 10000m,
                             PriceAtWeekEnds = 12000m,
                             ProductionYear = 2005,
@@ -543,14 +551,14 @@ namespace WebProject.Server.Data.Migrations
                             Id = 2,
                             Caution = 80000m,
                             Description = "it's a ship",
-                            Drought = 6.0,
+                            Draught = 6.0,
                             HomePort = "Sopron",
                             IsAvailable = true,
                             IsDeleted = false,
-                            Lenght = 15.0,
+                            Length = 15.0,
                             Manufacturer = "ship2.kft",
+                            MaxPeople = 7,
                             Name = "Awesome",
-                            PersonsMax = 7,
                             PriceAtWeekDays = 20000m,
                             PriceAtWeekEnds = 22000m,
                             ProductionYear = 2010,
