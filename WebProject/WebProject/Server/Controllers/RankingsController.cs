@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using WebProject.Server.Data;
 using WebProject.Server.Models;
 using WebProject.Server.Services;
+using WebProject.Server.Services.RankingService;
 using WebProject.Shared;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -19,37 +20,30 @@ namespace WebProject.Server.Controllers
     [ApiController]
     public class RankingsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRankingService _rankingService;
 
-        [Inject]
-        public IMapper Mapper { get; set; }
-
-        public RankingsController(ApplicationDbContext context)
+        public RankingsController(IRankingService rankingService)
         {
-            _context = context;
-            Mapper = new Mapper(new MapperConfiguration(c => c.AddProfile(new MapperConfigService())));
+            _rankingService = rankingService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetRankings()
         {
-            var rankings = await _context.Rankings.ToListAsync();
-            return Ok(Mapper.Map(rankings, new List<RankingDTO>()));
+            return Ok(await _rankingService.GetRankings());
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetRankingsForShip(int shipid)
         {
-            var rankings = await _context.Ships.Where(x => x.Id == shipid).Select(x => x.Rankings).ToListAsync();
-            return Ok(Mapper.Map(rankings, new List<RankingDTO>()));
+            await _rankingService.GetRankingsForShip(shipid);
+            return await GetRankings();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateRanking(RankingDTO rankingDTO)
         {
-            _context.Rankings.Add(Mapper.Map(rankingDTO, new Ranking()));
-            await _context.SaveChangesAsync();
-
+            await _rankingService.CreateRanking(rankingDTO);
             return await GetRankings();
         }
     }
