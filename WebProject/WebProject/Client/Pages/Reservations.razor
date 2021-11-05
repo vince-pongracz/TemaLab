@@ -23,6 +23,8 @@ else
         <thead>
             <tr>
                 <th>Nr.</th>
+                <th>Ship Name</th>
+                <th>Port</th>
                 <th>From</th>
                 <th>To</th>
                 <th>Price</th>
@@ -34,6 +36,8 @@ else
             {
                 <tr>
                     <td>@item.Id</td>
+                    <td>@item.Ship.Name</td>
+                    <td>@item.Ship.HomePort</td>
                     <td>@item.FromDate.ToShortDateString()</td>
                     <td>@item.ToDate.ToShortDateString()</td>
                     <td>@item.Price</td>

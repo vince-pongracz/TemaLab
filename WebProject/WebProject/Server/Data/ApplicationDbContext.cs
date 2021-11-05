@@ -22,7 +22,7 @@ namespace WebProject.Server.Data
         {
             base.OnModelCreating(modelBuilder);
 
-
+            /*
             modelBuilder.Entity<Reservation>().HasData(
                 new Reservation { Id = 1, FromDate = new DateTime(2021, 10, 16), Price = 50000, ToDate = new DateTime(2021, 10, 18) },
                 new Reservation { Id = 2, FromDate = new DateTime(2021, 9, 16), Price = 70000, ToDate = new DateTime(2021, 9, 18) }
@@ -41,7 +41,7 @@ namespace WebProject.Server.Data
                 new Ranking { Id = 5, Date = new DateTime(2021, 01, 11), Comment = "fhjfghjfghj", Stars = 4},
                 new Ranking { Id = 6, Date = new DateTime(2021, 01, 22), Comment = "fhjfghjfghj", Stars = 5}
             );
-
+            */
             //TODO PV ez reflexiv kell, vagyis oda vissza irányokba kell a binding?
             //Reservation bindings
             modelBuilder.Entity<Reservation>().HasOne(r => r.Ship).WithMany(s => s.Reservations);
@@ -60,7 +60,6 @@ namespace WebProject.Server.Data
             modelBuilder.Entity<Ship>().HasMany(res => res.Reservations).WithOne(s => s.Ship);
             modelBuilder.Entity<Ship>().HasOne(u => u.Owner).WithMany(s => s.OwnedShips);
             modelBuilder.Entity<Ship>().HasMany(r => r.Rankings).WithOne(s => s.Ship);
-
         }
 
         public DbSet<ApplicationUser> Users { get; set; }

@@ -48,6 +48,7 @@
 
     async void HandleSubmit()
     {
+        reservation.Ship = SelectedShip;
         await JSRuntime.InvokeVoidAsync("console.log", reservation);
 
         if (CalculatePrice() > 0)

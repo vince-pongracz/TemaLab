@@ -9,6 +9,12 @@ namespace WebProject.Server.Models
 {
     public class Reservation
     {
+        public Reservation()
+        {
+            Ship = new Ship();
+            Person = new ApplicationUser();
+        }
+
         [Required]
         public int Id { get; set; }
 

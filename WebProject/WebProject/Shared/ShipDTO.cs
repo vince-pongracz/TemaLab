@@ -12,7 +12,7 @@ namespace WebProject.Shared
 
         public string Name { get; set; }
 
-        public double Lenght { get; set; }
+        public double Length { get; set; }
 
         public int ProductionYear { get; set; }
 
@@ -20,11 +20,11 @@ namespace WebProject.Shared
 
         public double Weight { get; set; }
 
-        public int PersonsMax { get; set; }
+        public int MaxPeople { get; set; }
 
         public string ShipType { get; set; }
 
-        public double Drought { get; set; } //merülés
+        public double Draught { get; set; } //merülés
 
         public double Width { get; set; }
 
