@@ -14,6 +14,8 @@ namespace WebProject.Shared
 
         public DateTime ToDate { get; set; }
 
+        public decimal Price { get; set; }
+
         public int ShipId { get; set; }
 
         public virtual ShipDTO Ship { get; set; }

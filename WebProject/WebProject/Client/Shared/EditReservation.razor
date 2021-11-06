@@ -31,11 +31,11 @@
 
 
 @code {
-    [Parameter]
-    public ApplicationUserDTO PersonLoggedOn { get; set; }
+        [Parameter]
+        public ApplicationUserDTO PersonLoggedOn { get; set; }
 
-    [Parameter]
-    public ShipDTO SelectedShip { get; set; }
+        [Parameter]
+        public ShipDTO SelectedShip { get; set; }
 
     private ReservationPostDTO reservation = new ReservationPostDTO();
 
@@ -44,13 +44,16 @@
         reservation.FromDate = DateTime.Today;
         reservation.ToDate = DateTime.Today.AddDays(1);
         //TODO get and set the current Ship and Person here
-        //reservation.Ship = SelectedShip;
         reservation.ShipId = SelectedShip.Id;
+        reservation.Price = CalculatePrice();
 
         await JSRuntime.InvokeVoidAsync("console.log", reservation);
 
         if (CalculatePrice() > 0)
+        {
+
             await ReservationService.CreateReservation(reservation);
+        }
     }
 
     decimal CalculatePrice()
