@@ -41,5 +41,6 @@ namespace WebProject.Client.Services.RankingService
             rankings = await _httpClient.GetFromJsonAsync<List<RankingDTO>>($"api/rankings/{shipid}");
             return rankings;
         }
+
     }
 }

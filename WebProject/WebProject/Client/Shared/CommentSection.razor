@@ -1,6 +1,7 @@
 ﻿@using WebProject.Client.Services.RankingService
 @inject IRankingService RankingService
 @inject IShipSearchService ShipSearchService
+@inject IJSRuntime JsRuntime
 @implements IDisposable
 
 <br>
@@ -97,9 +98,12 @@
     {
         if (rankingNew.Stars > 0)
         {
+            rankingNew.ShipId = currentShipIdFromParentPage;
             rankingNew.Date = DateTime.Now;
+
             rankings = await RankingService.CreateRanking(rankingNew);
             rankingNew = new RankingDTO();
+            await JsRuntime.InvokeVoidAsync("alert", "Your comment has been posted");
         }
     }
 

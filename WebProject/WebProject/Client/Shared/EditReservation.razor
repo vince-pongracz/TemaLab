@@ -1,5 +1,5 @@
-﻿@inject IJSRuntime JSRuntime
-@inject IReservationService ReservationService
+﻿@inject IReservationService ReservationService
+@inject IJSRuntime JsRuntime
 
 <div class="card reservation-card">
     <div class="card-body">
@@ -31,28 +31,31 @@
 
 
 @code {
-        [Parameter]
-        public ApplicationUserDTO PersonLoggedOn { get; set; }
+    [Parameter]
+    public ApplicationUserDTO PersonLoggedOn { get; set; }
 
-        [Parameter]
-        public ShipDTO SelectedShip { get; set; }
+    [Parameter]
+    public ShipDTO SelectedShip { get; set; }
 
     private ReservationPostDTO reservation = new ReservationPostDTO();
 
-    async void HandleSubmit()
+    protected override void OnParametersSet()
     {
+        base.OnParametersSet();
         reservation.FromDate = DateTime.Today;
         reservation.ToDate = DateTime.Today.AddDays(1);
-        //TODO get and set the current Ship and Person here
+    }
+
+    async void HandleSubmit()
+    {
+        //TODO get and set the current Person here
         reservation.ShipId = SelectedShip.Id;
         reservation.Price = CalculatePrice();
 
-        await JSRuntime.InvokeVoidAsync("console.log", reservation);
-
         if (CalculatePrice() > 0)
         {
-
             await ReservationService.CreateReservation(reservation);
+            await JsRuntime.InvokeVoidAsync("alert", "Your reservation has been confirmed");
         }
     }
 
