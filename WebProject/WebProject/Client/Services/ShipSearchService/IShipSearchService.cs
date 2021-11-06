@@ -9,6 +9,7 @@ namespace WebProject.Client.Services
 {
     public interface IShipSearchService
     {
+        List<ShipDTO> Ships { get; set; }
         Task<List<ShipDTO>> GetShips();
 
         Task<ShipDTO> GetShip(int id);

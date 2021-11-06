@@ -40,10 +40,14 @@ namespace WebProject.Shared
 
         public bool IsAvailable { get; set; }
 
-        public ApplicationUserDTO Owner { get; set; }
+        public string OwnerId { get; set; }
 
-        public List<ReservationGetDTO> Reservations { get; set; }
-        public List<RankingDTO> Rankings { get; set; }
+        public virtual ApplicationUserDTO Owner { get; set; }
+
+        public virtual ICollection<ReservationGetDTO> Reservations { get; set; }
+        
+        public virtual ICollection<RankingDTO> Rankings { get; set; }
+        
         public string RouteToPic { get; set; }
     }
 }

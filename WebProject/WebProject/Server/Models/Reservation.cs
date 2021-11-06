@@ -8,13 +8,7 @@ using System.Threading.Tasks;
 namespace WebProject.Server.Models
 {
     public class Reservation
-    {
-        public Reservation()
-        {
-            Ship = new Ship();
-            Person = new ApplicationUser();
-        }
-
+    { 
         [Required]
         public int Id { get; set; }
 
@@ -28,8 +22,12 @@ namespace WebProject.Server.Models
         [Required]
         public DateTime ToDate { get; set; }
 
-        public Ship Ship { get; set; }
+        public int ShipId { get; set; }
 
-        public ApplicationUser Person { get; set; }
+        public virtual Ship Ship { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

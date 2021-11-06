@@ -22,8 +22,12 @@ namespace WebProject.Server.Models
         [StringLength(500, ErrorMessage = "Comment length has to be between 0 and 500 characters")]
         public string? Comment { get; set; }
 
-        public ApplicationUser Person { get; set; }
+        public string UserId { get; set; }
 
-        public Ship Ship { get; set; }
+        public virtual ApplicationUser User { get; set; }
+
+        public int ShipId { get; set; }
+
+        public virtual Ship Ship { get; set; }
     }
 }

@@ -18,10 +18,10 @@ namespace WebProject.Shared
 
         public string InstagramLink { get; set; }
 
-        public List<RankingDTO> Rankings { get; set; }
+        public virtual ICollection<RankingDTO> Rankings { get; set; }
 
-        public List<ReservationGetDTO> Reservations { get; set; }
+        public virtual ICollection<ReservationGetDTO> Reservations { get; set; }
 
-        public List<ShipDTO> OwnedShips { get; set; }
+        public virtual ICollection<ShipDTO> OwnedShips { get; set; }
     }
 }

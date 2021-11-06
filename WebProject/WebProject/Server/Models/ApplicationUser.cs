@@ -15,11 +15,11 @@ namespace WebProject.Server.Models
         [Url]
         public string InstagramLink { get; set; }
         
-        public List<Ranking> Rankings { get; set; }
+        public virtual ICollection<Ranking> Rankings { get; set; }
 
-        public List<Reservation> Reservations { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
 
-        public List<Ship> OwnedShips { get; set; }
+        public virtual ICollection<Ship> OwnedShips { get; set; }
 
         public ApplicationUser()
         {

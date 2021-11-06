@@ -18,6 +18,8 @@ namespace WebProject.Client.Services
             _httpClient = httpClient;
         }
 
+        public List<ShipDTO> Ships { get; set; }
+
         public async Task<ShipDTO> GetShip(int id)
         {
             return await _httpClient.GetFromJsonAsync<ShipDTO>($"api/ships/{id}");
@@ -25,7 +27,8 @@ namespace WebProject.Client.Services
 
         public async Task<List<ShipDTO>> GetShips()
         {
-            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships");
+            Ships = await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships");
+            return Ships;
         }
 
         public async Task<List<ShipDTO>> SearchShips(string query)

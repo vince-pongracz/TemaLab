@@ -10,6 +10,7 @@ using WebProject.Server.Models;
 using WebProject.Server.Services;
 using WebProject.Shared;
 
+
 namespace WebProject.Server.Services.ReservationService
 {
     public class ReservationService : IReservationService
@@ -33,8 +34,10 @@ namespace WebProject.Server.Services.ReservationService
 
         public async Task CreateReservation(ReservationGetDTO reservationDTO)
         {
+            
             _context.Reservations.Add(Mapper.Map(reservationDTO, new Reservation()));
             await _context.SaveChangesAsync();
+            
         }
 
         public async Task<Reservation> DeleteReservation(int id)

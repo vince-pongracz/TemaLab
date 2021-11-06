@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProject.Server.Data;
 
-namespace WebProject.Server.Data.Migrations
+namespace WebProject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211104004031_validation3")]
-    partial class validation3
+    [Migration("20211106191305_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -344,66 +344,22 @@ namespace WebProject.Server.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PersonId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("ShipId")
+                    b.Property<int>("ShipId")
                         .HasColumnType("int");
 
                     b.Property<int>("Stars")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("PersonId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ShipId");
 
-                    b.ToTable("Rankings");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Comment = "fhjfghjfghj",
-                            Date = new DateTime(2021, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Stars = 4
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Comment = "fhjfghjfghj",
-                            Date = new DateTime(2021, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Stars = 5
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Comment = "fhjfghjfghj",
-                            Date = new DateTime(2021, 1, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Stars = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Comment = "fhjfghjfghj",
-                            Date = new DateTime(2021, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Stars = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Comment = "fhjfghjfghj",
-                            Date = new DateTime(2021, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Stars = 4
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Comment = "fhjfghjfghj",
-                            Date = new DateTime(2021, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Stars = 5
-                        });
+                    b.ToTable("Rankings");
                 });
 
             modelBuilder.Entity("WebProject.Server.Models.Reservation", b =>
@@ -413,16 +369,16 @@ namespace WebProject.Server.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PersonId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ShipId")
+                    b.Property<int>("ShipId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ToDate")
@@ -430,27 +386,11 @@ namespace WebProject.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ShipId");
 
                     b.ToTable("Reservations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FromDate = new DateTime(2021, 10, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 50000m,
-                            ToDate = new DateTime(2021, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FromDate = new DateTime(2021, 9, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 70000m,
-                            ToDate = new DateTime(2021, 9, 18, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("WebProject.Server.Models.Ship", b =>
@@ -467,7 +407,7 @@ namespace WebProject.Server.Data.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<double>("Drought")
+                    b.Property<double>("Draught")
                         .HasColumnType("float");
 
                     b.Property<string>("HomePort")
@@ -481,12 +421,15 @@ namespace WebProject.Server.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Lenght")
+                    b.Property<double>("Length")
                         .HasColumnType("float");
 
                     b.Property<string>("Manufacturer")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("MaxPeople")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -495,9 +438,6 @@ namespace WebProject.Server.Data.Migrations
 
                     b.Property<string>("OwnerId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("PersonsMax")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("PriceAtWeekDays")
                         .HasColumnType("decimal(18,2)");
@@ -526,48 +466,6 @@ namespace WebProject.Server.Data.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Ships");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Caution = 50000m,
-                            Description = "it's a ship",
-                            Drought = 5.0,
-                            HomePort = "Balatonfured",
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Lenght = 12.0,
-                            Manufacturer = "ship.kft",
-                            Name = "Carol",
-                            PersonsMax = 5,
-                            PriceAtWeekDays = 10000m,
-                            PriceAtWeekEnds = 12000m,
-                            ProductionYear = 2005,
-                            ShipType = "fancy",
-                            Weight = 2600.0,
-                            Width = 5.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Caution = 80000m,
-                            Description = "it's a ship",
-                            Drought = 6.0,
-                            HomePort = "Sopron",
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Lenght = 15.0,
-                            Manufacturer = "ship2.kft",
-                            Name = "Awesome",
-                            PersonsMax = 7,
-                            PriceAtWeekDays = 20000m,
-                            PriceAtWeekEnds = 22000m,
-                            ProductionYear = 2010,
-                            ShipType = "very fancy",
-                            Weight = 3600.0,
-                            Width = 7.0
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -623,30 +521,34 @@ namespace WebProject.Server.Data.Migrations
 
             modelBuilder.Entity("WebProject.Server.Models.Ranking", b =>
                 {
-                    b.HasOne("WebProject.Server.Models.ApplicationUser", "Person")
-                        .WithMany("Rankings")
-                        .HasForeignKey("PersonId");
-
                     b.HasOne("WebProject.Server.Models.Ship", "Ship")
                         .WithMany("Rankings")
-                        .HasForeignKey("ShipId");
+                        .HasForeignKey("ShipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Person");
+                    b.HasOne("WebProject.Server.Models.ApplicationUser", "User")
+                        .WithMany("Rankings")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Ship");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WebProject.Server.Models.Reservation", b =>
                 {
-                    b.HasOne("WebProject.Server.Models.ApplicationUser", "Person")
+                    b.HasOne("WebProject.Server.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Reservations")
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("WebProject.Server.Models.Ship", "Ship")
                         .WithMany("Reservations")
-                        .HasForeignKey("ShipId");
+                        .HasForeignKey("ShipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Person");
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Ship");
                 });

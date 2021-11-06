@@ -16,8 +16,12 @@ namespace WebProject.Shared
 
         public DateTime ToDate { get; set; }
 
-        public ShipDTO Ship { get; set; }
+        public int ShipId { get; set; }
 
-        public ApplicationUserDTO Person { get; set; }
+        public virtual ShipDTO Ship { get; set; }
+
+        public string ApplicationUserId { get; set; }
+
+        public virtual ApplicationUserDTO Person { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿@inject IJSRuntime JSRuntime
 @inject IReservationService ReservationService
 
-
 <div class="card reservation-card">
     <div class="card-body">
         <h5 class="card-title">Book a ship</h5>
@@ -38,17 +37,16 @@
     [Parameter]
     public ShipDTO SelectedShip { get; set; }
 
-    private ReservationPostDTO reservation = new ReservationPostDTO
-    {
-        FromDate = DateTime.Today,
-        ToDate = DateTime.Today.AddDays(1),
-        //TODO get and set the current Ship and Person here
-    };
-
+    private ReservationPostDTO reservation = new ReservationPostDTO();
 
     async void HandleSubmit()
     {
-        reservation.Ship = SelectedShip;
+        reservation.FromDate = DateTime.Today;
+        reservation.ToDate = DateTime.Today.AddDays(1);
+        //TODO get and set the current Ship and Person here
+        //reservation.Ship = SelectedShip;
+        reservation.ShipId = SelectedShip.Id;
+
         await JSRuntime.InvokeVoidAsync("console.log", reservation);
 
         if (CalculatePrice() > 0)

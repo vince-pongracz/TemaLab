@@ -69,11 +69,13 @@ namespace WebProject.Server.Models
         [Required]
         public bool IsDeleted { get; set; }
 
-        public List<Reservation> Reservations { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
 
-        public ApplicationUser Owner { get; set; }
+        public string OwnerId { get; set; }
 
-        public List<Ranking> Rankings { get; set; }
+        public virtual ApplicationUser Owner { get; set; }
+
+        public virtual ICollection<Ranking> Rankings { get; set; }
 
         public string RouteToPic { get; set; }
     }

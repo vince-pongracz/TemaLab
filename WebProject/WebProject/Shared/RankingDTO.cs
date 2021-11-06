@@ -18,8 +18,12 @@ namespace WebProject.Shared
 
         public string Comment { get; set; }
 
-        public ApplicationUserDTO Person { get; set; }
+        public string UserId { get; set; }
 
-        public ShipDTO Ship { get; set; }
+        public virtual ApplicationUserDTO User { get; set; }
+
+        public int ShipId { get; set; }
+
+        public virtual ShipDTO Ship { get; set; }
     }
 }
