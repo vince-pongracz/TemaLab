@@ -8,78 +8,84 @@
 @inject IJSRuntime JsRuntime
 @implements IDisposable
 
-    <div class="title">
-        <h3>Reservations</h3>
-    </div>
+<div class="title">
+    <h3>Reservations</h3>
+</div>
 
-    @if (ReservationService.reservations == null)
-    {
-        <span>Loading reservations...</span>
-    }
-    else if (ReservationService.reservations.Count == 0)
-    {
-        <span>It seems like you haven't got any reservation for now...</span>
-    }
-    else
-    {
-        <div class="reservation-table">
-            <table class="table table-striped">
-                <thead class="thead-dark">
+@if (ReservationService.reservations == null)
+{
+    <span>Loading reservations...</span>
+}
+else if (ReservationService.reservations.Count == 0)
+{
+    <span>It seems like you haven't got any reservation for now...</span>
+}
+else
+{
+    <div class="reservation-table">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nr.</th>
+                    <th>Ship Name</th>
+                    <th>Port</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Price</th>
+                    <th>Cancel Reservation</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ReservationService.reservations)
+                {
                     <tr>
-                        <th>Nr.</th>
-                        <th>Ship Name</th>
-                        <th>Port</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Price</th>
-                        <th>Cancel Reservation</th>
+                        <td>@item.Id</td>
+                        <td>@GetShip(item.ShipId).Name</td>
+                        <td>@GetShip(item.ShipId).HomePort</td>
+                        <td>@item.FromDate.ToShortDateString()</td>
+                        <td>@item.ToDate.ToShortDateString()</td>
+                        <td>@item.Price</td>
+                        <td>
+                            <button class="btn btn-primary btn-cancel" disabled=@IsDesibled(@item.FromDate) @onclick="(() => DeleteReservation(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span> Cancel</button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in ReservationService.reservations)
-                    {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@GetShip(item.ShipId).Name</td>
-                            <td>@GetShip(item.ShipId).HomePort</td>
-                            <td>@item.FromDate.ToShortDateString()</td>
-                            <td>@item.ToDate.ToShortDateString()</td>
-                            <td>@item.Price</td>
-                            <td>
-                                <button class="btn btn-primary btn-cancel" @onclick="(() => DeleteReservation(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span> Cancel</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ReservationService.GetReservations();
+        await ShipSearchService.GetShips();
+        ReservationService.OnChange += StateHasChanged;
     }
 
-    @code {
-
-
-        protected override async Task OnInitializedAsync()
-        {
-            await ReservationService.GetReservations();
-            await ShipSearchService.GetShips();
-            ReservationService.OnChange += StateHasChanged;
-        }
-
-        async void DeleteReservation(int id)
-        {
-            if (await JsRuntime.InvokeAsync<bool>("confirm", $"Are sure you want to delete the reservation #{ReservationService.reservations.Find(x => x.Id == id).Id}"))
-                await ReservationService.DeleteReservation(id);
-        }
-
-        public void Dispose()
-        {
-            ReservationService.OnChange -= StateHasChanged;
-        }
-
-        public ShipDTO GetShip(int shipId)
-        {
-            return ShipSearchService.Ships.Find(s => s.Id == shipId);
-        }
-
-
+    async void DeleteReservation(int id)
+    {
+        if (await JsRuntime.InvokeAsync<bool>("confirm", $"Are sure you want to delete the reservation #{ReservationService.reservations.Find(x => x.Id == id).Id}"))
+            await ReservationService.DeleteReservation(id);
     }
+
+    public void Dispose()
+    {
+        ReservationService.OnChange -= StateHasChanged;
+    }
+
+    public ShipDTO GetShip(int shipId)
+    {
+        return ShipSearchService.Ships.Find(s => s.Id == shipId);
+    }
+
+    public bool IsDesibled(DateTime from)
+    {
+        if (from.AddDays(-2) < DateTime.Now)
+            return true;
+        else
+            return false;
+    }
+}

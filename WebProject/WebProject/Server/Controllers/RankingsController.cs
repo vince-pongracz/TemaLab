@@ -34,10 +34,9 @@ namespace WebProject.Server.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetRankingsForShip(int shipid)
+        public async Task<IActionResult> GetRankingsForShip(int id)
         {
-            await _rankingService.GetRankingsForShip(shipid);
-            return await GetRankings();
+            return Ok(await _rankingService.GetRankingsForShip(id));
         }
 
         [HttpPost]

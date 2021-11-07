@@ -86,11 +86,9 @@
     //TODO get current logged on person here
     RankingDTO rankingNew { get; set; } = new RankingDTO();
 
-    private List<RankingDTO> rankings { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
-        rankings = await RankingService.GetRankingsForShip(currentShipIdFromParentPage);
+        await RankingService.GetRankingsForShip(currentShipIdFromParentPage);
         RankingService.OnChange += StateHasChanged;
     }
 
