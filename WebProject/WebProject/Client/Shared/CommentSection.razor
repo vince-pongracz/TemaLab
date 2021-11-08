@@ -1,4 +1,6 @@
 ﻿@using WebProject.Client.Services.RankingService
+@using WebProject.Client.Services.UserService
+@inject IUserService UserService
 @inject IRankingService RankingService
 @inject IShipSearchService ShipSearchService
 @inject IJSRuntime JsRuntime
@@ -17,7 +19,7 @@
                     if (i % 2 == 0)
                     {
                         <div class="comment mt-4 text-justify">
-                            <h4 class="title-dark">Jhon Doe</h4><span> - @RankingService.rankings[i].Date.ToLongDateString()</span> <br>
+                            <h4 class="title-dark"></h4><span>@currentUser.UserName - @RankingService.rankings[i].Date.ToLongDateString()</span> <br>
                             <p>@RankingService.rankings[i].Comment</p>
                             @for (int j = 0; j < RankingService.rankings[i].Stars; j++) //yellow stars = actual ranking
                             {
@@ -32,7 +34,7 @@
                     else
                     {
                         <div class="darker mt-4 text-justify">
-                            <h4 class="title-hell">Rob Simpson</h4><span> - @RankingService.rankings[i].Date.ToLongDateString()</span> <br>
+                            <h4 class="title-hell"></h4><span>@currentUser.UserName - @RankingService.rankings[i].Date.ToLongDateString()</span> <br>
                             <p>@RankingService.rankings[i].Comment</p>
                             @for (int j = 0; j < RankingService.rankings[i].Stars; j++) //yellow stars = actual ranking
                             {
@@ -83,13 +85,15 @@
     [Parameter]
     public int currentShipIdFromParentPage { get; set; }
 
-    //TODO get current logged on person here
     RankingDTO rankingNew { get; set; } = new RankingDTO();
+
+    ApplicationUserDTO currentUser = new ApplicationUserDTO();
 
     protected override async Task OnInitializedAsync()
     {
         await RankingService.GetRankingsForShip(currentShipIdFromParentPage);
         RankingService.OnChange += StateHasChanged;
+        currentUser = await UserService.GetCurrentUser();
     }
 
     async void HandleSubmit()
@@ -98,8 +102,9 @@
         {
             rankingNew.ShipId = currentShipIdFromParentPage;
             rankingNew.Date = DateTime.Now;
-
-            rankings = await RankingService.CreateRanking(rankingNew);
+            rankingNew.UserId = currentUser.Id;
+            //rankingNew.User = await UserService.GetCurrentUser(); //ez így nem működik...
+            await RankingService.CreateRanking(rankingNew);
             rankingNew = new RankingDTO();
             await JsRuntime.InvokeVoidAsync("alert", "Your comment has been posted");
         }
@@ -114,4 +119,5 @@
     {
         RankingService.OnChange -= StateHasChanged;
     }
+
 }

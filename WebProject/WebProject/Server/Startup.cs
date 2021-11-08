@@ -14,6 +14,7 @@ using WebProject.Server.Services;
 using WebProject.Server.Services.RankingService;
 using WebProject.Server.Services.ReservationService;
 using WebProject.Server.Services.ShipSearchService;
+using WebProject.Server.Services.UserService;
 
 namespace WebProject.Server
 {
@@ -53,6 +54,8 @@ namespace WebProject.Server
             services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IRankingService, RankingService>();
             services.AddScoped<IShipSearchService, ShipSearchService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
