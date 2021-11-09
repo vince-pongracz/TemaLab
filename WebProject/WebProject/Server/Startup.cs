@@ -14,6 +14,7 @@ using WebProject.Server.Services;
 using WebProject.Server.Services.RankingService;
 using WebProject.Server.Services.ReservationService;
 using WebProject.Server.Services.ShipSearchService;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebProject.Server
 {
@@ -36,8 +37,17 @@ namespace WebProject.Server
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.Password = new PasswordOptions
+                {
+                    RequiredLength = 4,
+                    RequireNonAlphanumeric = false,
+                    RequireDigit = false,
+                    RequiredUniqueChars = 0
+                };
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();

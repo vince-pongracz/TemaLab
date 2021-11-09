@@ -20,7 +20,7 @@ namespace WebProject.Server.Models
         public DateTime Date { get; set; }
 
         [StringLength(500, ErrorMessage = "Comment length has to be between 0 and 500 characters")]
-        public string? Comment { get; set; }
+        public string Comment { get; set; }
 
         public string UserId { get; set; }
 

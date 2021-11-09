@@ -3,77 +3,18 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using WebProject.Shared
 @attribute [Authorize]
-@inject IShipSearchService ShipSearchService
-@inject NavigationManager NavigationManager
 
 <h3>Ship Search</h3>
 <br>
 
-<SearchLine QueryResult="ships"/>
+<SearchLine QueryReady="HandleQueryReadyCallback"/>
+<ShipList Ships="ships" />
 <br>
 
-@if (ships.Count == 0)
-{
-    <span>Loading ships...</span>
-}
-else
-{
-    foreach (var item in ships)
-    {
-        <div class="card own-card-style ">
-            <h5 class="card-header">@item.Name</h5>
-            <div class="card-body">
-
-                <img class="ship-img" src="https://www.vitorlazas.hu/nodepic/950x607/301539.jpg" alt="Image of the ship">
-
-                <table class="card-table">
-                    <tr>
-                        <td>Port: </td>
-                        <td>@item.HomePort</td>
-                        <td>Ranking: </td>
-                        <td> ...</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Capacity: </td>
-                        <td>Max @item.MaxPeople people</td>
-                        <td>Ship type: </td>
-                        <td>@item.ShipType</td>
-                        <td><button class="btn btn-dark" style="padding-left: 40px; padding-right: 40px" @onclick="(() => ShowShip(item.Id))">Show</button></td>
-                    </tr>
-                    <tr>
-                        <td>Price at Weekends: </td>
-                        <td>@item.PriceAtWeekEnds</td>
-                        <td>Price at Weekdays: </td>
-                        <td>@item.PriceAtWeekDays</td>
-                        <td></td>
-                    </tr>
-                </table>
-                <table>
-                    <!--just for styling-->
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td> </td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <br>
-    }
-}
 @code {
     List<ShipDTO> ships = new List<ShipDTO>();
-
-    protected override async Task OnInitializedAsync()
+    void HandleQueryReadyCallback(List<ShipDTO> shipDTOs)
     {
-        ships = await ShipSearchService.GetShips();
-    }
-
-    void ShowShip(int id)
-    {
-        NavigationManager.NavigateTo($"ships/{id}");
+        ships = shipDTOs;
     }
 }

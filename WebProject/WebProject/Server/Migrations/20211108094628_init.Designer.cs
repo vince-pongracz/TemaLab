@@ -10,8 +10,8 @@ using WebProject.Server.Data;
 namespace WebProject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211106194330_seeding")]
-    partial class seeding
+    [Migration("20211108094628_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -360,44 +360,6 @@ namespace WebProject.Server.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Rankings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rutrum arcu sit amet enim euismod, sed mattis quam pellentesque. Proin porttitor ullamcorper euismod. ",
-                            Date = new DateTime(2021, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShipId = 1,
-                            Stars = 4,
-                            UserId = "0e40245d-d108-4236-a833-3628e645d097"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Comment = "Nulla ut odio sem. Donec convallis, arcu ac convallis posuere, ipsum ligula dapibus neque, ullamcorper vulputate nunc ipsum in enim. Aliquam finibus quam vitae justo tincidunt, eu viverra diam suscipit. Donec sodales at enim sollicitudin dignissim. Praesent aliquam venenatis nulla, et pulvinar massa ullamcorper et. ",
-                            Date = new DateTime(2021, 11, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShipId = 1,
-                            Stars = 5,
-                            UserId = "0e40245d-d108-4236-a833-3628e645d097"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Comment = "Ut sit amet tellus eu elit egestas tempor. Sed ut tortor malesuada, posuere leo non, hendrerit turpis. Nam imperdiet tincidunt ultricies. Nulla sit amet est a velit ornare aliquet. ",
-                            Date = new DateTime(2021, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShipId = 2,
-                            Stars = 1,
-                            UserId = "0e40245d-d108-4236-a833-3628e645d097"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rutrum arcu sit amet enim euismod, sed mattis quam pellentesque. Proin porttitor ullamcorper euismod. ",
-                            Date = new DateTime(2021, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ShipId = 2,
-                            Stars = 3,
-                            UserId = "0e40245d-d108-4236-a833-3628e645d097"
-                        });
                 });
 
             modelBuilder.Entity("WebProject.Server.Models.Reservation", b =>
@@ -429,44 +391,6 @@ namespace WebProject.Server.Migrations
                     b.HasIndex("ShipId");
 
                     b.ToTable("Reservations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ApplicationUserId = "0e40245d-d108-4236-a833-3628e645d097",
-                            FromDate = new DateTime(2021, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 55555m,
-                            ShipId = 1,
-                            ToDate = new DateTime(2021, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ApplicationUserId = "0e40245d-d108-4236-a833-3628e645d097",
-                            FromDate = new DateTime(2021, 10, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 66666m,
-                            ShipId = 2,
-                            ToDate = new DateTime(2021, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ApplicationUserId = "0e40245d-d108-4236-a833-3628e645d097",
-                            FromDate = new DateTime(2021, 10, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 77777m,
-                            ShipId = 3,
-                            ToDate = new DateTime(2021, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ApplicationUserId = "0e40245d-d108-4236-a833-3628e645d097",
-                            FromDate = new DateTime(2021, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 88888m,
-                            ShipId = 4,
-                            ToDate = new DateTime(2021, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("WebProject.Server.Models.Ship", b =>
@@ -542,92 +466,6 @@ namespace WebProject.Server.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Ships");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Caution = 555555m,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rutrum arcu sit amet enim euismod, sed mattis quam pellentesque....",
-                            Draught = 15.0,
-                            HomePort = "Sopron",
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Length = 10.0,
-                            Manufacturer = "ship.kft",
-                            MaxPeople = 10,
-                            Name = "Carol",
-                            OwnerId = "0e40245d-d108-4236-a833-3628e645d097",
-                            PriceAtWeekDays = 10000m,
-                            PriceAtWeekEnds = 12000m,
-                            ProductionYear = 1999,
-                            ShipType = "fancy",
-                            Weight = 1500.0,
-                            Width = 5.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Caution = 555555m,
-                            Description = "Mauris dui nisl, suscipit id fringilla id, efficitur sed erat...",
-                            Draught = 15.0,
-                            HomePort = "Balatonfüred",
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Length = 10.0,
-                            Manufacturer = "ship.kft",
-                            MaxPeople = 5,
-                            Name = "Awesome",
-                            OwnerId = "0e40245d-d108-4236-a833-3628e645d097",
-                            PriceAtWeekDays = 20000m,
-                            PriceAtWeekEnds = 22000m,
-                            ProductionYear = 1999,
-                            ShipType = "fancy",
-                            Weight = 1500.0,
-                            Width = 5.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Caution = 555555m,
-                            Description = "Ut sit amet tellus eu elit egestas tempor. Sed ut tortor malesuada, posuere leo non, hendrerit turpis. ...",
-                            Draught = 15.0,
-                            HomePort = "Tisza-tó",
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Length = 10.0,
-                            Manufacturer = "ship.kft",
-                            MaxPeople = 12,
-                            Name = "Jazz",
-                            OwnerId = "0e40245d-d108-4236-a833-3628e645d097",
-                            PriceAtWeekDays = 30000m,
-                            PriceAtWeekEnds = 32000m,
-                            ProductionYear = 1999,
-                            ShipType = "fancy",
-                            Weight = 1500.0,
-                            Width = 5.0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Caution = 555555m,
-                            Description = "Etiam eu eros id turpis volutpat mollis sed vitae metus. Ut suscipit lectus enim...",
-                            Draught = 15.0,
-                            HomePort = "Velencei-tó",
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Length = 10.0,
-                            Manufacturer = "ship.kft",
-                            MaxPeople = 14,
-                            Name = "Sina",
-                            OwnerId = "0e40245d-d108-4236-a833-3628e645d097",
-                            PriceAtWeekDays = 40000m,
-                            PriceAtWeekEnds = 42000m,
-                            ProductionYear = 1999,
-                            ShipType = "fancy",
-                            Weight = 1500.0,
-                            Width = 5.0
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

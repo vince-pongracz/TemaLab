@@ -10,6 +10,7 @@ namespace WebProject.Server.Services
 {
     public class MapperConfigService : Profile
     {
+        // DOC : https://docs.automapper.org/en/stable/Configuration.html
         public MapperConfigService()
         {
             //map between ships
@@ -23,7 +24,9 @@ namespace WebProject.Server.Services
             //map between reservations
             CreateMap<Reservation, ReservationGetDTO>();
             CreateMap<ReservationGetDTO, Reservation>();
-            //TODO ReservationPostDTO
+            //---
+            CreateMap<Reservation, ReservationPostDTO>();
+            CreateMap<ReservationPostDTO, Reservation>();
 
             //map between users
             CreateMap<ApplicationUser, ApplicationUserDTO>();

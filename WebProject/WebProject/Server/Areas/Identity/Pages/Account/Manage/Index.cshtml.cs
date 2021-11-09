@@ -42,13 +42,13 @@ namespace WebProject.Server.Areas.Identity.Pages.Account.Manage
 
         private async Task LoadAsync(ApplicationUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var nickName = (await _userManager.GetUserAsync(User)).NickName;
 
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
-                UserName = userName
+                UserName = nickName
             };
         }
 
@@ -78,16 +78,12 @@ namespace WebProject.Server.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            if (Input.UserName != user.UserName)
+            
+            if (Input.UserName != user.NickName)
             {
-                var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.UserName);
-                if (!setUserNameResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
+                user.NickName = Input.UserName;
             }
-
+            
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {

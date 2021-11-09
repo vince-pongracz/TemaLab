@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
 using WebProject.Shared;
 
@@ -31,9 +34,18 @@ namespace WebProject.Client.Services
             return Ships;
         }
 
-        public async Task<List<ShipDTO>> SearchShips(string query)
+        public async Task<List<ShipDTO>> SearchShips(DateTime? from = default, DateTime? until = default, int? maxPersons = default, string where = default)
         {
-            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/search/{query}");
+            var queryBuilder = new QueryBuilder();
+            
+            if (from.HasValue && from.Value != default) queryBuilder.Add("from", from.ToString());
+            if (until.HasValue && until.Value != default) queryBuilder.Add("until", until.ToString());
+            if (maxPersons.HasValue) queryBuilder.Add("maxPersons", maxPersons.ToString());
+            if (!string.IsNullOrWhiteSpace(where)) queryBuilder.Add("where", where.ToString());
+
+            var queryString = queryBuilder.ToQueryString();
+
+            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/search{queryString}");
         }
     }
 }

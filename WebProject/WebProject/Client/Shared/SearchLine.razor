@@ -6,14 +6,13 @@
 @inject NavigationManager Navigation
 
 
-
 <div class="container">
     <div class="wrapper">
         <div class="search-container">
             <EditForm Model="@model" OnSubmit="@Search">
                 <InputDate @bind-Value="from" class="date-from" placeholder="from"></InputDate>
                 <InputDate @bind-Value="until" class="date-to" placeholder="until"></InputDate>
-                <InputNumber @bind-Value="persons" class="persons" placeholder="#persons"></InputNumber>
+                <InputNumber @bind-Value="maxPersons" class="persons" placeholder="#persons"></InputNumber>
                 <InputText @bind-Value="port" class="search" placeholder="port"></InputText>
                 <button type="submit" class="btn btn-primary">Search!</button>
             </EditForm>
@@ -26,102 +25,22 @@
     [Parameter]
     public ApplicationUserDTO PersonLoggedOn { get; set; }
 
+    [Parameter]
+    public EventCallback<List<ShipDTO>> QueryReady { get; set; }
+
     private DateTime? from { get; set; } = default;
     private DateTime? until { get; set; } = default;
-    //TODO bounds or validation...
-    private int? persons { get; set; } = default;
+    private int? maxPersons { get; set; } = default;
     private string port { get; set; } = default;
 
-    private string queryString;
     private object model = new object();
 
-    [Parameter]
-    public List<ShipDTO> QueryResult { get; set; }
+    public List<ShipDTO> QueryResult { get; set; } = new()
 
     async void Search()
     {
-        //ez mire jó?
-        //await JSRuntime.InvokeVoidAsync("console.log", r);
-
-        //TODO mi is legyen azokkal amik null-ok...
-        queryString = QueryHelpers.AddQueryString(Navigation.Uri.Replace("ships", "search"), new Dictionary<string, string>()
-{
-            { "from",from.ToString()},
-            { "until",until.ToString()},
-            { "persons",persons.ToString()},
-            { "port",port }
-         });
-
-        QueryResult = await SearchService.SearchShips(queryString);
+        QueryResult = await SearchService.SearchShips(from, until, maxPersons, port);
+        //callback to parent page
+        await QueryReady.InvokeAsync(QueryResult);
     }
 }
-
-<style>
-
-    body {
-        font: 16px Arial, Verdana, Tahoma, Sans-serif;
-    }
-
-    .container {
-        background: #ccc;
-        margin: 0 auto;
-        padding: 16px;
-        border-radius: 12px;
-        box-shadow: 0 0 20px 8px #d0d0d0;
-        width: 80%;
-        align-content: center
-    }
-
-    .wrapper {
-        margin: 8px 0;
-    }
-
-    .search-container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-content: stretch;
-        align-items: flex-start;
-        flex-grow: 1
-    }
-
-    input {
-        min-width: 20px;
-        padding: 8px;
-        margin: 0 4px 0 0;
-        border: 1px solid #666;
-        border-radius: 5px;
-        height: 30px;
-    }
-
-    .button {
-        padding: 8px 16px;
-        min-height: 48px;
-        min-width: 10px;
-        word-wrap: nowrap;
-        background: #000;
-        color: #fff;
-        border: 1px solid #fff;
-        border-radius: 5px;
-    }
-
-    input {
-        order: 0;
-        align-self: auto;
-    }
-
-    .search {
-        flex: 2 1 auto;
-    }
-
-    .persons, .date-from, .date-to {
-        flex: 1 1 auto;
-    }
-
-    .button {
-        order: 4;
-        flex: 0 1 auto;
-        align-self: auto;
-    }
-</style>
