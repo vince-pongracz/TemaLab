@@ -36,9 +36,9 @@ namespace WebProject.Client.Services.RankingService
             return rankings;
         }
 
-        public async Task<List<RankingDTO>> GetRankingsForShip(int shipid)
+        public async Task<List<RankingDTO>> GetRankingsForShip(int id)
         {
-            rankings = await _httpClient.GetFromJsonAsync<List<RankingDTO>>($"api/rankings/{shipid}");
+            rankings = await _httpClient.GetFromJsonAsync<List<RankingDTO>>($"api/rankings/{id}");
             return rankings;
         }
 

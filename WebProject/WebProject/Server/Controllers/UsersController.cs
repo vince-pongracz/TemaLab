@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebProject.Server.Services.UserService;
 
@@ -9,10 +11,11 @@ namespace WebProject.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+
+        public UsersController(IUserService userService)
         {
             _userService = userService;
         }
@@ -20,7 +23,8 @@ namespace WebProject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCurrentUser()
         {
-            return Ok(await _userService.GetCurrentLoggedInUserID());
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Ok(await _userService.GetCurrentUser(userId));
         }
     }
 }

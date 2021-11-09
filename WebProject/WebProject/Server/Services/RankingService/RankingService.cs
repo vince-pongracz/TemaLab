@@ -32,7 +32,7 @@ namespace WebProject.Server.Services.RankingService
 
         public async Task<List<RankingDTO>> GetRankingsForShip(int shipid)
         {
-            var rankings = await _context.Ships.Where(x => x.Id == shipid).Select(x => x.Rankings).ToListAsync();
+            var rankings = await _context.Rankings.Where(x => x.ShipId == shipid).ToListAsync();
             return Mapper.Map(rankings, new List<RankingDTO>());
         }
 

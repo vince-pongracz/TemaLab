@@ -10,10 +10,10 @@ namespace WebProject.Client.Services.RankingService
     {
         event Action OnChange;
 
-        //TODO refactor !!!
         List<RankingDTO> rankings { get; set; }
 
         Task<List<RankingDTO>> GetRankings();
+
         Task<List<RankingDTO>> GetRankingsForShip(int shipid);
 
         Task<List<RankingDTO>> CreateRanking(RankingDTO ranking);
