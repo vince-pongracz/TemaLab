@@ -36,6 +36,7 @@ namespace WebProject.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReservation(ReservationGetDTO reservationDTO)
         {
+            //TODO validate, set isAvailable to true, etc..
             await _reservationService.CreateReservation(reservationDTO);
             return await GetReservations();
         }

@@ -36,9 +36,9 @@ namespace WebProject.Server.Controllers
                 var shipsWithOkStartDate = from res in _context.Reservations
                                            where !(
                                                 res.FromDate <= searchCriteria.From &&
-                                                searchCriteria.From <= res.ToDate)
+                                                searchCriteria.From < res.ToDate)
                                            select res.ShipId;
-                if (shipsWithOkStartDate.Count() > 0)
+                if (shipsWithOkStartDate.Any())
                     queryResultShips = queryResultShips.Where(x => shipsWithOkStartDate.Contains(x.Id));
             }
             if (searchCriteria.Until != default)
@@ -47,9 +47,9 @@ namespace WebProject.Server.Controllers
                 var shipsWithOkEndDate = from res in _context.Reservations
                                          where !(
                                             res.FromDate <= searchCriteria.Until &&
-                                            searchCriteria.Until <= res.ToDate)
+                                            searchCriteria.Until < res.ToDate)
                                          select res.ShipId;
-                if (shipsWithOkEndDate.Count() > 0)
+                if (shipsWithOkEndDate.Any())
                     queryResultShips = queryResultShips.Where(x => shipsWithOkEndDate.Contains(x.Id));
             }
             if (searchCriteria.From != default && searchCriteria.Until != default)
@@ -58,9 +58,9 @@ namespace WebProject.Server.Controllers
                 var filterTooLongReservations = from res in _context.Reservations
                                                 where !(
                                                     searchCriteria.From <= res.FromDate &&
-                                                    res.ToDate <= searchCriteria.Until)
+                                                    res.ToDate < searchCriteria.Until)
                                                 select res.ShipId;
-                if (filterTooLongReservations.Count() > 0)
+                if (filterTooLongReservations.Any())
                     queryResultShips = queryResultShips.Where(x => filterTooLongReservations.Contains(x.Id));
             }
             if (searchCriteria.MaxPersons != null)
