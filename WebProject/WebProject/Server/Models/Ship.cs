@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebProject.Server.Models
@@ -69,12 +70,15 @@ namespace WebProject.Server.Models
         [Required]
         public bool IsDeleted { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Reservation> Reservations { get; set; }
 
         public string OwnerId { get; set; }
 
+        [JsonIgnore]
         public virtual ApplicationUser Owner { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Ranking> Rankings { get; set; }
 
         public string RouteToPic { get; set; }

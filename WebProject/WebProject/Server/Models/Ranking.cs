@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using WebProject.Shared;
 
@@ -24,10 +25,12 @@ namespace WebProject.Server.Models
 
         public string UserId { get; set; }
 
+        [JsonIgnore]
         public virtual ApplicationUser User { get; set; }
 
         public int ShipId { get; set; }
 
+        [JsonIgnore]
         public virtual Ship Ship { get; set; }
     }
 }

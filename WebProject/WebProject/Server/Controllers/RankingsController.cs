@@ -42,8 +42,9 @@ namespace WebProject.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRanking(RankingDTO rankingDTO)
         {
-            await _rankingService.CreateRanking(rankingDTO);
-            return await GetRankings();
+            var result = await _rankingService.CreateRanking(rankingDTO);
+            if (result) return Ok(await GetRankings());
+            else return Forbid();
         }
     }
 }

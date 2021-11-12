@@ -10,6 +10,7 @@ namespace WebProject.Server.Services.RankingService
     {
         Task<List<RankingDTO>> GetRankings();
         Task<List<RankingDTO>> GetRankingsForShip(int shipId);
-        Task CreateRanking(RankingDTO rankingDTO);
+        //indicates when the task was successful (posted ranking is regular and valid)
+        Task<bool> CreateRanking(RankingDTO rankingDTO);
     }
 }

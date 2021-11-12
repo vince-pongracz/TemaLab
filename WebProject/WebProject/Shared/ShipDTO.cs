@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebProject.Shared
@@ -42,10 +43,12 @@ namespace WebProject.Shared
 
         public string OwnerId { get; set; }
 
+        [JsonIgnore]
         public virtual ApplicationUserDTO Owner { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<ReservationGetDTO> Reservations { get; set; }
-        
+        [JsonIgnore]
         public virtual ICollection<RankingDTO> Rankings { get; set; }
         
         public string RouteToPic { get; set; }

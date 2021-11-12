@@ -1,5 +1,6 @@
 ﻿@inject IReservationService ReservationService
 @inject IJSRuntime JsRuntime
+@inject WebProject.Client.Services.UserService.IUserService UserService
 
 <div class="card reservation-card">
     <div class="card-body">
@@ -51,6 +52,7 @@
         //TODO get and set the current Person here
         reservation.ShipId = SelectedShip.Id;
         reservation.Price = CalculatePrice();
+        reservation.ApplicationUserId = (await UserService.GetCurrentUser()).Id;
 
         if (CalculatePrice() > 0)
         {

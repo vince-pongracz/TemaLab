@@ -6,7 +6,7 @@ using WebProject.Shared;
 
 namespace WebProject.Client.Services.UserService
 {
-    interface IUserService
+    public interface IUserService
     {
         Task<ApplicationUserDTO> GetCurrentUser();
     }
