@@ -6,6 +6,7 @@
 @inject IReservationService ReservationService
 @inject IShipSearchService ShipSearchService
 @inject IJSRuntime JsRuntime
+@inject NavigationManager NavManager
 @implements IDisposable
 
 <div class="title">
@@ -40,7 +41,7 @@ else
                 {
                     <tr>
                         <td>@item.Id</td>
-                        <td>@GetShip(item.ShipId).Name</td>
+                        <td><a href="/ships/@item.ShipId">@GetShip(item.ShipId).Name</a></td>
                         <td>@GetShip(item.ShipId).HomePort</td>
                         <td>@item.FromDate.ToShortDateString()</td>
                         <td>@item.ToDate.ToShortDateString()</td>
@@ -56,8 +57,6 @@ else
 }
 
 @code {
-
-
     protected override async Task OnInitializedAsync()
     {
         await ReservationService.GetReservations();
