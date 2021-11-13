@@ -43,22 +43,23 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        reservation.FromDate = DateTime.Today;
-        reservation.ToDate = DateTime.Today.AddDays(1);
+        reservation.FromDate = DateTime.Today.AddDays(1);
+        reservation.ToDate = DateTime.Today.AddDays(2);
     }
 
     async void HandleSubmit()
     {
-        //TODO get and set the current Person here
         reservation.ShipId = SelectedShip.Id;
         reservation.Price = CalculatePrice();
         reservation.ApplicationUserId = (await UserService.GetCurrentUser()).Id;
 
-        if (CalculatePrice() > 0)
+        if (DatesAreCorrect())
         {
             await ReservationService.CreateReservation(reservation);
             await JsRuntime.InvokeVoidAsync("alert", "Your reservation has been confirmed");
         }
+        else
+            await JsRuntime.InvokeVoidAsync("alert", "The dates you entered are incorrect");
     }
 
     decimal CalculatePrice()
@@ -84,5 +85,17 @@
     {
         TimeSpan timeSpan = reservation.ToDate - reservation.FromDate;
         return timeSpan.Days - numOfWeekdays();
+    }
+
+    bool DatesAreCorrect()
+    {
+        bool result = true;
+        if (reservation.FromDate >= reservation.ToDate)
+            result = false;
+        else if (reservation.FromDate <= DateTime.Now)
+            result = false;
+        else if (CalculatePrice() <= 0)
+            result = false;
+        return result;
     }
 }
