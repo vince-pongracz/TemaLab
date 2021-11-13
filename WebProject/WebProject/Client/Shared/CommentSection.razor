@@ -19,7 +19,9 @@
                     if (i % 2 == 0)
                     {
                         <div class="comment mt-4 text-justify">
-                            <h4 class="title-dark"></h4><span>@currentUser.UserName - @Rankings[i].Date.ToLongDateString()</span> <br>
+                            <h4 class="title-dark"></h4><span>@currentUser.UserName - @Rankings[i].Date.ToLongDateString()</span>
+                            <br>
+                            <br>
                             <p>@Rankings[i].Comment</p>
                             @for (int j = 0; j < Rankings[i].Stars; j++) //yellow stars = actual ranking
                             {
@@ -34,7 +36,9 @@
                     else
                     {
                         <div class="darker mt-4 text-justify">
-                            <h4 class="title-hell"></h4><span>@currentUser.UserName - @Rankings[i].Date.ToLongDateString()</span> <br>
+                            <h4 class="title-hell"></h4><span>@currentUser.UserName - @Rankings[i].Date.ToLongDateString()</span>
+                            <br>
+                            <br>
                             <p>@Rankings[i].Comment</p>
                             @for (int j = 0; j < Rankings[i].Stars; j++) //yellow stars = actual ranking
                             {
@@ -104,6 +108,7 @@
             rankingNew.ShipId = currentShipIdFromParentPage;
             rankingNew.Date = DateTime.Now;
             rankingNew.UserId = (await UserService.GetCurrentUser()).Id;
+
 
             var newListOfRankings = await RankingService.CreateRanking(rankingNew);
             if (newListOfRankings.Count == 0)

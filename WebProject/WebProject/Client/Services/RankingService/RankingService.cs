@@ -27,7 +27,7 @@ namespace WebProject.Client.Services.RankingService
             var result = await _httpClient.PostAsJsonAsync("api/rankings", ranking);
             if (result.IsSuccessStatusCode)
             {
-                return await GetRankings();
+                return await GetRankingsForShip(ranking.ShipId);
             }
             else
             {
