@@ -113,6 +113,7 @@
             rankingNew.Date = DateTime.Now;
             rankingNew.UserId = (await UserService.GetCurrentUser()).Id;
 
+
             var newListOfRankings = await RankingService.CreateRanking(rankingNew);
             if (newListOfRankings.Count == 0)
             {
