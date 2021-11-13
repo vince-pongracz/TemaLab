@@ -26,3 +26,7 @@ tr:nth-child(even) {
 .title {
     padding-left: 33%;
 }
+
+.contact-icon{
+    margin: 10px 20px 10px 0px;
+}

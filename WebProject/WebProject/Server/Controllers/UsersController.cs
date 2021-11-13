@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using WebProject.Server.Services.UserService;
 
+
 namespace WebProject.Server.Controllers
 {
     [Route("api/[controller]")]
@@ -25,6 +26,12 @@ namespace WebProject.Server.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok(await _userService.GetCurrentUser(userId));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserByID(string id)
+        {
+            return Ok(await _userService.GetCurrentUser(id));
         }
     }
 }
