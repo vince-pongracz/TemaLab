@@ -13,15 +13,21 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-5 col-md-6 col-12 pb-4">
-                <h1>Comments</h1>
+                @if (Rankings.Count <= 0)
+                {
+                    <h1 class="comment-margin">Comments</h1> <!--Ha nincs komment a navbar rosszul jelenik ezért egy plusz margint kellett hozzádni ha üres -->
+                }
+                else
+                {
+                    <h1>Comments</h1>
+                }
+
                 @for (int i = 0; i < Rankings.Count; i++)
                 {
                     if (i % 2 == 0)
                     {
                         <div class="comment mt-4 text-justify">
-                            <h4 class="title-dark"></h4><span>@currentUser.UserName - @Rankings[i].Date.ToLongDateString()</span>
-                            <br>
-                            <br>
+                            <h4 class="title-dark"></h4><span>@currentUser.UserName.Split('@')[0] - @Rankings[i].Date.ToLongDateString()</span> <br>
                             <p>@Rankings[i].Comment</p>
                             @for (int j = 0; j < Rankings[i].Stars; j++) //yellow stars = actual ranking
                             {
@@ -36,9 +42,7 @@
                     else
                     {
                         <div class="darker mt-4 text-justify">
-                            <h4 class="title-hell"></h4><span>@currentUser.UserName - @Rankings[i].Date.ToLongDateString()</span>
-                            <br>
-                            <br>
+                            <h4 class="title-hell"></h4><span>@currentUser.UserName.Split('@')[0] - @Rankings[i].Date.ToLongDateString()</span> <br>
                             <p>@Rankings[i].Comment</p>
                             @for (int j = 0; j < Rankings[i].Stars; j++) //yellow stars = actual ranking
                             {

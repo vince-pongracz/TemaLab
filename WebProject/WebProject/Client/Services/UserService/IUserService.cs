@@ -9,5 +9,6 @@ namespace WebProject.Client.Services.UserService
     public interface IUserService
     {
         Task<ApplicationUserDTO> GetCurrentUser();
+        Task<ApplicationUserDTO> GetUserByID(string Id);
     }
 }

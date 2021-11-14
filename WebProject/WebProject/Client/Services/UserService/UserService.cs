@@ -21,5 +21,10 @@ namespace WebProject.Client.Services.UserService
         {
             return await _httpClient.GetFromJsonAsync<ApplicationUserDTO>("api/users");
         }
+
+        public async Task<ApplicationUserDTO> GetUserByID(string Id)
+        {
+            return await _httpClient.GetFromJsonAsync<ApplicationUserDTO>($"api/users/{Id}");
+        }
     }
 }

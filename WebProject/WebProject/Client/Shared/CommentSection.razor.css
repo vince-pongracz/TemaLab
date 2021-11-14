@@ -153,3 +153,7 @@ input:checked ~ label {
 .star-color {
     color: rgb(238 235 52);
 }
+
+.comment-margin{
+    margin:0px 0px 400px 0px;
+}
