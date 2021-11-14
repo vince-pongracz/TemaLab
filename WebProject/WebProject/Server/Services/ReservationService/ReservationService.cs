@@ -28,16 +28,17 @@ namespace WebProject.Server.Services.ReservationService
         }
         public async Task<List<ReservationGetDTO>> GetReservations()
         {
-            var reservations = await _context.Reservations.ToListAsync();
+            //TODO - check
+            var localUserService = new UserService.UserService(_context);
+            var currentSessionUserID = (await localUserService.GetCurrentLoggedInUserID());
+            var reservations = await _context.Reservations.Where(x => x.ApplicationUserId == currentSessionUserID).ToListAsync();
             return Mapper.Map(reservations, new List<ReservationGetDTO>());
         }
 
         public async Task CreateReservation(ReservationGetDTO reservationDTO)
         {
-            
             _context.Reservations.Add(Mapper.Map(reservationDTO, new Reservation()));
             await _context.SaveChangesAsync();
-            
         }
 
         public async Task<Reservation> DeleteReservation(int id)
