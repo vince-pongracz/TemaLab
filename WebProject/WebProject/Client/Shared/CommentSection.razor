@@ -113,17 +113,21 @@
             rankingNew.Date = DateTime.Now;
             rankingNew.UserId = (await UserService.GetCurrentUser()).Id;
 
-
-            var newListOfRankings = await RankingService.CreateRanking(rankingNew);
-            if (newListOfRankings.Count == 0)
+            try
             {
-                await JsRuntime.InvokeVoidAsync("alert", "No permission to write a comment");
-            }
-            else
-            {
+                var newListOfRankings = await RankingService.CreateRanking(rankingNew);
+                if (newListOfRankings.Count == 0)
+                {
+                    throw new ArgumentException("No permission to write a comment");
+                }
                 Rankings = newListOfRankings;
                 await JsRuntime.InvokeVoidAsync("alert", "Your comment has been posted");
             }
+            catch (ArgumentException e)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", e.Message);
+            }
+
             //clear ranking inputs
             rankingNew = new RankingDTO();
             StateHasChanged();

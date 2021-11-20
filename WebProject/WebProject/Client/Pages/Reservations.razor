@@ -13,11 +13,11 @@
     <h3>Reservations</h3>
 </div>
 
-@if (ReservationService.reservations == null)
+@if (reservations == null)
 {
     <span>Loading reservations...</span>
 }
-else if (ReservationService.reservations.Count == 0)
+else if (reservations.Count == 0)
 {
     <span>It seems like you haven't got any reservation for now...</span>
 }
@@ -37,7 +37,7 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ReservationService.reservations)
+                @foreach (var item in reservations)
                 {
                     <tr>
                         <td>@item.Id</td>
@@ -57,17 +57,20 @@ else
 }
 
 @code {
+
+    private List<ReservationGetDTO> reservations { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        await ReservationService.GetReservations();
+        reservations = await ReservationService.GetReservations();
         await ShipSearchService.GetShips();
         ReservationService.OnChange += StateHasChanged;
     }
 
     async void DeleteReservation(int id)
     {
-        if (await JsRuntime.InvokeAsync<bool>("confirm", $"Are sure you want to delete the reservation #{ReservationService.reservations.Find(x => x.Id == id).Id}"))
-            await ReservationService.DeleteReservation(id);
+        if (await JsRuntime.InvokeAsync<bool>("confirm", $"Are sure you want to delete the reservation #{reservations.Find(x => x.Id == id).Id}"))
+            reservations = await ReservationService.DeleteReservation(id);
     }
 
     public void Dispose()

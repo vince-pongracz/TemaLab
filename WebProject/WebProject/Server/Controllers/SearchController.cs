@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using WebProject.Server.Data;
 using WebProject.Server.Services;
@@ -34,9 +35,9 @@ namespace WebProject.Server.Controllers
             {
                 //query such reservations, where the startdate of the current reservation is not in an other reservation timeslot
                 var shipsWithOkStartDate = from res in _context.Reservations
-                                           where !(
-                                                res.FromDate <= searchCriteria.From &&
-                                                searchCriteria.From < res.ToDate)
+                                           where
+                                           !(res.FromDate <= searchCriteria.From &&
+                                             searchCriteria.From < res.ToDate)
                                            select res.ShipId;
                 if (shipsWithOkStartDate.Any())
                     queryResultShips = queryResultShips.Where(x => shipsWithOkStartDate.Contains(x.Id));

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebProject.Server.Controllers;
 using WebProject.Server.Data;
 using WebProject.Server.Models;
 using WebProject.Server.Services;
@@ -26,12 +28,9 @@ namespace WebProject.Server.Services.ReservationService
             _context = context;
             Mapper = new Mapper(new MapperConfiguration(c => c.AddProfile(new MapperConfigService())));
         }
-        public async Task<List<ReservationGetDTO>> GetReservations()
+        public async Task<List<ReservationGetDTO>> GetReservations(string userID)
         {
-            //TODO - check
-            var localUserService = new UserService.UserService(_context);
-            var currentSessionUserID = (await localUserService.GetCurrentLoggedInUserID());
-            var reservations = await _context.Reservations.Where(x => x.ApplicationUserId == currentSessionUserID).ToListAsync();
+            var reservations = await _context.Reservations.Where(x => x.ApplicationUserId == userID).ToListAsync();
             return Mapper.Map(reservations, new List<ReservationGetDTO>());
         }
 

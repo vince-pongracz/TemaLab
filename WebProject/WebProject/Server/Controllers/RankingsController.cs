@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebProject.Client.Services.UserService;
 using WebProject.Server.Data;
 using WebProject.Server.Models;
 using WebProject.Server.Services;
@@ -21,7 +22,7 @@ namespace WebProject.Server.Controllers
     public class RankingsController : ControllerBase
     {
         private readonly IRankingService _rankingService;
-
+        
         public RankingsController(IRankingService rankingService)
         {
             _rankingService = rankingService;

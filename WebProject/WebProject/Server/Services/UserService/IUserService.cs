@@ -10,6 +10,5 @@ namespace WebProject.Server.Services.UserService
     public interface IUserService
     {
         Task<ApplicationUserDTO> GetCurrentUser(string userId);
-        Task<string> GetCurrentLoggedInUserID();
     }
 }

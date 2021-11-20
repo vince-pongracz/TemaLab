@@ -21,7 +21,11 @@ namespace WebProject.Client.Services
         public List<ReservationGetDTO> reservations { get; set; } = new List<ReservationGetDTO>();
 
         public event Action OnChange;
-
+        public async Task<List<ReservationGetDTO>> GetReservations()
+        {
+            reservations = await _httpClient.GetFromJsonAsync<List<ReservationGetDTO>>("api/reservations");
+            return reservations;
+        }
         public async Task<List<ReservationGetDTO>> CreateReservation(ReservationPostDTO reserv)
         {
             var result = await _httpClient.PostAsJsonAsync("api/reservations", reserv);
@@ -34,12 +38,6 @@ namespace WebProject.Client.Services
             var result = await _httpClient.DeleteAsync($"api/reservations/{id}");
             reservations = await result.Content.ReadFromJsonAsync<List<ReservationGetDTO>>();
             OnChange.Invoke();
-            return reservations;
-        }
-
-        public async Task<List<ReservationGetDTO>> GetReservations()
-        {
-            reservations = await _httpClient.GetFromJsonAsync<List<ReservationGetDTO>>("api/reservations");
             return reservations;
         }
     }
