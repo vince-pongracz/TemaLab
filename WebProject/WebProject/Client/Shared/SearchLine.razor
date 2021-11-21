@@ -39,8 +39,16 @@
 
     async void Search()
     {
-        QueryResult = await SearchService.SearchShips(from, until, maxPersons, port);
-        //callback to parent page
-        await QueryReady.InvokeAsync(QueryResult);
+        try
+        {
+            QueryResult = await SearchService.SearchShips(from, until, maxPersons, port);
+
+            //callback to parent page
+            await QueryReady.InvokeAsync(QueryResult);
+        }
+        catch (InvalidOperationException e)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", e.Message);
+        }
     }
 }

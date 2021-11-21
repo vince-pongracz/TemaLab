@@ -37,7 +37,7 @@ namespace WebProject.Client.Services
         public async Task<List<ShipDTO>> SearchShips(DateTime? from = default, DateTime? until = default, int? maxPersons = default, string where = default)
         {
             var queryBuilder = new QueryBuilder();
-            
+
             if (from.HasValue && from.Value != default) queryBuilder.Add("from", from.ToString());
             if (until.HasValue && until.Value != default) queryBuilder.Add("until", until.ToString());
             if (maxPersons.HasValue) queryBuilder.Add("maxPersons", maxPersons.ToString());
@@ -45,7 +45,15 @@ namespace WebProject.Client.Services
 
             var queryString = queryBuilder.ToQueryString();
 
-            return await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/search{queryString}");
+            var response = await _httpClient.GetAsync($"api/search{queryString}");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<ShipDTO>>();
+            }
+            else
+            {
+                throw new InvalidOperationException("Wrong search criterias");
+            }
         }
     }
 }

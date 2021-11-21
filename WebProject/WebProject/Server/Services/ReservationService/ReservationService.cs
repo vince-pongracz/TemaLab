@@ -30,7 +30,10 @@ namespace WebProject.Server.Services.ReservationService
         }
         public async Task<List<ReservationGetDTO>> GetReservations(string userID)
         {
-            var reservations = await _context.Reservations.Where(x => x.ApplicationUserId == userID).ToListAsync();
+            var reservations = await _context.Reservations
+                .Where(x => x.ApplicationUserId == userID)
+                .OrderByDescending(x => x.ToDate)
+                .ToListAsync();
             return Mapper.Map(reservations, new List<ReservationGetDTO>());
         }
 
