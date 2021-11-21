@@ -7,6 +7,9 @@
 @implements IDisposable
 
 <br>
+
+<Warning AlertMessage="@PopupMessageContent" ShowAlert="@ShowAlert" Type="@AlertType" />
+
 <br>
 
 <section>
@@ -98,6 +101,11 @@
 
     ApplicationUserDTO currentUser = new ApplicationUserDTO();
 
+    //params for alert sys
+    private Warning.AlertType AlertType { get; set; }
+    private string PopupMessageContent { get; set; }
+    private bool ShowAlert { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         Rankings = await RankingService.GetRankingsForShip(currentShipIdFromParentPage);
@@ -121,11 +129,20 @@
                     throw new ArgumentException("No permission to write a comment");
                 }
                 Rankings = newListOfRankings;
-                await JsRuntime.InvokeVoidAsync("alert", "Your comment has been posted");
+
+                //send interactive message to user
+                PopupMessageContent = "Your comment has been posted";
+                AlertType = Warning.AlertType.SUCCESS;
+                ShowAlert = true;
+                StateHasChanged();
             }
             catch (ArgumentException e)
             {
-                await JsRuntime.InvokeVoidAsync("alert", e.Message);
+                //send interactive message to user that she/he failed :D
+                PopupMessageContent = e.Message;
+                AlertType = Warning.AlertType.ERROR;
+                ShowAlert = true;
+                StateHasChanged();
             }
 
             //clear ranking inputs
@@ -143,5 +160,4 @@
     {
         RankingService.OnChange -= StateHasChanged;
     }
-
 }

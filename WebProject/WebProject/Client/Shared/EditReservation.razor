@@ -2,6 +2,10 @@
 @inject IJSRuntime JsRuntime
 @inject WebProject.Client.Services.UserService.IUserService UserService
 
+<br>
+<Warning AlertMessage="@PopupMessageContent" ShowAlert="@ShowAlert" Type="@AlertType" />
+<br>
+
 <div class="card reservation-card">
     <div class="card-body">
         <h5 class="card-title">Book a ship</h5>
@@ -40,6 +44,11 @@
 
     private ReservationPostDTO reservation = new ReservationPostDTO();
 
+    //params for alert sys
+    private Warning.AlertType AlertType { get; set; }
+    private string PopupMessageContent { get; set; }
+    private bool ShowAlert { get; set; }
+
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
@@ -56,10 +65,22 @@
         if (DatesAreCorrect())
         {
             await ReservationService.CreateReservation(reservation);
-            await JsRuntime.InvokeVoidAsync("alert", "Your reservation has been confirmed");
+
+            //activate popup
+            AlertType = Warning.AlertType.SUCCESS;
+            PopupMessageContent = "Your reservation has been confirmed";
+            ShowAlert = true;
+            StateHasChanged();
         }
         else
-            await JsRuntime.InvokeVoidAsync("alert", "The dates you entered are incorrect");
+        {
+            //activate popup
+            AlertType = Warning.AlertType.ERROR;
+            PopupMessageContent = "The dates you entered are incorrect";
+            ShowAlert = true;
+            StateHasChanged();
+        }
+
     }
 
     decimal CalculatePrice()

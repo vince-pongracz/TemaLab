@@ -69,10 +69,12 @@ else
     protected override async Task OnInitializedAsync()
     {
         Ships = await ShipSearchService.GetShips();
+        StateHasChanged();
     }
 
     void ShowShip(int id)
     {
         NavigationManager.NavigateTo($"ships/{id}");
+        StateHasChanged();
     }
 }
