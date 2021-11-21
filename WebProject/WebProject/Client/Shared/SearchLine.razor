@@ -4,88 +4,74 @@
 @inject IJSRuntime JSRuntime
 @inject IShipSearchService SearchService
 @inject NavigationManager Navigation
-    <head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
-    </head>
 
-    @if (ShowAlert)
-    {
-        <!-- Warning Alert -->
-        <div class="alert alert-warning alert-dismissible d-flex align-items-center fade show">
-            <i class="bi-exclamation-triangle-fill"></i>
-            <strong class="mx-2">Warning!</strong> @AlertMessage
-            <button type="button" class="btn-close" data-bs-dismiss="alert" @onclick="() => {
-                                                                                      ShowAlert = false;
-                                                                                  }" />
-        </div>
-    }
+<Warning AlertMessage="@AlertMessage" ShowAlert="@ShowAlert" />
 
-    <br>
-    <div class="container">
-        <div class="wrapper">
-            <div class="search-container">
-                <EditForm Model="@model" OnSubmit="@Search">
-                    <InputDate @bind-Value="from" class="date-from" placeholder="from"></InputDate>
-                    <InputDate @bind-Value="until" class="date-to" placeholder="until"></InputDate>
-                    <InputNumber @bind-Value="maxPersons" class="persons" placeholder="#persons"></InputNumber>
-                    <InputText @bind-Value="port" class="search" placeholder="port"></InputText>
-                    <button type="submit" class="btn btn-primary">Search!</button>
-                </EditForm>
-            </div>
+<br>
+<div class="container">
+    <div class="wrapper">
+        <div class="search-container">
+            <EditForm Model="@model" OnSubmit="@Search">
+                <InputDate @bind-Value="from" class="date-from" placeholder="from"></InputDate>
+                <InputDate @bind-Value="until" class="date-to" placeholder="until"></InputDate>
+                <InputNumber @bind-Value="maxPersons" class="persons" placeholder="#persons"></InputNumber>
+                <InputText @bind-Value="port" class="search" placeholder="port"></InputText>
+                <button type="submit" class="btn btn-primary">Search!</button>
+            </EditForm>
         </div>
     </div>
-    <br>
+</div>
+<br>
 
-    @code {
-        [Parameter]
-        public ApplicationUserDTO PersonLoggedOn { get; set; }
+@code {
+    [Parameter]
+    public ApplicationUserDTO PersonLoggedOn { get; set; }
 
-        [Parameter]
-        public EventCallback<List<ShipDTO>> QueryReady { get; set; }
+    [Parameter]
+    public EventCallback<List<ShipDTO>> QueryReady { get; set; }
 
-        private DateTime? from { get; set; } = default;
-        private DateTime? until { get; set; } = default;
-        private int? maxPersons { get; set; } = default;
-        private string port { get; set; } = default;
+    private DateTime? from { get; set; } = default;
+    private DateTime? until { get; set; } = default;
+    private int? maxPersons { get; set; } = default;
+    private string port { get; set; } = default;
 
-        private object model = new object();
+    private object model = new object();
 
-        public List<ShipDTO> QueryResult { get; set; } = new();
+    public List<ShipDTO> QueryResult { get; set; } = new();
 
-        private bool ShowAlert { get; set; } = false;
-        private string AlertMessage { get; set; } = "Error";
+    private bool ShowAlert { get; set; } = false;
+    private string AlertMessage { get; set; } = "Error";
 
-        private void SetFieldsToDefault()
-        {
-            from = default;
-            until = default;
-            maxPersons = default;
-            port = default;
+    private void SetFieldsToDefault()
+    {
+        from = default;
+        until = default;
+        maxPersons = default;
+        port = default;
 
-            StateHasChanged();
-        }
-
-        private void SendAlert(string message)
-        {
-            AlertMessage = message;
-            ShowAlert = true;
-            StateHasChanged();
-        }
-
-        async void Search()
-        {
-            try
-            {
-                QueryResult = await SearchService.SearchShips(from, until, maxPersons, port);
-
-                //callback to parent page
-                await QueryReady.InvokeAsync(QueryResult);
-            }
-            catch (InvalidOperationException e)
-            {
-                SendAlert(e.Message + " Try again");
-            }
-            SetFieldsToDefault();
-        }
+        StateHasChanged();
     }
+
+    private void SendAlert(string message)
+    {
+        AlertMessage = message;
+        ShowAlert = true;
+        StateHasChanged();
+    }
+
+    async void Search()
+    {
+        try
+        {
+            QueryResult = await SearchService.SearchShips(from, until, maxPersons, port);
+
+            //callback to parent page
+            await QueryReady.InvokeAsync(QueryResult);
+        }
+        catch (InvalidOperationException e)
+        {
+            SendAlert(e.Message + "  -  Try again");
+        }
+        SetFieldsToDefault();
+    }
+}
