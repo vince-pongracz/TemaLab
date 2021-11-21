@@ -67,4 +67,14 @@ input {
     align-self: auto;
 }
 
-</style >
+.btn-close{
+
+}
+
+/* Custom style to set icon size */
+.alert i[class^="bi-"] {
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+</style>
