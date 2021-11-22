@@ -81,6 +81,7 @@ namespace WebProject.Server.Models
         [JsonIgnore]
         public virtual ICollection<Ranking> Rankings { get; set; }
 
-        public string RouteToPic { get; set; }
+        public int ImageId { get; set; }
+
     }
 }

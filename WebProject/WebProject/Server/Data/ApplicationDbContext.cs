@@ -31,5 +31,7 @@ namespace WebProject.Server.Data
         public DbSet<Reservation> Reservations { get; set; }
 
         public DbSet<Ship> Ships { get; set; }
+
+        public DbSet<ShipImage> Images { get; set; }
     }
 }

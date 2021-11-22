@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebProject.Client.Services;
 using WebProject.Client.Services.RankingService;
+using WebProject.Client.Services.ShipImageService;
 using WebProject.Client.Services.UserService;
 
 namespace WebProject.Client
@@ -33,6 +34,7 @@ namespace WebProject.Client
             builder.Services.AddScoped<IShipSearchService, ShipSearchService>();
             builder.Services.AddScoped<IRankingService, RankingService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IShipImageService, ShipImageService>();
 
 
             await builder.Build().RunAsync();
