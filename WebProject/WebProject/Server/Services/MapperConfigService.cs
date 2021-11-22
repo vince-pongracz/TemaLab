@@ -31,6 +31,10 @@ namespace WebProject.Server.Services
             //map between users
             CreateMap<ApplicationUser, ApplicationUserDTO>();
             CreateMap<ApplicationUserDTO, ApplicationUser>();
+
+            //map between shipImages
+            CreateMap<ShipImage, ShipImageDTO>();
+            CreateMap<ShipImageDTO, ShipImage>();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebProject.Shared
 {
-    class ShipImageDTO
+    public class ShipImageDTO
     {
         public int Id { get; set; }
 
