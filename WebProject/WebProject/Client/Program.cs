@@ -33,7 +33,7 @@ namespace WebProject.Client
             builder.Services.AddScoped<IShipSearchService, ShipSearchService>();
             builder.Services.AddScoped<IRankingService, RankingService>();
             builder.Services.AddScoped<IUserService, UserService>();
-            
+
 
             await builder.Build().RunAsync();
         }

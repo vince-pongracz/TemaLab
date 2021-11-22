@@ -71,8 +71,8 @@
         catch (InvalidOperationException e)
         {
             SendAlert(e.Message + "  -  Try again");
+            SetFieldsToDefault();
         }
-        SetFieldsToDefault();
         StateHasChanged();
     }
 }
