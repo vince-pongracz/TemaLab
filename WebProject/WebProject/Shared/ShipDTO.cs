@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebProject.Shared
@@ -12,7 +13,7 @@ namespace WebProject.Shared
 
         public string Name { get; set; }
 
-        public double Lenght { get; set; }
+        public double Length { get; set; }
 
         public int ProductionYear { get; set; }
 
@@ -20,11 +21,11 @@ namespace WebProject.Shared
 
         public double Weight { get; set; }
 
-        public int PersonsMax { get; set; }
+        public int MaxPeople { get; set; }
 
         public string ShipType { get; set; }
 
-        public double Drought { get; set; } //merülés
+        public double Draught { get; set; } //merülés
 
         public double Width { get; set; }
 
@@ -40,10 +41,16 @@ namespace WebProject.Shared
 
         public bool IsAvailable { get; set; }
 
-        public ApplicationUserDTO Owner { get; set; }
+        public string OwnerId { get; set; }
 
-        public List<ReservationGetDTO> Reservations { get; set; }
-        public List<RankingDTO> Rankings { get; set; }
+        [JsonIgnore]
+        public virtual ApplicationUserDTO Owner { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<ReservationGetDTO> Reservations { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<RankingDTO> Rankings { get; set; }
+        
         public string RouteToPic { get; set; }
     }
 }

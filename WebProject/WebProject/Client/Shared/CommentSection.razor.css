@@ -1,0 +1,159 @@
+﻿.navbar-nav {
+    width: 100%
+}
+
+@media(min-width:568px) {
+    .end {
+        margin-left: auto
+    }
+}
+
+@media(max-width:768px) {
+    #post {
+        width: 100%
+    }
+}
+
+#clicked {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    width: 100%;
+    background-color: #24aeb4;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: white;
+    border-radius: 7px;
+}
+
+#profile {
+    background-color: unset
+}
+
+.btn-comment {
+    margin-top: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: center;
+    background-color: #24aeb4;
+    color: white;
+    border-radius: 7px;
+    width: 100%
+}
+
+.comments {
+    margin-top: 5%;
+    margin-left: 20px
+}
+
+.darker {
+    border: 1px solid;
+    background-color: #252b33;
+    float: left;
+    border-radius: 5px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 10px;
+}
+
+.comment {
+    border: 1px solid;
+    background-color: white;
+    float: left;
+    border-radius: 5px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 10px;
+}
+
+    .comment h4,
+    .comment span,
+    .darker h4,
+    .darker span {
+        display: inline
+    }
+
+    .comment p,
+    .comment span {
+        color: rgb(32 38 49)
+    }
+
+.darker p,
+.darker span {
+    color: white;
+}
+
+h1 {
+    color: black;
+}
+
+.title-dark {
+    color: black;
+    font-weight: bold
+}
+
+.title-hell {
+    color: white;
+    font-weight: bold
+}
+
+label {
+    color: rgb(212, 208, 288)
+}
+
+#align-form {
+    margin-top: 20px
+}
+
+.form-group p a {
+    color: white
+}
+
+#darker img {
+    margin-right: 15px;
+    position: static
+}
+
+.form-group input,
+.form-group textarea {
+    background-color: white;
+    border-radius: 7px
+}
+
+form {
+    background-color: white;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    width: 100%;
+    margin-left: 7%;
+    margin-top: 55px;
+    position: absolute;
+}
+
+.wrapper {
+    display: inline-block;
+}
+
+    .wrapper * {
+        float: right;
+    }
+
+input {
+    display: none;
+}
+
+label {
+    font-size: 30px;
+}
+
+input:checked ~ label {
+    color: rgb(238 235 52);
+}
+
+.star-color {
+    color: rgb(238 235 52);
+}
+
+.comment-margin{
+    margin:0px 0px 400px 0px;
+}

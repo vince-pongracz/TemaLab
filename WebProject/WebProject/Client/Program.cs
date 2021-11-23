@@ -1,3 +1,4 @@
+using BlazorStrap;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WebProject.Client.Services;
+using WebProject.Client.Services.RankingService;
+using WebProject.Client.Services.ShipImageService;
+using WebProject.Client.Services.UserService;
 
 namespace WebProject.Client
 {
@@ -29,6 +33,11 @@ namespace WebProject.Client
 
             builder.Services.AddScoped<IReservationService, ReservationService>();
             builder.Services.AddScoped<IShipSearchService, ShipSearchService>();
+            builder.Services.AddScoped<IRankingService, RankingService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IShipImageService, ShipImageService>();
+            builder.Services.AddBootstrapCss();
+
 
             await builder.Build().RunAsync();
         }

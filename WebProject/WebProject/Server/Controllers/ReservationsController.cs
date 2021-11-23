@@ -6,10 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebProject.Server.Data;
 using WebProject.Server.Models;
 using WebProject.Server.Services;
+using WebProject.Server.Services.ReservationService;
+using WebProject.Server.Services.UserService;
 using WebProject.Shared;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -19,44 +22,36 @@ namespace WebProject.Server.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IReservationService _reservationService;
+        private readonly IUserService _userService;
 
-        [Inject]
-        public IMapper Mapper { get; set; }
-
-        public ReservationsController(ApplicationDbContext context)
+        public ReservationsController(IReservationService reservationService, IUserService userService)
         {
-            _context = context;
-            Mapper = new Mapper(new MapperConfiguration(c => c.AddProfile(new MapperConfigService())));
+            _reservationService = reservationService;
+            _userService = userService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetReservations()
         {
-            var reservations = await _context.Reservations.ToListAsync();
-            return Ok(Mapper.Map(reservations, new List<ReservationGetDTO>()));
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Ok(await _reservationService.GetReservations(userId));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateReservation(ReservationGetDTO reservationDTO)
         {
-            _context.Reservations.Add(Mapper.Map(reservationDTO,new Reservation()));
-            await _context.SaveChangesAsync();
-
+            await _reservationService.CreateReservation(reservationDTO);
             return await GetReservations();
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteReservation(int id)
         {
-            var reservation = await _context.Reservations.FirstOrDefaultAsync(h => h.Id == id);
-            if (reservation == null)
+            if (await _reservationService.DeleteReservation(id) == null)
                 return NotFound("Reservation was not found");
-
-            _context.Reservations.Remove(reservation);
-            await _context.SaveChangesAsync();
-
-            return await GetReservations();
+            else
+                return await GetReservations();
         }
     }
 }

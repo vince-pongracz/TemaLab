@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,13 +16,14 @@ namespace WebProject.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ShipsController : ControllerBase
+    public partial class ShipsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+
         [Inject]
         public IMapper Mapper { get; set; }
 
-        public ShipsController(ApplicationDbContext context)
+        public ShipsController(ApplicationDbContext context, NavigationManager navigation)
         {
             _context = context;
             Mapper = new Mapper(new MapperConfiguration(c => c.AddProfile(new MapperConfigService())));
@@ -32,7 +32,7 @@ namespace WebProject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShips()
         {
-            return Ok(Mapper.Map(await _context.Ships.ToListAsync(), new List<ShipDTO>()));
+            return Ok(Mapper.Map(await _context.Ships.Where(x => x.IsAvailable && !x.IsDeleted).ToListAsync(), new List<ShipDTO>()));
         }
 
         [HttpGet("{id:int}")]

@@ -11,6 +11,12 @@ using System.Linq;
 using WebProject.Server.Data;
 using WebProject.Server.Models;
 using WebProject.Server.Services;
+using WebProject.Server.Services.RankingService;
+using WebProject.Server.Services.ReservationService;
+using WebProject.Server.Services.ShipSearchService;
+using WebProject.Server.Services.UserService;
+using Microsoft.AspNetCore.Identity;
+using WebProject.Server.Services.ShipImageService;
 
 namespace WebProject.Server
 {
@@ -33,8 +39,17 @@ namespace WebProject.Server
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.Password = new PasswordOptions
+                {
+                    RequiredLength = 4,
+                    RequireNonAlphanumeric = false,
+                    RequireDigit = false,
+                    RequiredUniqueChars = 0
+                };
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
@@ -46,6 +61,13 @@ namespace WebProject.Server
             services.AddRazorPages();
 
             services.AddAutoMapper(typeof(MapperConfigService));
+
+            services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IRankingService, RankingService>();
+            services.AddScoped<IShipSearchService, ShipSearchService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IShipImageService, ShipImageService>();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

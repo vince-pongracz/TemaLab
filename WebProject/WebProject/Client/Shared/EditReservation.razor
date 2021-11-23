@@ -1,30 +1,38 @@
-﻿@inject IJSRuntime JSRuntime
-@inject IReservationService ReservationService
+﻿@inject IReservationService ReservationService
+@inject IJSRuntime JsRuntime
+@inject WebProject.Client.Services.UserService.IUserService UserService
 
+<br>
+<Warning AlertMessage="@PopupMessageContent" ShowAlert="@ShowAlert" Type="@AlertType" />
+<br>
 
-<div class="card" style="width: 30%; box-shadow: 0 0 20px 8px #d0d0d0; margin-left:48%; position:absolute">
+<div class="card reservation-card">
     <div class="card-body">
         <h5 class="card-title">Book a ship</h5>
         <h6 class="card-subtitle mb-2 text-muted">Enter the dates for the reservation here:</h6>
-        <EditForm Model="@r" OnSubmit="@HandleSubmit">
-            <div class="form-group">
-                <label>Ship ID</label>
-                <InputNumber @bind-Value="SelectedShip.Id" class="form-control"></InputNumber>
-            </div>
+        <EditForm Model="@reservation" OnSubmit="@HandleSubmit">
             <div class="form-group">
                 <label>Book from:</label>
-                <InputDate @bind-Value="r.FromDate" class="form-control"></InputDate>
+                <InputDate @bind-Value="reservation.FromDate" class="form-control"></InputDate>
             </div>
             <div class="form-group">
                 <label>Book until</label>
-                <InputDate @bind-Value="r.ToDate" class="form-control"></InputDate>
+                <InputDate @bind-Value="reservation.ToDate" class="form-control"></InputDate>
             </div>
-            <button type="submit" class="btn btn-outline-dark">Book this! </button>
+            <div class="form-group">
+                @if (CalculatePrice() < 0)
+                {
+                    <label>Total price: Invalid Date Interval</label>
+                }
+                else
+                {
+                    <label>Total price: @CalculatePrice()</label>
+                }
+            </div>
+            <button type="submit" class="btn btn-teal">Book this ship </button>
         </EditForm>
     </div>
 </div>
-
-
 
 
 @code {
@@ -34,18 +42,82 @@
     [Parameter]
     public ShipDTO SelectedShip { get; set; }
 
-    private ReservationPostDTO r = new ReservationPostDTO
-    {
-        FromDate = DateTime.Today,
-        ToDate = DateTime.Today.AddDays(1),
-        //TODO get and set the current Ship and Person here
-    };
+    private ReservationPostDTO reservation = new ReservationPostDTO();
 
+    //params for alert sys
+    private Warning.AlertType AlertType { get; set; }
+    private string PopupMessageContent { get; set; }
+    private bool ShowAlert { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        reservation.FromDate = DateTime.Today.AddDays(1);
+        reservation.ToDate = DateTime.Today.AddDays(2);
+    }
 
     async void HandleSubmit()
     {
-        await JSRuntime.InvokeVoidAsync("console.log", r);
+        reservation.ShipId = SelectedShip.Id;
+        reservation.Price = CalculatePrice();
+        reservation.ApplicationUserId = (await UserService.GetCurrentUser()).Id;
 
-        await ReservationService.CreateReservation(r);
+        if (DatesAreCorrect())
+        {
+
+            await ReservationService.CreateReservation(reservation);
+
+            //activate popup
+            AlertType = Warning.AlertType.SUCCESS;
+            PopupMessageContent = "Your reservation has been confirmed";
+            ShowAlert = true;
+            StateHasChanged();
+        }
+        else
+        {
+            //activate popup
+            AlertType = Warning.AlertType.ERROR;
+            PopupMessageContent = "The dates you entered are incorrect";
+            ShowAlert = true;
+            StateHasChanged();
+        }
+
+    }
+
+    decimal CalculatePrice()
+    {
+        decimal result = numOfWeekdays() * SelectedShip.PriceAtWeekDays;
+        result += numOfWeekendDays() * SelectedShip.PriceAtWeekEnds;
+        return result;
+    }
+
+    int numOfWeekdays()
+    {
+        int totalDays = 0;
+        for (DateTime date = reservation.FromDate; date < reservation.ToDate; date = date.AddDays(1))
+        {
+            if (date.DayOfWeek != DayOfWeek.Saturday
+                && date.DayOfWeek != DayOfWeek.Sunday)
+                totalDays++;
+        }
+        return totalDays;
+    }
+
+    int numOfWeekendDays()
+    {
+        TimeSpan timeSpan = reservation.ToDate - reservation.FromDate;
+        return timeSpan.Days - numOfWeekdays();
+    }
+
+    bool DatesAreCorrect()
+    {
+        bool result = true;
+        if (reservation.FromDate >= reservation.ToDate)
+            result = false;
+        else if (reservation.FromDate <= DateTime.Now)
+            result = false;
+        else if (CalculatePrice() <= 0)
+            result = false;
+        return result;
     }
 }

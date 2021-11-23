@@ -1,44 +1,78 @@
-﻿@inject IJSRuntime JSRuntime
+﻿<!-- page "/search"-->
+@using Microsoft.AspNetCore.WebUtilities
+@using WebProject.Shared
+@inject IJSRuntime JSRuntime
 @inject IShipSearchService SearchService
+@inject NavigationManager Navigation
 
-<h3>Search</h3>>
+<Warning AlertMessage="@AlertMessage" ShowAlert="@ShowAlert" />
 
-<EditForm Model="@r" OnSubmit="@HandleSubmit">
-    <div class="form-group">
-        <label>Ship ID</label>
-        <InputNumber @bind-Value="SelectedShip.Id" class="form-control"></InputNumber>
+<br>
+<div class="container">
+    <div class="wrapper">
+        <div class="search-container">
+            <EditForm Model="@model" OnSubmit="@Search">
+                <InputDate @bind-Value="from" class="date-from" placeholder="from"></InputDate>
+                <InputDate @bind-Value="until" class="date-to" placeholder="until"></InputDate>
+                <InputNumber @bind-Value="maxPersons" class="persons" placeholder="#persons"></InputNumber>
+                <InputText @bind-Value="port" class="search" placeholder="port"></InputText>
+                <button type="submit" class="btn btn-primary">Search!</button>
+            </EditForm>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Book from:</label>
-        <InputDate @bind-Value="r.FromDate" class="form-control"></InputDate>
-    </div>
-    <div class="form-group">
-        <label>Book until</label>
-        <InputDate @bind-Value="r.ToDate" class="form-control"></InputDate>
-    </div>
-    <button type="submit" class="btn btn-primary">Book this!</button>
-</EditForm>
-
+</div>
+<br>
 
 @code {
     [Parameter]
     public ApplicationUserDTO PersonLoggedOn { get; set; }
 
-    //TODO is it ok as static field?
     [Parameter]
-    public ShipDTO SelectedShip { get; set; }
+    public EventCallback<List<ShipDTO>> QueryReady { get; set; }
 
-    private ReservationPostDTO r = new ReservationPostDTO
+    private DateTime? from { get; set; } = default;
+    private DateTime? until { get; set; } = default;
+    private int? maxPersons { get; set; } = default;
+    private string port { get; set; } = default;
+
+    private object model = new object();
+
+    public List<ShipDTO> QueryResult { get; set; } = new();
+
+    private bool ShowAlert { get; set; } = false;
+    private string AlertMessage { get; set; } = "Error";
+
+    private void SetFieldsToDefault()
     {
-        FromDate = DateTime.Today,
-        ToDate = DateTime.Today.AddDays(1),
-        //TODO get and set the current Ship and Person here
-    };
+        from = default;
+        until = default;
+        maxPersons = default;
+        port = default;
 
-    async void HandleSubmit()
+        StateHasChanged();
+    }
+
+    private void SendAlert(string message)
     {
-        await JSRuntime.InvokeVoidAsync("console.log", r);
+        AlertMessage = message;
+        ShowAlert = true;
+        StateHasChanged();
+    }
 
-        await SearchService.GetShips();
+    async void Search()
+    {
+        try
+        {
+            QueryResult = await SearchService.SearchShips(from, until, maxPersons, port);
+
+            //callback to parent page
+            await QueryReady.InvokeAsync(QueryResult);
+        }
+        catch (InvalidOperationException e)
+        {
+            SendAlert(e.Message + "  -  Try again");
+            SetFieldsToDefault();
+        }
+        StateHasChanged();
     }
 }

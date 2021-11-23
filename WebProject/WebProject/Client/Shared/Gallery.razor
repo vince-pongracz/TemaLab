@@ -1,0 +1,30 @@
+﻿@using WebProject.Client.Services.ShipImageService
+@inject IShipImageService ShipImageService
+
+<br>
+<h3 style="text-align:center">Ship Gallery</h3>
+    <BlazorStrap.BSCarousel NumberOfItems="@Images.Count" Fade="true" style="width: 60%; text-align: center; margin: auto;" class="ship-carousel">
+        <BlazorStrap.BSCarouselIndicators />
+        <div class="carousel-inner">
+            @foreach (var image in Images)
+            {
+                <BlazorStrap.BSCarouselItem Src="@image.RouteToPic" Alt="It is a ship">
+                    <BlazorStrap.BSCarouselCaption CaptionText="@image.ImageDescription" HeaderText="@image.ImageTitle" />
+                </BlazorStrap.BSCarouselItem>
+            }
+        </div>
+        <BlazorStrap.BSCarouselControl CarouselDirection="BlazorStrap.CarouselDirection.Previous" NumberOfItems="@Images.Count" />
+        <BlazorStrap.BSCarouselControl CarouselDirection="BlazorStrap.CarouselDirection.Next" NumberOfItems="@Images.Count" />
+    </BlazorStrap.BSCarousel>
+
+@code {
+    [Parameter]
+    public int currentShipIdFromParentPage { get; set; }
+
+    private List<ShipImageDTO> Images { get; set; } = new List<ShipImageDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Images = await ShipImageService.GetImagesById(currentShipIdFromParentPage);
+    }
+}

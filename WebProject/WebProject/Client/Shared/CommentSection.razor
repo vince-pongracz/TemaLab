@@ -1,0 +1,163 @@
+﻿@using WebProject.Client.Services.RankingService
+@using WebProject.Client.Services.UserService
+@inject IUserService UserService
+@inject IRankingService RankingService
+@inject IShipSearchService ShipSearchService
+@inject IJSRuntime JsRuntime
+@implements IDisposable
+
+<br>
+
+<Warning AlertMessage="@PopupMessageContent" ShowAlert="@ShowAlert" Type="@AlertType" />
+
+<br>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-5 col-md-6 col-12 pb-4">
+                @if (Rankings.Count <= 0)
+                {
+                    <h1 class="comment-margin">Comments</h1> <!--Ha nincs komment a navbar rosszul jelenik ezért egy plusz margint kellett hozzádni ha üres -->
+                }
+                else
+                {
+                    <h1>Comments</h1>
+                }
+
+                @for (int i = 0; i < Rankings.Count; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        <div class="comment mt-4 text-justify">
+                            <h4 class="title-dark"></h4><span>@currentUser.UserName.Split('@')[0] - @Rankings[i].Date.ToLongDateString()</span> <br>
+                            <p>@Rankings[i].Comment</p>
+                            @for (int j = 0; j < Rankings[i].Stars; j++) //yellow stars = actual ranking
+                            {
+                                <label class="star-color">&#9733;</label>
+                            }
+                            @for (int j = 0; j < 5 - Rankings[i].Stars; j++) // the rest is white stars
+                            {
+                                <label>&#9733;</label>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="darker mt-4 text-justify">
+                            <h4 class="title-hell"></h4><span>@currentUser.UserName.Split('@')[0] - @Rankings[i].Date.ToLongDateString()</span> <br>
+                            <p>@Rankings[i].Comment</p>
+                            @for (int j = 0; j < Rankings[i].Stars; j++) //yellow stars = actual ranking
+                            {
+                                <label class="star-color">&#9733;</label>
+                            }
+                            @for (int j = 0; j < 5 - Rankings[i].Stars; j++) // the rest is white stars
+                            {
+                                <label>&#9733;</label>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                <form id="algin-form">
+                    <div class="form-group">
+                        <h4>Leave a comment</h4>
+                        <p class="message">Message</p>
+                        <EditForm Model="@rankingNew" OnSubmit="@HandleSubmit">
+                            <InputTextArea @bind-Value="rankingNew.Comment" placeholder="Type your comment here" cols="30" rows="5" class="form-control"></InputTextArea>
+                            <div class="wrapper">
+                                <input type="radio" id="r1" @onclick="(() => StarClicked(5))"><!--Fordított sorrendben rajzolja ki őket azert megy az érték 5-től 1-ig-->
+                                <label for="r1">&#9733;</label>
+                                <input type="radio" id="r2" @onclick="(() => StarClicked(4))">
+                                <label for="r2">&#9733;</label>
+                                <input type="radio" id="r3" @onclick="(() => StarClicked(3))">
+                                <label for="r3">&#9733;</label>
+                                <input type="radio" id="r4" @onclick="(() => StarClicked(2))">
+                                <label for="r4">&#9733;</label>
+                                <input type="radio" id="r5" @onclick="(() => StarClicked(1))">
+                                <label for="r5">&#9733;</label>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-comment">Post Comment</button>
+                            </div>
+                        </EditForm>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+
+    [Parameter]
+    public int currentShipIdFromParentPage { get; set; }
+
+    RankingDTO rankingNew { get; set; } = new RankingDTO();
+
+    private List<RankingDTO> Rankings { get; set; } = new List<RankingDTO>();
+
+    ApplicationUserDTO currentUser = new ApplicationUserDTO();
+
+    //params for alert sys
+    private Warning.AlertType AlertType { get; set; }
+    private string PopupMessageContent { get; set; }
+    private bool ShowAlert { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Rankings = await RankingService.GetRankingsForShip(currentShipIdFromParentPage);
+        RankingService.OnChange += StateHasChanged;
+        currentUser = await UserService.GetCurrentUser();
+    }
+
+    async void HandleSubmit()
+    {
+        if (rankingNew.Stars > 0)
+        {
+            rankingNew.ShipId = currentShipIdFromParentPage;
+            rankingNew.Date = DateTime.Now;
+            rankingNew.UserId = (await UserService.GetCurrentUser()).Id;
+
+            try
+            {
+                var newListOfRankings = await RankingService.CreateRanking(rankingNew);
+                if (newListOfRankings.Count == 0)
+                {
+                    throw new ArgumentException("No permission to write a comment");
+                }
+                Rankings = newListOfRankings;
+
+                //send interactive message to user
+                PopupMessageContent = "Your comment has been posted";
+                AlertType = Warning.AlertType.SUCCESS;
+                ShowAlert = true;
+                StateHasChanged();
+            }
+            catch (ArgumentException e)
+            {
+                //send interactive message to user that she/he failed :D
+                PopupMessageContent = e.Message;
+                AlertType = Warning.AlertType.ERROR;
+                ShowAlert = true;
+                StateHasChanged();
+            }
+
+            //clear ranking inputs
+            rankingNew = new RankingDTO();
+            StateHasChanged();
+        }
+    }
+
+    void StarClicked(int rating)
+    {
+        rankingNew.Stars = rating;
+    }
+
+    public void Dispose()
+    {
+        RankingService.OnChange -= StateHasChanged;
+    }
+}

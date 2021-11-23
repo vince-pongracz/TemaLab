@@ -2,14 +2,21 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using WebProject.Shared
+@using BlazorStrap
 @attribute [Authorize]
 @inject IReservationService ReservationService
+@inject IShipSearchService ShipSearchService
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavManager
+@implements IDisposable
 
-<h3>Reservations</h3>
+<div class="title">
+    <h3>Reservations</h3>
+</div>
 
 @if (reservations == null)
 {
-    <span>Loading reservations...</span>
+    <div class="spinner"></div>
 }
 else if (reservations.Count == 0)
 {
@@ -17,43 +24,78 @@ else if (reservations.Count == 0)
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nr.</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Price</th>
-                <th>Cancel Reservation</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in reservations)
-            {
+    <div class="reservation-table">
+        <table class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.FromDate</td>
-                    <td>@item.ToDate</td>
-                    <td>@item.Price</td>
-                    <td>
-                        <button class="btn btn-primary" @onclick="(() => DeleteReservation(item.Id))">Cancel</button>
-                    </td>
+                    <th>Nr.</th>
+                    <th>Ship Name</th>
+                    <th>Port</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Price</th>
+                    <th>Cancel Reservation</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in reservations)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td><a href="/ships/@item.ShipId">@GetShip(item.ShipId).Name</a></td>
+                        <td>@GetShip(item.ShipId).HomePort</td>
+                        <td>@item.FromDate.ToShortDateString()</td>
+                        <td>@item.ToDate.ToShortDateString()</td>
+                        <td>@item.Price</td>
+                        <td>
+                            <div>
+                                <ModalDialog ItemId="item.Id"
+                                             ActionOnOk="() => {
+                                                             onYesPushed(item.Id);
+                                                         }"
+                                             Disabled=@IsDesibled(@item.FromDate) />
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 
 @code {
-    List<ReservationGetDTO> reservations = null;
+
+    private List<ReservationGetDTO> reservations { get; set; }
+
+    async void onYesPushed(int itemId)
+    {
+        reservations = await ReservationService.DeleteReservation(itemId);
+        StateHasChanged();
+    }
 
     protected override async Task OnInitializedAsync()
     {
         reservations = await ReservationService.GetReservations();
+        await ShipSearchService.GetShips();
+        ReservationService.OnChange += StateHasChanged;
     }
 
-    void DeleteReservation(int id)
+    public void Dispose()
     {
-        ReservationService.DeleteReservation(id);
+        ReservationService.OnChange -= StateHasChanged;
+    }
+
+    public ShipDTO GetShip(int shipId)
+    {
+        return ShipSearchService.Ships.Find(s => s.Id == shipId);
+    }
+
+    public bool IsDesibled(DateTime from)
+    {
+        if (from.AddDays(-2) < DateTime.Now)
+            return true;
+        else
+            return false;
     }
 }

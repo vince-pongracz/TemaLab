@@ -1,0 +1,56 @@
+﻿@using BlazorStrap
+
+
+<BSButton Color="Color.Primary"
+          @onclick="() => {
+                        if (!Disabled)
+                        {
+                            onToggle();
+                        }
+                    }">
+    <span class="oi oi-trash"
+          aria-hidden="true">
+
+    </span>
+    Cancel
+</BSButton>
+
+<BSModal @ref="VerticallyCentered" IsCentered="true">
+    <BSModalHeader OnClick="@onToggle">Alert</BSModalHeader>
+    <BSModalBody>
+        <p>
+            Are sure you want to delete the reservation? #@ItemId
+        </p>
+    </BSModalBody>
+    <BSModalFooter>
+        <BSButton Color="Color.Secondary" @onclick="@onToggle">No</BSButton>
+        <BSButton Color="Color.Primary" @onclick="() => {
+                                                        if (!Disabled)
+                                                        {
+                                                            ActionOnOk();
+                                                            onToggle();
+                                                        }
+                                                      }">
+            Yes
+        </BSButton>
+    </BSModalFooter>
+</BSModal>
+
+@code{
+    [Parameter]
+    public Action ActionOnOk { get; set; }
+
+    [Parameter]
+    public int ItemId { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+
+    BSModal VerticallyCentered;
+
+    void onToggle()
+    {
+        VerticallyCentered.Toggle();
+    }
+}

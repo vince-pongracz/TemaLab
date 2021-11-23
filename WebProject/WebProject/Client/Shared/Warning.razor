@@ -1,0 +1,81 @@
+﻿
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+@if (ShowAlert)
+{
+    switch (Type)
+    {
+        case AlertType.ALERT:
+            break;
+        case AlertType.WARNING:
+            <!-- Warning Alert -->
+            <div class="alert alert-warning alert-dismissible d-flex align-items-center fade show">
+                <i class="bi-exclamation-triangle-fill"></i>
+                <strong class="mx-2">Warning!</strong> @AlertMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" @onclick="() => {
+                                                                                      ShowAlert = false;
+                                                                                  }" />
+            </div>
+            break;
+        case AlertType.ERROR:
+            <!-- Error Alert -->
+            <div class="alert alert-danger alert-dismissible fade show">
+                <i class="bi-exclamation-octagon-fill"></i>
+                <strong>Error!</strong>  @AlertMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" @onclick="() => {
+                                                                                      ShowAlert = false;
+                                                                                  }" />
+            </div>
+
+            break;
+        case AlertType.SUCCESS:
+            <!-- Success Alert -->
+            <div class="alert alert-success alert-dismissible fade show">
+                <i class="bi-check-circle-fill"></i>
+                <strong>Success!</strong> @AlertMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" @onclick="() => {
+                                                                                      ShowAlert = false;
+                                                                                  }" />
+            </div>
+            break;
+        default:
+            <!-- Info Alert -->
+            <div class="alert alert-info alert-dismissible fade show">
+                <i class="bi-info-circle-fill"></i>
+                <strong>Info!</strong>@AlertMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" @onclick="() => {
+                                                                                      ShowAlert = false;
+                                                                                  }" />
+            </div>
+            break;
+    }
+}
+
+@code{
+    public enum AlertType { ALERT, WARNING, ERROR, SUCCESS };
+
+    //true if show, false if not
+    [Parameter]
+    public bool ShowAlert { get; set; } = false;
+
+    //message to write out
+    [Parameter]
+    public string AlertMessage { get; set; } = "Alert";
+
+    [Parameter]
+    public AlertType Type { get; set; } = AlertType.WARNING;
+
+    //not reliable !!!
+    private int delayInSecAround = 12;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(delayInSecAround * 1000);
+        ShowAlert = false;
+        StateHasChanged();
+    }
+}

@@ -40,15 +40,15 @@
         line-height: 3rem;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgb(0 173 181);
-    color: white;
-}
+        .nav-item ::deep a.active {
+            background-color: rgb(0 173 181);
+            color: white;
+        }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(0,173,181,0.5);
-    color: white;
-}
+        .nav-item ::deep a:hover {
+            background-color: rgba(0,173,181,0.5);
+            color: white;
+        }
 
 @media (min-width: 641px) {
     .navbar-toggler {

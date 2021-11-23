@@ -1,16 +1,10 @@
 ﻿@page "/"
-@inject IJSRuntime JsRuntime;
+@inject IJSRuntime JsRuntime
 
-<h1 style="text-align:center">Yacht Airbnb</h1>
-
-<p style="text-align:center">Welcome to our new Yacht renting website!</p>
-<br>
-
-
-<BlazorStrap.BSCarousel NumberOfItems="3" Fade="true" style="width: 60%; margin:auto;">
-    <BlazorStrap.BSCarouselIndicators ActiveIndexChangedEvent="@indexChanged" />
+<BlazorStrap.BSCarousel NumberOfItems="3" Fade="true">
+    <BlazorStrap.BSCarouselIndicators />
     <div class="carousel-inner">
-
+        <BlazorStrap.BSCarouselCaption CaptionText="Welcome to our new Yacht renting website!" HeaderText="Yacht Airbnb" style="padding-bottom: 50%" />
         <BlazorStrap.BSCarouselItem Src="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" Alt="it is an image">
             <BlazorStrap.BSCarouselCaption CaptionText="Experience the adventure on our ships" HeaderText="Adventure" />
         </BlazorStrap.BSCarouselItem>
@@ -24,11 +18,3 @@
     <BlazorStrap.BSCarouselControl CarouselDirection="BlazorStrap.CarouselDirection.Previous" NumberOfItems="3" />
     <BlazorStrap.BSCarouselControl CarouselDirection="BlazorStrap.CarouselDirection.Next" NumberOfItems="3" />
 </BlazorStrap.BSCarousel>
-
-
-@code {
-    private void indexChanged(int index)
-    {
-        Console.WriteLine("Index Changed: " + index);
-    }
-}

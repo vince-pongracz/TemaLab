@@ -1,0 +1,80 @@
+﻿<style >
+
+body {
+    font: 16px Arial, Verdana, Tahoma, Sans-serif;
+}
+
+.container {
+    background: #ccc;
+    margin: 0 auto;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px 8px #d0d0d0;
+    width: 80%;
+    align-content: center
+}
+
+.wrapper {
+    margin: 8px 0;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: flex-start;
+    flex-grow: 1
+}
+
+input {
+    min-width: 20px;
+    padding: 8px;
+    margin: 0 4px 0 0;
+    border: 1px solid #666;
+    border-radius: 5px;
+    height: 30px;
+}
+
+.button {
+    padding: 8px 16px;
+    min-height: 48px;
+    min-width: 10px;
+    word-wrap: nowrap;
+    background: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+
+input {
+    order: 0;
+    align-self: auto;
+}
+
+.search {
+    flex: 2 1 auto;
+}
+
+.persons, .date-from, .date-to {
+    flex: 1 1 auto;
+}
+
+.button {
+    order: 4;
+    flex: 0 1 auto;
+    align-self: auto;
+}
+
+.btn-close{
+
+}
+
+/* Custom style to set icon size */
+.alert i[class^="bi-"] {
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+</style>
