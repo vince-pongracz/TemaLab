@@ -69,8 +69,11 @@ else
 
     async void DeleteReservation(int id)
     {
-        if (await JsRuntime.InvokeAsync<bool>("confirm", $"Are sure you want to delete the reservation #{reservations.Find(x => x.Id == id).Id}"))
+        var deleteConfirmed = await JsRuntime.InvokeAsync<bool>
+            ("confirm", $"Are sure you want to delete the reservation #{reservations.Find(x => x.Id == id).Id}");
+        if (deleteConfirmed)
             reservations = await ReservationService.DeleteReservation(id);
+        StateHasChanged();
     }
 
     public void Dispose()
