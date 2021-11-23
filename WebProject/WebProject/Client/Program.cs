@@ -1,3 +1,4 @@
+using BlazorStrap;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +36,7 @@ namespace WebProject.Client
             builder.Services.AddScoped<IRankingService, RankingService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IShipImageService, ShipImageService>();
+            builder.Services.AddBootstrapCss();
 
 
             await builder.Build().RunAsync();

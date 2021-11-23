@@ -20,15 +20,12 @@ namespace WebProject.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        private readonly NavigationManager NavigationManager;
-
         [Inject]
         public IMapper Mapper { get; set; }
 
         public ShipsController(ApplicationDbContext context, NavigationManager navigation)
         {
             _context = context;
-            NavigationManager = navigation;
             Mapper = new Mapper(new MapperConfiguration(c => c.AddProfile(new MapperConfigService())));
         }
 

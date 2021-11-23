@@ -39,7 +39,7 @@ namespace WebProject.Server.Services.ReservationService
 
         public async Task CreateReservation(ReservationGetDTO reservationDTO)
         {
-            if (isTheReservationCorrect(reservationDTO))
+            if (IsTheReservationCorrect(reservationDTO))
             {
                 _context.Reservations.Add(Mapper.Map(reservationDTO, new Reservation()));
                 await _context.SaveChangesAsync();
@@ -49,13 +49,13 @@ namespace WebProject.Server.Services.ReservationService
         public async Task<Reservation> DeleteReservation(int id)
         {
             var reservation = await _context.Reservations.FirstOrDefaultAsync(h => h.Id == id);
-            if (reservation != null && canBeDeleted(reservation))
+            if (reservation != null && CanBeDeleted(reservation))
                 _context.Reservations.Remove(reservation);
             await _context.SaveChangesAsync();
             return reservation;
         }
 
-        public bool isTheReservationCorrect(ReservationGetDTO reservation)
+        public bool IsTheReservationCorrect(ReservationGetDTO reservation)
         {
             bool result = true;
             if (reservation.FromDate >= reservation.ToDate)
@@ -67,7 +67,7 @@ namespace WebProject.Server.Services.ReservationService
             return result;
         }
 
-        public bool canBeDeleted(Reservation reserv)
+        public bool CanBeDeleted(Reservation reserv)
         {
             DateTime date = reserv.FromDate;
             if (date.AddDays(-2) < DateTime.Now)

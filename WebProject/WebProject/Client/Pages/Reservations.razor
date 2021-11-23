@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using WebProject.Shared
+@using BlazorStrap
 @attribute [Authorize]
 @inject IReservationService ReservationService
 @inject IShipSearchService ShipSearchService
@@ -47,7 +48,14 @@ else
                         <td>@item.ToDate.ToShortDateString()</td>
                         <td>@item.Price</td>
                         <td>
-                            <button class="btn btn-primary btn-cancel" disabled=@IsDesibled(@item.FromDate) @onclick="(() => DeleteReservation(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span> Cancel</button>
+                            <div>
+                                <ModalDialog ItemId="item.Id"
+                                             ActionOnOk="() => {
+                                                             onYesPushed(item.Id);
+                                                         }"
+                                             Disabled=@IsDesibled(@item.FromDate) />
+
+                            </div>
                         </td>
                     </tr>
                 }
@@ -60,20 +68,17 @@ else
 
     private List<ReservationGetDTO> reservations { get; set; }
 
+    async void onYesPushed(int itemId)
+    {
+        reservations = await ReservationService.DeleteReservation(itemId);
+        StateHasChanged();
+    }
+
     protected override async Task OnInitializedAsync()
     {
         reservations = await ReservationService.GetReservations();
         await ShipSearchService.GetShips();
         ReservationService.OnChange += StateHasChanged;
-    }
-
-    async void DeleteReservation(int id)
-    {
-        var deleteConfirmed = await JsRuntime.InvokeAsync<bool>
-            ("confirm", $"Are sure you want to delete the reservation #{reservations.Find(x => x.Id == id).Id}");
-        if (deleteConfirmed)
-            reservations = await ReservationService.DeleteReservation(id);
-        StateHasChanged();
     }
 
     public void Dispose()

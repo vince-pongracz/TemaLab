@@ -59,6 +59,8 @@ a, .btn-link {
 .spinner:before {
     content: '';
     box-sizing: border-box;
+    align-content: center;
+    align-self: center;
     position: absolute;
     top: 50%;
     left: 50%;

@@ -91,7 +91,7 @@ namespace WebProject.Server.Controllers
                 return Ok(Mapper.Map(await queryResultShips.ToListAsync(), new List<ShipDTO>()));
 
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 //for bad request return an empty list indicating that's wrong...
                 return BadRequest(Mapper.Map(new List<Ship>(), new List<ShipDTO>()));
