@@ -1,13 +1,22 @@
 ﻿@page "/ships/{id:int}"
 @using Microsoft.AspNetCore.Authorization
 @using WebProject.Client.Services.UserService
+@using BlazorPro.Spinkit
 @inject IShipSearchService ShipSearchService
 @inject IUserService UserService
 @attribute [Authorize]
 
 @if (ship == null)
 {
-    <div class="spinner"></div>
+    <SpinLoader IsLoading="true">
+        <LoadingTemplate>
+            <div>
+                <br />
+                <br />
+                <Chase Center="true" Color="blue" Size="40px"></Chase>
+            </div>
+        </LoadingTemplate>
+    </SpinLoader>
 }
 else
 {

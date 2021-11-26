@@ -1,11 +1,20 @@
 ﻿@inject IShipSearchService ShipSearchService
 @inject NavigationManager NavigationManager
+@using BlazorPro.Spinkit
 
 <h3>Ship List</h3>
 
 @if (Ships == null)
 {
-    <div class="spinner"></div>
+    <SpinLoader IsLoading="true">
+        <LoadingTemplate>
+            <div>
+                <br />
+                <br />
+                <Chase Center="true" Color="blue" Size="40px"></Chase>
+            </div>
+        </LoadingTemplate>
+    </SpinLoader>
 }
 else if (Ships.Count == 0)
 {
