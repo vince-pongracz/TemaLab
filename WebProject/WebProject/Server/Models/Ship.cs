@@ -82,6 +82,5 @@ namespace WebProject.Server.Models
         public virtual ICollection<Ranking> Rankings { get; set; }
 
         public int ImageId { get; set; }
-        public int MyProperty { get; set; }
     }
 }
