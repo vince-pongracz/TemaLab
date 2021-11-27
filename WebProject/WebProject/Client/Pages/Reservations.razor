@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using WebProject.Shared
 @using BlazorStrap
+@using BlazorPro.Spinkit
 @attribute [Authorize]
 @inject IReservationService ReservationService
 @inject IShipSearchService ShipSearchService
@@ -16,7 +17,19 @@
 
 @if (reservations == null)
 {
-    <div class="spinner"></div>
+    <SpinLoader IsLoading="true">
+        <LoadingTemplate>
+            <div>
+                <br />
+                <br />
+                <Chase Center="true" Color="blue" Size="40px"></Chase>
+            </div>
+        </LoadingTemplate>
+    </SpinLoader>
+    <!--
+        <Circle Center="true" Size="40p" />
+        <div class="spinner"></div>
+    -->
 }
 else if (reservations.Count == 0)
 {
