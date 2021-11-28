@@ -45,7 +45,7 @@ else
                         <td>Max @item.MaxPeople people</td>
                         <td>Ship type: </td>
                         <td>@item.ShipType</td>
-                        <td>Set the avaibility of the ship</td>
+                        <td>Set the avaibility of the ship (Checked - available)</td>
                     </tr>
                     <tr>
                         <td>Price at Weekends: </td>
@@ -54,15 +54,8 @@ else
                         <td>@item.PriceAtWeekDays</td>
                         <td>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked @bind-value="@item.IsAvailable">
                             </div>
-                            <!--<EditForm Model="OwnedShips" OnValidSubmit="UpdateAvaibility">
-        <InputRadioGroup TValue="bool" id="" @bind-Value="item.IsAvailable" Buttons="true">
-            <InputRadio TValue="bool">Available</InputRadio>
-            <InputRadio TValue="bool">Unavailable</InputRadio>
-        </InputRadioGroup>
-    </EditForm>-->
                         </td>
                     </tr>
                 </table>
