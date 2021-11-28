@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebProject.Server.Data;
 using WebProject.Server.Models;
@@ -43,5 +44,13 @@ namespace WebProject.Server.Controllers
                 return NotFound("Ship was not found");
             return Ok(Mapper.Map(ship, new ShipDTO()));
         }
+
+        [HttpGet("OwnedShips")]
+        public async Task<IActionResult> GetOwnedShipsForUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Ok(Mapper.Map(await _context.Ships.Where(x => x.OwnerId == userId).ToListAsync(), new List<ShipDTO>()));
+        }
+
     }
 }

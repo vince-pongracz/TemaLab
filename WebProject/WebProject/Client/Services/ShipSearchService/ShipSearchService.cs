@@ -55,5 +55,13 @@ namespace WebProject.Client.Services
                 throw new InvalidOperationException("Wrong search criterias");
             }
         }
+
+        public async Task<List<ShipDTO>> GetOwnedShipsForUser()
+        {
+            Ships = await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships/OwnedShips");
+            return Ships;
+        }
+
+        
     }
 }

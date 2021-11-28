@@ -1,0 +1,99 @@
+﻿@page "/myYachts"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@inject IShipSearchService ShipSearchService
+
+<h3>My Yachts</h3>
+<br>
+
+@if (OwnedShips == null)
+{
+    <SpinLoader IsLoading="true">
+        <LoadingTemplate>
+            <div>
+                <br />
+                <br />
+                <Chase Center="true" Color="blue" Size="40px"></Chase>
+            </div>
+        </LoadingTemplate>
+    </SpinLoader>
+}
+else if (OwnedShips.Count == 0)
+{
+    <span>You do not lease out any ships yet.</span>
+}
+else
+{
+    foreach (var item in OwnedShips)
+    {
+        <div class="card own-card-style ">
+            <h5 class="card-header">@item.Name</h5>
+            <div class="card-body">
+
+                <img class="ship-img" src="https://www.vitorlazas.hu/nodepic/950x607/301539.jpg" alt="Image of the ship">
+
+                <table class="card-table">
+                    <tr>
+                        <td>Port: </td>
+                        <td>@item.HomePort</td>
+                        <td>Ranking: </td>
+                        <td> ...</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Capacity: </td>
+                        <td>Max @item.MaxPeople people</td>
+                        <td>Ship type: </td>
+                        <td>@item.ShipType</td>
+                        <td>Set the avaibility of the ship</td>
+                    </tr>
+                    <tr>
+                        <td>Price at Weekends: </td>
+                        <td>@item.PriceAtWeekEnds</td>
+                        <td>Price at Weekdays: </td>
+                        <td>@item.PriceAtWeekDays</td>
+                        <td>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                            </div>
+                            <!--<EditForm Model="OwnedShips" OnValidSubmit="UpdateAvaibility">
+        <InputRadioGroup TValue="bool" id="" @bind-Value="item.IsAvailable" Buttons="true">
+            <InputRadio TValue="bool">Available</InputRadio>
+            <InputRadio TValue="bool">Unavailable</InputRadio>
+        </InputRadioGroup>
+    </EditForm>-->
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <!--just for styling-->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+    }
+}
+
+@code {
+    public bool Available { get; set; }
+
+    public List<ShipDTO> OwnedShips = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        OwnedShips = await ShipSearchService.GetOwnedShipsForUser();
+    }
+
+    public void UpdateAvaibility()
+    {
+
+    }
+}
