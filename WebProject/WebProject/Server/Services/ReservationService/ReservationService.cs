@@ -31,7 +31,8 @@ namespace WebProject.Server.Services.ReservationService
         public async Task<List<ReservationGetDTO>> GetReservations(string userID)
         {
             var reservations = await _context.Reservations
-                .Where(x => x.ApplicationUserId == userID)
+                .Where(x => x.ApplicationUserId == userID
+                    && !x.ReservationApproved)
                 .OrderByDescending(x => x.ToDate)
                 .ToListAsync();
             return Mapper.Map(reservations, new List<ReservationGetDTO>());
@@ -67,7 +68,7 @@ namespace WebProject.Server.Services.ReservationService
             return result;
         }
 
-        public bool CanBeDeleted(Reservation reserv)
+        public static bool CanBeDeleted(Reservation reserv)
         {
             DateTime date = reserv.FromDate;
             if (date.AddDays(-2) < DateTime.Now)
@@ -76,7 +77,7 @@ namespace WebProject.Server.Services.ReservationService
                 return true;
         }
 
-        private bool IsInThePast(Reservation reservation)
+        private static bool IsInThePast(Reservation reservation)
         {
             if (reservation.ToDate < DateTime.Now) return true;
             else return false;
@@ -84,14 +85,26 @@ namespace WebProject.Server.Services.ReservationService
 
         public async Task<List<ReservationGetDTO>> GetIncomingBookings(string actualLoggedInUserId)
         {
-            var probableShipIds = _context.Ships.Where(x => x.OwnerId == actualLoggedInUserId).Select(x => x.Id);
+            var probableShipIds = await _context.Ships.Where(x => x.OwnerId == actualLoggedInUserId).Select(x => x.Id).ToListAsync();
 
-            var probableReservations = _context.Reservations
-                .Where(x => probableShipIds.Contains(x.ShipId))
+            var probableReservations = await _context.Reservations.OrderByDescending(x => x.ToDate).ToListAsync();
+
+            var returnList = probableReservations.Where(x => probableShipIds.Contains(x.ShipId))
                 .Where(x => CanBeDeleted(x))
                 .Where(x => !IsInThePast(x));
 
-            return Mapper.Map(await probableReservations.ToListAsync(), new List<ReservationGetDTO>());
+            return Mapper.Map(returnList, new List<ReservationGetDTO>());
+        }
+
+        public async Task ApproveReservation(ReservationPostDTO reservation)
+        {
+            var updateThisReservation = await _context.Reservations.Where(x => x.Id == reservation.Id).FirstOrDefaultAsync();
+            if (updateThisReservation != null)
+            {
+                updateThisReservation.ReservationApproved = true;
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

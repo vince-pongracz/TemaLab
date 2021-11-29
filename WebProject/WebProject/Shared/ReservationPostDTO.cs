@@ -24,5 +24,7 @@ namespace WebProject.Shared
         public string ApplicationUserId { get; set; }
         [JsonIgnore]
         public virtual ApplicationUserDTO Person { get; set; }
+
+        public bool ReservationApproved { get; set; } = false;
     }
 }

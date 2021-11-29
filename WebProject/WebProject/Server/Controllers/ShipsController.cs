@@ -51,6 +51,5 @@ namespace WebProject.Server.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok(Mapper.Map(await _context.Ships.Where(x => x.OwnerId == userId).ToListAsync(), new List<ShipDTO>()));
         }
-
     }
 }

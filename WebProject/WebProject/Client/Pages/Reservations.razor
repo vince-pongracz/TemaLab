@@ -68,6 +68,11 @@ else
                                                          }"
                                              Disabled=@IsDesibled(@item.FromDate)
                                              QuestionText="Are you sure, you want to delete this reservation?" />
+                                @if (item.ReservationApproved)
+                                {
+                                    <br />
+                                    <p>Approved by owner</p>
+                                }
 
                             </div>
                         </td>

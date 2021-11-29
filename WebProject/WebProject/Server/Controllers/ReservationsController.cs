@@ -60,5 +60,11 @@ namespace WebProject.Server.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok(await _reservationService.GetIncomingBookings(userId));
         }
+        [HttpPost("incomingBookings")]
+        public async Task<IActionResult> ApproveBooking(ReservationPostDTO reservation)
+        {
+            await _reservationService.ApproveReservation(reservation);
+            return await GetIncomingBookings();
+        }
     }
 }
