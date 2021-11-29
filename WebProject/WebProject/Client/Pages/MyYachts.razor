@@ -54,7 +54,14 @@ else
                         <td>@item.PriceAtWeekDays</td>
                         <td>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked @bind-value="@item.IsAvailable">
+                                @if (item.IsAvailable)
+                                {
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked @bind-value="@item.IsAvailable" @oninput="EventArgs => { UpdateAvailability(item.Id, false); }">
+                                }
+                                else
+                                {
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" @bind-value="@item.IsAvailable" @oninput="EventArgs => { UpdateAvailability(item.Id, true); }">
+                                }
                             </div>
                         </td>
                     </tr>
@@ -76,7 +83,6 @@ else
 }
 
 @code {
-    public bool Available { get; set; }
 
     public List<ShipDTO> OwnedShips = null;
 
@@ -85,8 +91,12 @@ else
         OwnedShips = await ShipSearchService.GetOwnedShipsForUser();
     }
 
-    public void UpdateAvaibility()
+    public async void UpdateAvailability(int id, bool checkedValue)
     {
-
+        ShipDTO shipToEdit = await ShipSearchService.GetShip(id);
+        shipToEdit.IsAvailable = checkedValue;
+        await ShipSearchService.UpdateShipAvailability(shipToEdit, id);
+        StateHasChanged();
     }
+
 }

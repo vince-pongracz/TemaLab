@@ -62,6 +62,11 @@ namespace WebProject.Client.Services
             return Ships;
         }
 
-        
+        public async Task<ShipDTO> UpdateShipAvailability(ShipDTO shipDTO, int id)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/ships/{id}", shipDTO);
+            var ships = await result.Content.ReadFromJsonAsync<ShipDTO>();
+            return ships;
+        }
     }
 }

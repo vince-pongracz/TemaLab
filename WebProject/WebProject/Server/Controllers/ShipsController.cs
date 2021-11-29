@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -52,5 +53,25 @@ namespace WebProject.Server.Controllers
             return Ok(Mapper.Map(await _context.Ships.Where(x => x.OwnerId == userId).ToListAsync(), new List<ShipDTO>()));
         }
 
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateShipAvailability(int id, ShipDTO shipDTO)
+        {
+            try
+            {
+                var shipToUpdate = await _context.Ships.FirstOrDefaultAsync(s => s.Id == id);
+
+                if (shipToUpdate == null)
+                    return NotFound($"Ship with Id = {id} not found");
+
+                shipToUpdate.IsAvailable = shipDTO.IsAvailable;
+                await _context.SaveChangesAsync();
+
+                return Ok(Mapper.Map(shipToUpdate, new ShipDTO()));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data");
+            }
+        }
     }
 }
