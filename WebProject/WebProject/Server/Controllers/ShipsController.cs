@@ -52,7 +52,6 @@ namespace WebProject.Server.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok(Mapper.Map(await _context.Ships.Where(x => x.OwnerId == userId).ToListAsync(), new List<ShipDTO>()));
         }
-<<<<<<< HEAD
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateShipAvailability(int id, ShipDTO shipDTO)
@@ -74,7 +73,5 @@ namespace WebProject.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data");
             }
         }
-=======
->>>>>>> 5d47a026fa514cac43a0e1716cf26ba5881d6264
     }
 }
