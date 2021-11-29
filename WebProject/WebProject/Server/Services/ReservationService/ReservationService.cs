@@ -75,5 +75,23 @@ namespace WebProject.Server.Services.ReservationService
             else
                 return true;
         }
+
+        private bool IsInThePast(Reservation reservation)
+        {
+            if (reservation.ToDate < DateTime.Now) return true;
+            else return false;
+        }
+
+        public async Task<List<ReservationGetDTO>> GetIncomingBookings(string actualLoggedInUserId)
+        {
+            var probableShipIds = _context.Ships.Where(x => x.OwnerId == actualLoggedInUserId).Select(x => x.Id);
+
+            var probableReservations = _context.Reservations
+                .Where(x => probableShipIds.Contains(x.ShipId))
+                .Where(x => CanBeDeleted(x))
+                .Where(x => !IsInThePast(x));
+
+            return Mapper.Map(await probableReservations.ToListAsync(), new List<ReservationGetDTO>());
+        }
     }
 }

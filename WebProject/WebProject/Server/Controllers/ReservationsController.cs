@@ -53,5 +53,12 @@ namespace WebProject.Server.Controllers
             else
                 return await GetReservations();
         }
+
+        [HttpGet("incomingBookings")]
+        public async Task<IActionResult> GetIncomingBookings()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Ok(await _reservationService.GetIncomingBookings(userId));
+        }
     }
 }

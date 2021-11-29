@@ -40,5 +40,11 @@ namespace WebProject.Client.Services
             OnChange.Invoke();
             return reservations;
         }
+
+        public async Task<List<ReservationGetDTO>> GetIncomingBookings()
+        {
+            reservations = await _httpClient.GetFromJsonAsync<List<ReservationGetDTO>>("api/reservations/incomingBookings");
+            return reservations;
+        }
     }
 }

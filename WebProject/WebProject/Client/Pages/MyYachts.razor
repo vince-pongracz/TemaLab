@@ -1,5 +1,6 @@
 ﻿@page "/myYachts"
 @using Microsoft.AspNetCore.Authorization
+@using BlazorPro.Spinkit
 @attribute [Authorize]
 @inject IShipSearchService ShipSearchService
 
@@ -58,11 +59,11 @@ else
                                 <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
                             </div>
                             <!--<EditForm Model="OwnedShips" OnValidSubmit="UpdateAvaibility">
-        <InputRadioGroup TValue="bool" id="" @bind-Value="item.IsAvailable" Buttons="true">
-            <InputRadio TValue="bool">Available</InputRadio>
-            <InputRadio TValue="bool">Unavailable</InputRadio>
-        </InputRadioGroup>
-    </EditForm>-->
+                                <InputRadioGroup TValue="bool" id="" @bind-Value="item.IsAvailable" Buttons="true">
+                                    <InputRadio TValue="bool">Available</InputRadio>
+                                    <InputRadio TValue="bool">Unavailable</InputRadio>
+                                </InputRadioGroup>
+                            </EditForm>-->
                         </td>
                     </tr>
                 </table>

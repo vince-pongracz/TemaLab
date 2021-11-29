@@ -10,6 +10,7 @@ namespace WebProject.Server.Services.ReservationService
     public interface IReservationService
     {
         Task<List<ReservationGetDTO>> GetReservations(string userID);
+        Task<List<ReservationGetDTO>> GetIncomingBookings(string actualLoggedInUserId);
         Task CreateReservation(ReservationGetDTO reservationDTO);
         Task<Reservation> DeleteReservation(int id);
     }
