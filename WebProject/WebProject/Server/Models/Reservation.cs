@@ -30,5 +30,7 @@ namespace WebProject.Server.Models
         public string ApplicationUserId { get; set; }
         [JsonIgnore]
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public bool ReservationApproved { get; set; } = false;
     }
 }

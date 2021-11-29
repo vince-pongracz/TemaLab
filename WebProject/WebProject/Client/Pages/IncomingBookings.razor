@@ -1,4 +1,4 @@
-﻿@page "/reservations"
+﻿@page "/incomingBookings"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using WebProject.Shared
@@ -12,34 +12,31 @@
 @implements IDisposable
 
 <div class="title">
-    <h3>Reservations</h3>
+    <h3>Incoming Bookings</h3>
 </div>
+<br />
 
-@if (reservations == null)
+@if (bookings == null)
 {
     <SpinLoader IsLoading="true">
         <LoadingTemplate>
             <div>
                 <br />
                 <br />
-                <Chase Center="true" Color="black" Size="40px"></Chase>
+                <Chase Center="true" Color="blue" Size="40px"></Chase>
             </div>
         </LoadingTemplate>
     </SpinLoader>
-    <!--
-        <Circle Center="true" Size="40p" />
-        <div class="spinner"></div>
-    -->
 }
-else if (reservations.Count == 0)
+else if (bookings.Count == 0)
 {
-    <span>It seems like you haven't got any reservation for now...</span>
+    <span>It seems like you haven't got any incoming bookings for now...</span>
 }
 else
 {
     <div class="reservation-table">
-        <table class="table table-striped table-hover">
-            <thead class="table-dark">
+        <table class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
                     <th>Nr.</th>
                     <th>Ship Name</th>
@@ -47,11 +44,11 @@ else
                     <th>From</th>
                     <th>To</th>
                     <th>Price</th>
-                    <th>Cancel Reservation</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in reservations)
+                @foreach (var item in bookings)
                 {
                     <tr>
                         <td>@item.Id</td>
@@ -62,18 +59,29 @@ else
                         <td>@item.Price</td>
                         <td>
                             <div>
+
                                 <ModalDialog ItemId="item.Id"
                                              ActionOnOk="() => {
-                                                             onYesPushed(item.Id);
+                                                             onCancelPushed(item.Id);
                                                          }"
                                              Disabled=@IsDesibled(@item.FromDate)
-                                             QuestionText="Are you sure, you want to delete this reservation?" />
-                                @if (item.ReservationApproved)
+                                             ButtonText="Dismiss"
+                                             QuestionText="Are you sure, you want to delete this incoming booking?" />
+                                @if (!item.ReservationApproved)
                                 {
-                                    <br />
-                                    <p>Approved by owner</p>
+                                    <ModalDialog ItemId="item.Id"
+                                                 ActionOnOk="() => {
+                                                             onApprovePushed(item.Id);
+                                                         }"
+                                                 Disabled=@IsDesibled(@item.FromDate)
+                                                 ButtonText="Approve"
+                                                 QuestionText="Are you sure, you want to approve this incoming booking?"
+                                                 PictoDesign="oi oi-check" />
                                 }
-
+                                else
+                                {
+                                    <p> Approved!</p>
+                                }
                             </div>
                         </td>
                     </tr>
@@ -85,17 +93,22 @@ else
 
 @code {
 
-    private List<ReservationGetDTO> reservations { get; set; }
+    private List<ReservationGetDTO> bookings { get; set; }
 
-    async void onYesPushed(int itemId)
+    async void onCancelPushed(int itemId)
     {
-        reservations = await ReservationService.DeleteReservation(itemId);
+        bookings = await ReservationService.DeleteReservation(itemId);
+        StateHasChanged();
+    }
+    async void onApprovePushed(int itemId)
+    {
+        bookings = await ReservationService.ApproveReservation(itemId);
         StateHasChanged();
     }
 
     protected override async Task OnInitializedAsync()
     {
-        reservations = await ReservationService.GetReservations();
+        bookings = await ReservationService.GetReservations();
         await ShipSearchService.GetShips();
         ReservationService.OnChange += StateHasChanged;
     }
