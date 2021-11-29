@@ -16,7 +16,7 @@
 }
 
 .own-table {
-    width: 50%;
+    line-height: 2.2;
 }
 
 tr:nth-child(even) {

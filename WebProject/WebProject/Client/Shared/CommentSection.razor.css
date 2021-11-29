@@ -53,6 +53,8 @@
     padding-left: 40px;
     padding-right: 30px;
     padding-top: 10px;
+    margin-bottom: 20px;
+    min-width: 60%;
 }
 
 .comment {
@@ -63,6 +65,8 @@
     padding-left: 40px;
     padding-right: 30px;
     padding-top: 10px;
+    margin-bottom: 20px;
+    min-width: 60%;
 }
 
     .comment h4,
@@ -124,8 +128,7 @@ form {
     border-radius: 5px;
     padding: 30px;
     box-shadow: 0 0 20px 8px #d0d0d0;
-    width: 100%;
-    margin-left: 7%;
+    margin-left: 50px;
     margin-top: 55px;
     position: absolute;
 }

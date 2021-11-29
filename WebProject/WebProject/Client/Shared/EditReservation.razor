@@ -15,10 +15,12 @@
                 <label>Book from:</label>
                 <InputDate @bind-Value="reservation.FromDate" class="form-control"></InputDate>
             </div>
+            <br>
             <div class="form-group">
                 <label>Book until</label>
                 <InputDate @bind-Value="reservation.ToDate" class="form-control"></InputDate>
             </div>
+            <br>
             <div class="form-group">
                 @if (CalculatePrice() < 0)
                 {

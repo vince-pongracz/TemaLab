@@ -15,7 +15,7 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-5 col-md-6 col-12 pb-4">
+            <div class="col-md-7">
                 @if (Rankings.Count <= 0)
                 {
                     <h1 class="comment-margin">Comments</h1> <!--Ha nincs komment a navbar rosszul jelenik ezért egy plusz margint kellett hozzádni ha üres -->
@@ -29,7 +29,7 @@
                 {
                     if (i % 2 == 0)
                     {
-                        <div class="comment mt-4 text-justify">
+                        <div class="comment">
                             <h4 class="title-dark"></h4><span>@currentUser.UserName.Split('@')[0] - @Rankings[i].Date.ToLongDateString()</span> <br>
                             <p>@Rankings[i].Comment</p>
                             @for (int j = 0; j < Rankings[i].Stars; j++) //yellow stars = actual ranking
@@ -44,7 +44,7 @@
                     }
                     else
                     {
-                        <div class="darker mt-4 text-justify">
+                        <div class="darker">
                             <h4 class="title-hell"></h4><span>@currentUser.UserName.Split('@')[0] - @Rankings[i].Date.ToLongDateString()</span> <br>
                             <p>@Rankings[i].Comment</p>
                             @for (int j = 0; j < Rankings[i].Stars; j++) //yellow stars = actual ranking
@@ -57,10 +57,11 @@
                             }
                         </div>
                     }
+                    <br>
                 }
             </div>
 
-            <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+            <div class="col-md-5">
                 <form id="algin-form">
                     <div class="form-group">
                         <h4>Leave a comment</h4>

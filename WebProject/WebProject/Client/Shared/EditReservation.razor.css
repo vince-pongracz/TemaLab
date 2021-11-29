@@ -1,8 +1,7 @@
 ﻿.reservation-card {
-    width: 26%;
+    max-width: 400px;
     box-shadow: 0 0 20px 8px #d0d0d0;
-    margin-left: 48%;
-    position: absolute;
+    margin-left: 50px;
     padding: 10px;
 }
 
