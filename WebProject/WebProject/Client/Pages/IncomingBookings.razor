@@ -52,41 +52,47 @@ else
                 {
                     if (item != null)
                     {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td><a href="/ships/@item.ShipId">@GetShip(item.ShipId).Name</a></td>
-                        <td>@GetShip(item.ShipId).HomePort</td>
-                        <td>@item.FromDate.ToShortDateString()</td>
-                        <td>@item.ToDate.ToShortDateString()</td>
-                        <td>@item.Price</td>
-                        <td>
-                            <div>
-
-                                <ModalDialog ItemId="item.Id"
-                                             ActionOnOk="() => {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td><a href="/ships/@item.ShipId">@GetShip(item.ShipId).Name</a></td>
+                            <td>@GetShip(item.ShipId).HomePort</td>
+                            <td>@item.FromDate.ToShortDateString()</td>
+                            <td>@item.ToDate.ToShortDateString()</td>
+                            <td>@item.Price</td>
+                            <td>
+                                <div>
+                                    @if (!IsDesibled(item.FromDate))
+                                    {
+                                        <ModalDialog ItemId="item.Id"
+                                                     ActionOnOk="() => {
                                                              onCancelPushed(item.Id);
                                                          }"
-                                             Disabled=@IsDesibled(@item.FromDate)
-                                             ButtonText="Dismiss"
-                                             QuestionText="Are you sure, you want to delete this incoming booking?" />
-                                @if (!item.ReservationApproved)
-                                {
-                                    <ModalDialog ItemId="item.Id"
-                                                 ActionOnOk="() => {
+                                                     Disabled=@IsDesibled(@item.FromDate)
+                                                     ButtonText="Dismiss"
+                                                     QuestionText="Are you sure, you want to delete this incoming booking?" />
+                                        @if (!item.ReservationApproved)
+                                        {
+                                            <ModalDialog ItemId="item.Id"
+                                                         ActionOnOk="() => {
                                                              onApprovePushed(item.Id);
                                                          }"
-                                                 Disabled=@IsDesibled(@item.FromDate)
-                                                 ButtonText="Approve"
-                                                 QuestionText="Are you sure, you want to approve this incoming booking?"
-                                                 PictoDesign="oi oi-check" />
-                                }
-                                else
-                                {
-                                    <p> Approved!</p>
-                                }
-                            </div>
-                        </td>
-                    </tr>
+                                                         Disabled=@IsDesibled(@item.FromDate)
+                                                         ButtonText="Approve"
+                                                         QuestionText="Are you sure, you want to approve this incoming booking?"
+                                                         PictoDesign="oi oi-check" />
+                                        }
+                                        else
+                                        {
+                                            <p> Approved!</p>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p> Time is out!</p>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
                     }
                 }
             </tbody>
@@ -111,7 +117,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        bookings = await ReservationService.GetReservations();
+        bookings = await ReservationService.GetIncomingBookings();
         await ShipSearchService.GetShips();
         ReservationService.OnChange += StateHasChanged;
     }
