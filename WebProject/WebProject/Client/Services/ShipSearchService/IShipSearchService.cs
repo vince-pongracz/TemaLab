@@ -12,6 +12,8 @@ namespace WebProject.Client.Services
         List<ShipDTO> Ships { get; set; }
         Task<List<ShipDTO>> GetShips();
 
+        Task<List<ShipDTO>> GetAvailableShips();
+
         Task<ShipDTO> GetShip(int id);
 
         Task<List<ShipDTO>> SearchShips(DateTime? from, DateTime? until, int? maxPersons,string where);

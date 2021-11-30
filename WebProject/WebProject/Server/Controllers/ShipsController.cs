@@ -34,6 +34,12 @@ namespace WebProject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShips()
         {
+            return Ok(Mapper.Map(await _context.Ships.Where(x => !x.IsDeleted).ToListAsync(), new List<ShipDTO>()));
+        }
+
+        [HttpGet("available")]
+        public async Task<IActionResult> GetAvailableShips()
+        {
             return Ok(Mapper.Map(await _context.Ships.Where(x => x.IsAvailable && !x.IsDeleted).ToListAsync(), new List<ShipDTO>()));
         }
 

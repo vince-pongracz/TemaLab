@@ -50,6 +50,8 @@ else
             <tbody>
                 @foreach (var item in bookings)
                 {
+                    if (item != null)
+                    {
                     <tr>
                         <td>@item.Id</td>
                         <td><a href="/ships/@item.ShipId">@GetShip(item.ShipId).Name</a></td>
@@ -85,6 +87,7 @@ else
                             </div>
                         </td>
                     </tr>
+                    }
                 }
             </tbody>
         </table>

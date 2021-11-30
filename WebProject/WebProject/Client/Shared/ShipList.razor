@@ -77,7 +77,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Ships = await ShipSearchService.GetShips();
+        Ships = await ShipSearchService.GetAvailableShips();
         StateHasChanged();
     }
 

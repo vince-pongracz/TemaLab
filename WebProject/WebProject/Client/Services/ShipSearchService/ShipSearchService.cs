@@ -34,6 +34,12 @@ namespace WebProject.Client.Services
             return Ships;
         }
 
+        public async Task<List<ShipDTO>> GetAvailableShips()
+        {
+            Ships = await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships/available");
+            return Ships;
+        }
+
         public async Task<List<ShipDTO>> SearchShips(DateTime? from = default, DateTime? until = default, int? maxPersons = default, string where = default)
         {
             var queryBuilder = new QueryBuilder();
