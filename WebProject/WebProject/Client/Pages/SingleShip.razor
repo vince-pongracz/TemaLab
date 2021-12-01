@@ -1,13 +1,22 @@
 ﻿@page "/ships/{id:int}"
 @using Microsoft.AspNetCore.Authorization
 @using WebProject.Client.Services.UserService
+@using BlazorPro.Spinkit
 @inject IShipSearchService ShipSearchService
 @inject IUserService UserService
 @attribute [Authorize]
 
 @if (ship == null)
 {
-    <div class="spinner"></div>
+    <SpinLoader IsLoading="true">
+        <LoadingTemplate>
+            <div>
+                <br />
+                <br />
+                <Chase Center="true" Color="blue" Size="40px"></Chase>
+            </div>
+        </LoadingTemplate>
+    </SpinLoader>
 }
 else
 {
@@ -15,7 +24,7 @@ else
 
     <h3 class="title"> This is the detailed page of the ship "@ship.Name"</h3>
 
-    <table class="table first-table">
+    <table class="table table-borderless first-table" style="border-top: 2px solid #d7d8d8;">
         <tr>
             <td>Name: </td>
             <td>@ship.Name</td>
@@ -38,50 +47,63 @@ else
 
     <br>
     <br>
-    //TODO here user is also required !!! (or an username/userid pass is required)
-    <EditReservation SelectedShip="@ship"></EditReservation>
-
-    <h4>Dimensions</h4>
-    <table class="table own-table">
-        <tr>
-            <td>Legth: </td>
-            <td>@ship.Length</td>
-            <td>Width: </td>
-            <td>@ship.Width</td>
-
-        </tr>
-        <tr>
-            <td>Drought:</td>
-            <td>@ship.Draught</td>
-            <td>Weight: </td>
-            <td>@ship.Weight</td>
-        </tr>
-
-    </table>
-    <br>
-    <h4>Other details</h4>
-
-    <table class="table own-table">
-        <tr>
-            <td>Manufecturer: </td>
-            <td>@ship.Manufacturer</td>
-            <td>Type: </td>
-            <td>@ship.ShipType</td>
-
-        </tr>
-        <tr>
-            <td>Production Year:: </td>
-            <td>@ship.ProductionYear</td>
-            <td>Overall Ranking: </td>
-            <td>...</td>
-        </tr>
-    </table>
     <br>
     <br>
     <br>
-    <h4>Description</h4>
-    <p>@ship.Description</p>
-    <br>
+
+    <div class="container" style="padding-left: 0px; margin-left: 0px;">
+        <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+        <div class="row">
+            <div class="col-md-7">
+                <h4>Dimensions</h4>
+                <table class="table table-borderless table-hover own-table" style="border-top: 2px solid #d7d8d8; ">
+                    <tr>
+                        <td>Legth: </td>
+                        <td>@ship.Length</td>
+                        <td>Width: </td>
+                        <td>@ship.Width</td>
+
+                    </tr>
+                    <tr>
+                        <td>Drought:</td>
+                        <td>@ship.Draught</td>
+                        <td>Weight: </td>
+                        <td>@ship.Weight</td>
+                    </tr>
+
+                </table>
+                <br>
+                <h4>Other details</h4>
+
+                <table class="table table-borderless own-table" style="border-top: 2px solid #d7d8d8; ">
+                    <tr>
+                        <td>Manufecturer: </td>
+                        <td>@ship.Manufacturer</td>
+                        <td>Type: </td>
+                        <td>@ship.ShipType</td>
+
+                    </tr>
+                    <tr>
+                        <td>Production Year:: </td>
+                        <td>@ship.ProductionYear</td>
+                        <td>Overall Ranking: </td>
+                        <td>...</td>
+                    </tr>
+                </table>
+                <br>
+
+                <h4>Description</h4>
+                <p>@ship.Description</p>
+                <br>
+            </div>
+            <div class="col-6 col-md-5">
+                <EditReservation SelectedShip="@ship"></EditReservation>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <h4>Owner Details</h4>
     <div class="contact-div">
@@ -128,7 +150,6 @@ else
     <div class="comment">
         <CommentSection currentShipIdFromParentPage="Id" />
     </div>
-
 }
 
 

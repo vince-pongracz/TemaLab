@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using WebProject.Shared
 @using BlazorStrap
+@using BlazorPro.Spinkit
 @attribute [Authorize]
 @inject IReservationService ReservationService
 @inject IShipSearchService ShipSearchService
@@ -16,7 +17,19 @@
 
 @if (reservations == null)
 {
-    <div class="spinner"></div>
+    <SpinLoader IsLoading="true">
+        <LoadingTemplate>
+            <div>
+                <br />
+                <br />
+                <Chase Center="true" Color="black" Size="40px"></Chase>
+            </div>
+        </LoadingTemplate>
+    </SpinLoader>
+    <!--
+        <Circle Center="true" Size="40p" />
+        <div class="spinner"></div>
+    -->
 }
 else if (reservations.Count == 0)
 {
@@ -25,8 +38,8 @@ else if (reservations.Count == 0)
 else
 {
     <div class="reservation-table">
-        <table class="table table-striped">
-            <thead class="thead-dark">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>Nr.</th>
                     <th>Ship Name</th>
@@ -40,24 +53,33 @@ else
             <tbody>
                 @foreach (var item in reservations)
                 {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td><a href="/ships/@item.ShipId">@GetShip(item.ShipId).Name</a></td>
-                        <td>@GetShip(item.ShipId).HomePort</td>
-                        <td>@item.FromDate.ToShortDateString()</td>
-                        <td>@item.ToDate.ToShortDateString()</td>
-                        <td>@item.Price</td>
-                        <td>
-                            <div>
-                                <ModalDialog ItemId="item.Id"
-                                             ActionOnOk="() => {
+                    if (item != null)
+                    {
+                <tr>
+                    <td>@item.Id</td>
+                    <td><a href="/ships/@item.ShipId">@GetShip(item.ShipId).Name</a></td>
+                    <td>@GetShip(item.ShipId).HomePort</td>
+                    <td>@item.FromDate.ToShortDateString()</td>
+                    <td>@item.ToDate.ToShortDateString()</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <div>
+                            <ModalDialog ItemId="item.Id"
+                                         ActionOnOk="() => {
                                                              onYesPushed(item.Id);
                                                          }"
-                                             Disabled=@IsDesibled(@item.FromDate) />
+                                         Disabled=@IsDesibled(@item.FromDate)
+                                         QuestionText="Are you sure, you want to delete this reservation?" />
+                            @if (item.ReservationApproved)
+                            {
+                                <br />
+                                <p>Approved by owner</p>
+                            }
 
-                            </div>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                </tr>
+                    }
                 }
             </tbody>
         </table>

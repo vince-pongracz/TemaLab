@@ -1,25 +1,24 @@
 ﻿@using BlazorStrap
 
 
-<BSButton Color="Color.Primary"
+<BSButton IsDisabled="Disabled" style="background-color: #24aeb4; border-color: #24aeb4; width: 8rem"
           @onclick="() => {
                         if (!Disabled)
                         {
                             onToggle();
                         }
                     }">
-    <span class="oi oi-trash"
+    <span class="@PictoDesign"
           aria-hidden="true">
-
     </span>
-    Cancel
+    @ButtonText
 </BSButton>
 
 <BSModal @ref="VerticallyCentered" IsCentered="true">
     <BSModalHeader OnClick="@onToggle">Alert</BSModalHeader>
     <BSModalBody>
         <p>
-            Are sure you want to delete the reservation? #@ItemId
+            @QuestionText #@ItemId
         </p>
     </BSModalBody>
     <BSModalFooter>
@@ -45,6 +44,14 @@
 
     [Parameter]
     public bool Disabled { get; set; }
+
+    [Parameter]
+    public string ButtonText { get; set; } = "Cancel";
+
+    [Parameter]
+    public string PictoDesign { get; set; } = "oi oi-trash";
+    [Parameter]
+    public string QuestionText { get; set; } = "Question";
 
 
     BSModal VerticallyCentered;

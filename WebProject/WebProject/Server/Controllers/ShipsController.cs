@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebProject.Server.Data;
 using WebProject.Server.Models;
@@ -32,6 +34,12 @@ namespace WebProject.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShips()
         {
+            return Ok(Mapper.Map(await _context.Ships.Where(x => !x.IsDeleted).ToListAsync(), new List<ShipDTO>()));
+        }
+
+        [HttpGet("available")]
+        public async Task<IActionResult> GetAvailableShips()
+        {
             return Ok(Mapper.Map(await _context.Ships.Where(x => x.IsAvailable && !x.IsDeleted).ToListAsync(), new List<ShipDTO>()));
         }
 
@@ -42,6 +50,34 @@ namespace WebProject.Server.Controllers
             if (ship == null)
                 return NotFound("Ship was not found");
             return Ok(Mapper.Map(ship, new ShipDTO()));
+        }
+
+        [HttpGet("OwnedShips")]
+        public async Task<IActionResult> GetOwnedShipsForUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Ok(Mapper.Map(await _context.Ships.Where(x => x.OwnerId == userId).ToListAsync(), new List<ShipDTO>()));
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateShipAvailability(int id, ShipDTO shipDTO)
+        {
+            try
+            {
+                var shipToUpdate = await _context.Ships.FirstOrDefaultAsync(s => s.Id == id);
+
+                if (shipToUpdate == null)
+                    return NotFound($"Ship with Id = {id} not found");
+
+                shipToUpdate.IsAvailable = shipDTO.IsAvailable;
+                await _context.SaveChangesAsync();
+
+                return Ok(Mapper.Map(shipToUpdate, new ShipDTO()));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data");
+            }
         }
     }
 }

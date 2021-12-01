@@ -1,10 +1,13 @@
-﻿@inject IShipSearchService ShipSearchService
-@inject NavigationManager NavigationManager
+﻿@page "/myYachts"
+@using Microsoft.AspNetCore.Authorization
 @using BlazorPro.Spinkit
+@attribute [Authorize]
+@inject IShipSearchService ShipSearchService
 
-<h3>Ship List</h3>
+<h3>My Yachts</h3>
+<br>
 
-@if (Ships == null)
+@if (OwnedShips == null)
 {
     <SpinLoader IsLoading="true">
         <LoadingTemplate>
@@ -16,13 +19,13 @@
         </LoadingTemplate>
     </SpinLoader>
 }
-else if (Ships.Count == 0)
+else if (OwnedShips.Count == 0)
 {
-    <span>It seems your criterias are too high, or database has no ships yet</span>
+    <span>You do not lease out any ships yet.</span>
 }
 else
 {
-    foreach (var item in Ships)
+    foreach (var item in OwnedShips)
     {
         <div class="card own-card-style ">
             <h5 class="card-header">@item.Name</h5>
@@ -43,14 +46,25 @@ else
                         <td>Max @item.MaxPeople people</td>
                         <td>Ship type: </td>
                         <td>@item.ShipType</td>
-                        <td><button class="btn btn-dark" style="padding-left: 40px; padding-right: 40px" @onclick="(() => ShowShip(item.Id))">Show</button></td>
+                        <td>Set the availability of the ship<br>(Checked - available)</td>
                     </tr>
                     <tr>
                         <td>Price at Weekends: </td>
                         <td>@item.PriceAtWeekEnds</td>
                         <td>Price at Weekdays: </td>
                         <td>@item.PriceAtWeekDays</td>
-                        <td></td>
+                        <td>
+                            <div class="form-check form-switch">
+                                @if (item.IsAvailable)
+                                {
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked @bind-value="@item.IsAvailable" @oninput="EventArgs => { UpdateAvailability(item.Id, false); }">
+                                }
+                                else
+                                {
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" @bind-value="@item.IsAvailable" @oninput="EventArgs => { UpdateAvailability(item.Id, true); }">
+                                }
+                            </div>
+                        </td>
                     </tr>
                 </table>
                 <table>
@@ -59,7 +73,7 @@ else
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td> </td>
+                        <td></td>
                         <td></td>
                     </tr>
                 </table>
@@ -69,21 +83,21 @@ else
     }
 }
 
-
-
 @code {
-    [Parameter]
-    public List<ShipDTO> Ships { get; set; }
+
+    public List<ShipDTO> OwnedShips = null;
 
     protected override async Task OnInitializedAsync()
     {
-        Ships = await ShipSearchService.GetAvailableShips();
+        OwnedShips = await ShipSearchService.GetOwnedShipsForUser();
+    }
+
+    public async void UpdateAvailability(int id, bool checkedValue)
+    {
+        ShipDTO shipToEdit = await ShipSearchService.GetShip(id);
+        shipToEdit.IsAvailable = checkedValue;
+        await ShipSearchService.UpdateShipAvailability(shipToEdit, id);
         StateHasChanged();
     }
 
-    void ShowShip(int id)
-    {
-        NavigationManager.NavigateTo($"ships/{id}");
-        StateHasChanged();
-    }
 }

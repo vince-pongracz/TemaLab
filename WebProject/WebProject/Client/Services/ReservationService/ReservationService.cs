@@ -18,27 +18,41 @@ namespace WebProject.Client.Services
             _httpClient = httpClient;
         }
 
-        public List<ReservationGetDTO> reservations { get; set; } = new List<ReservationGetDTO>();
+        public List<ReservationGetDTO> Reservations { get; set; } = new List<ReservationGetDTO>();
 
         public event Action OnChange;
         public async Task<List<ReservationGetDTO>> GetReservations()
         {
-            reservations = await _httpClient.GetFromJsonAsync<List<ReservationGetDTO>>("api/reservations");
-            return reservations;
+            Reservations = await _httpClient.GetFromJsonAsync<List<ReservationGetDTO>>("api/reservations");
+            return Reservations;
         }
-        public async Task<List<ReservationGetDTO>> CreateReservation(ReservationPostDTO reserv)
+        public async Task<List<ReservationGetDTO>> CreateReservation(ReservationPostDTO reservation)
         {
-            var result = await _httpClient.PostAsJsonAsync("api/reservations", reserv);
-            reservations = await result.Content.ReadFromJsonAsync<List<ReservationGetDTO>>();
-            return reservations;
+            var result = await _httpClient.PostAsJsonAsync("api/reservations", reservation);
+            Reservations = await result.Content.ReadFromJsonAsync<List<ReservationGetDTO>>();
+            return Reservations;
         }
 
         public async Task<List<ReservationGetDTO>> DeleteReservation(int id)
         {
             var result = await _httpClient.DeleteAsync($"api/reservations/{id}");
-            reservations = await result.Content.ReadFromJsonAsync<List<ReservationGetDTO>>();
+            Reservations = await result.Content.ReadFromJsonAsync<List<ReservationGetDTO>>();
             OnChange.Invoke();
-            return reservations;
+            return Reservations;
+        }
+
+        public async Task<List<ReservationGetDTO>> GetIncomingBookings()
+        {
+            Reservations = await _httpClient.GetFromJsonAsync<List<ReservationGetDTO>>("api/reservations/incomingBookings");
+            return Reservations;
+        }
+
+        public async Task<List<ReservationGetDTO>> ApproveReservation(int reservationId)
+        {
+            var postBody = new ReservationPostDTO() { Id = reservationId };
+            var result = await _httpClient.PostAsJsonAsync("api/reservations/incomingBookings", postBody);
+            Reservations = await result.Content.ReadFromJsonAsync<List<ReservationGetDTO>>();
+            return Reservations;
         }
     }
 }

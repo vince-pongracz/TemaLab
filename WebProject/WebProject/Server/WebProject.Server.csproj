@@ -20,6 +20,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="BlazorPro.Spinkit" Version="1.2.0" />
     <PackageReference Include="BlazorStrap" Version="1.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
@@ -41,10 +42,6 @@
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -34,6 +34,12 @@ namespace WebProject.Client.Services
             return Ships;
         }
 
+        public async Task<List<ShipDTO>> GetAvailableShips()
+        {
+            Ships = await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships/available");
+            return Ships;
+        }
+
         public async Task<List<ShipDTO>> SearchShips(DateTime? from = default, DateTime? until = default, int? maxPersons = default, string where = default)
         {
             var queryBuilder = new QueryBuilder();
@@ -54,6 +60,19 @@ namespace WebProject.Client.Services
             {
                 throw new InvalidOperationException("Wrong search criterias");
             }
+        }
+
+        public async Task<List<ShipDTO>> GetOwnedShipsForUser()
+        {
+            Ships = await _httpClient.GetFromJsonAsync<List<ShipDTO>>($"api/ships/OwnedShips");
+            return Ships;
+        }
+
+        public async Task<ShipDTO> UpdateShipAvailability(ShipDTO shipDTO, int id)
+        {
+            var result = await _httpClient.PutAsJsonAsync($"api/ships/{id}", shipDTO);
+            var ships = await result.Content.ReadFromJsonAsync<ShipDTO>();
+            return ships;
         }
     }
 }

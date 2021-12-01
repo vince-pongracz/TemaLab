@@ -11,9 +11,12 @@ namespace WebProject.Client.Services
         event Action OnChange;
 
         Task<List<ReservationGetDTO>> GetReservations();
+        Task<List<ReservationGetDTO>> GetIncomingBookings();
 
         Task<List<ReservationGetDTO>> CreateReservation(ReservationPostDTO reservation);
 
         Task<List<ReservationGetDTO>> DeleteReservation(int id);
+
+        Task<List<ReservationGetDTO>> ApproveReservation(int reservationId);
     }
 }

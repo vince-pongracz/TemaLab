@@ -67,13 +67,43 @@ namespace WebProject.Server.Services.ReservationService
             return result;
         }
 
-        public bool CanBeDeleted(Reservation reserv)
+        public static bool CanBeDeleted(Reservation reserv)
         {
             DateTime date = reserv.FromDate;
             if (date.AddDays(-2) < DateTime.Now)
                 return false;
             else
                 return true;
+        }
+
+        private static bool IsInThePast(Reservation reservation)
+        {
+            if (reservation.ToDate < DateTime.Now) return true;
+            else return false;
+        }
+
+        public async Task<List<ReservationGetDTO>> GetIncomingBookings(string actualLoggedInUserId)
+        {
+            var probableShipIds = await _context.Ships.Where(x => x.OwnerId == actualLoggedInUserId).Select(x => x.Id).ToListAsync();
+
+            var probableReservations = await _context.Reservations.OrderByDescending(x => x.ToDate).ToListAsync();
+
+            var returnList = probableReservations.Where(x => probableShipIds.Contains(x.ShipId))
+                .Where(x => CanBeDeleted(x))
+                .Where(x => !IsInThePast(x));
+
+            return Mapper.Map(returnList, new List<ReservationGetDTO>());
+        }
+
+        public async Task ApproveReservation(ReservationPostDTO reservation)
+        {
+            var updateThisReservation = await _context.Reservations.Where(x => x.Id == reservation.Id).FirstOrDefaultAsync();
+            if (updateThisReservation != null)
+            {
+                updateThisReservation.ReservationApproved = true;
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }
