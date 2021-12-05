@@ -16,6 +16,13 @@ namespace WebProject.Client.Services.ShipImageService
         {
             _httpClient = httpClient;
         }
+
+        public async Task<List<ShipImageDTO>> GetAllImages()
+        {
+            var images = await _httpClient.GetFromJsonAsync<List<ShipImageDTO>>($"api/images/all");
+            return images;
+        }
+
         public async Task<List<ShipImageDTO>> GetImagesById(int id)
         {
             var images = await _httpClient.GetFromJsonAsync<List<ShipImageDTO>>($"api/images/{id}");

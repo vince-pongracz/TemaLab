@@ -28,5 +28,10 @@ namespace WebProject.Server.Services.ShipImageService
             var images = await _context.Images.Where(x => x.ShipId == shipId).ToListAsync();
             return Mapper.Map(images, new List<ShipImageDTO>());
         }
+
+        public async Task<List<ShipImageDTO>> GetAllImages()
+        {
+            return Mapper.Map(await _context.Images.ToListAsync(), new List<ShipImageDTO>());
+        }
     }
 }

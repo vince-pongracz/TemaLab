@@ -1,9 +1,11 @@
 ﻿@page "/ships/{id:int}"
 @using Microsoft.AspNetCore.Authorization
 @using WebProject.Client.Services.UserService
+@using WebProject.Client.Services.ShipImageService
 @using BlazorPro.Spinkit
 @inject IShipSearchService ShipSearchService
 @inject IUserService UserService
+@inject IShipImageService ShipImageService
 @attribute [Authorize]
 
 @if (ship == null)
@@ -20,42 +22,43 @@
 }
 else
 {
-    <img class="main-img" src="https://images.pexels.com/photos/1482193/pexels-photo-1482193.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="img of the ship" />
-
+    if (Images == null || Images.Count == 0)
+    {
+        <img class="main-img" src="Images/img_not_found.png" alt="img of the ship" />
+    }
+    else
+    {
+        <img class="main-img" src="@Images[0].RouteToPic" alt="img of the ship" />
+    }
     <h3 class="title"> This is the detailed page of the ship "@ship.Name"</h3>
-
-    <table class="table table-borderless first-table" style="border-top: 2px solid #d7d8d8;">
-        <tr>
-            <td>Name: </td>
-            <td>@ship.Name</td>
-            <td>Capacity: </td>
-            <td> @ship.MaxPeople</td>
-        </tr>
-        <tr>
-            <td>Caution: </td>
-            <td>@ship.Caution</td>
-            <td>Port: </td>
-            <td>@ship.HomePort</td>
-        </tr>
-        <tr>
-            <td>Price at Weekends: </td>
-            <td>@ship.PriceAtWeekEnds</td>
-            <td>Price at Weekdays: </td>
-            <td>@ship.PriceAtWeekDays</td>
-        </tr>
-    </table>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div class="table-responsive-lg">
+        <table class="table table-borderless first-table" style="border-top: 2px solid #d7d8d8;">
+            <tr>
+                <td>Name: </td>
+                <td>@ship.Name</td>
+                <td>Capacity: </td>
+                <td> @ship.MaxPeople</td>
+            </tr>
+            <tr>
+                <td>Caution: </td>
+                <td>@ship.Caution</td>
+                <td>Port: </td>
+                <td>@ship.HomePort</td>
+            </tr>
+            <tr>
+                <td>Price at Weekends: </td>
+                <td>@ship.PriceAtWeekEnds</td>
+                <td>Price at Weekdays: </td>
+                <td>@ship.PriceAtWeekDays</td>
+            </tr>
+        </table>
+    </div>
 
     <div class="container" style="padding-left: 0px; margin-left: 0px;">
         <!-- Stack the columns on mobile by making one full-width and the other half-width -->
         <div class="row">
-            <div class="col-md-7">
-                <h4>Dimensions</h4>
+            <div class="col-md-7 table-responsive-lg">
+                <h4 class="sub-title-dimension">Dimensions</h4>
                 <table class="table table-borderless table-hover own-table" style="border-top: 2px solid #d7d8d8; ">
                     <tr>
                         <td>Legth: </td>
@@ -101,8 +104,6 @@ else
             </div>
         </div>
     </div>
-
-
 
 
     <h4>Owner Details</h4>
@@ -160,8 +161,11 @@ else
     public ShipDTO ship = null;
     public ApplicationUserDTO Owner = new ApplicationUserDTO();
 
+    private List<ShipImageDTO> Images { get; set; } = new List<ShipImageDTO>();
+
     protected override async Task OnInitializedAsync()
     {
+        Images = await ShipImageService.GetImagesById(Id);
         ship = await ShipSearchService.GetShip(Id);
         Owner = await UserService.GetUserByID(ship.OwnerId);
     }

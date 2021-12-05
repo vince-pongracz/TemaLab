@@ -6,13 +6,16 @@
     width: 67%;
     position: relative;
     margin-left: 33%;
-    line-height: 2.2;
+    line-height: 3.2;
+    max-width: 750px;
 }
 
 .main-img {
     width: 23%;
     position: absolute;
     border-radius: 2%;
+    min-width: 300px;
+    max-width: 360px;
 }
 
 .own-table {
@@ -25,8 +28,27 @@ tr:nth-child(even) {
 
 .title {
     padding-left: 33%;
+    margin-bottom: 20px;
 }
 
 .contact-icon{
     margin: 10px 20px 10px 0px;
+}
+
+@media (max-width: 1250px) {
+    .main-img {
+        width: 100%;
+        position: relative;
+        margin: auto;
+    }
+
+    .first-table {
+        margin: 0;
+        width: 100%;
+    }
+
+    .title {
+        padding-left: 0;
+        margin: 10px auto 15px auto;
+    }
 }

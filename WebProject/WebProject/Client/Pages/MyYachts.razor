@@ -1,8 +1,11 @@
 ﻿@page "/myYachts"
+@using WebProject.Client.Services.ShipImageService
 @using Microsoft.AspNetCore.Authorization
 @using BlazorPro.Spinkit
 @attribute [Authorize]
 @inject IShipSearchService ShipSearchService
+@inject IShipImageService ShipImageService
+
 
 <h3>My Yachts</h3>
 <br>
@@ -29,10 +32,8 @@ else
     {
         <div class="card own-card-style ">
             <h5 class="card-header">@item.Name</h5>
-            <div class="card-body">
-
-                <img class="ship-img" src="https://www.vitorlazas.hu/nodepic/950x607/301539.jpg" alt="Image of the ship">
-
+            <img class="ship-img" src="@GetImgRoute(item.Id)" alt="Image of the ship">
+            <div class="card-body table-responsive">
                 <table class="card-table">
                     <tr>
                         <td>Port: </td>
@@ -86,10 +87,12 @@ else
 @code {
 
     public List<ShipDTO> OwnedShips = null;
+    private List<ShipImageDTO> Images { get; set; } = new List<ShipImageDTO>();
 
     protected override async Task OnInitializedAsync()
     {
         OwnedShips = await ShipSearchService.GetOwnedShipsForUser();
+        Images = await ShipImageService.GetAllImages();
     }
 
     public async void UpdateAvailability(int id, bool checkedValue)
@@ -98,6 +101,15 @@ else
         shipToEdit.IsAvailable = checkedValue;
         await ShipSearchService.UpdateShipAvailability(shipToEdit, id);
         StateHasChanged();
+    }
+
+    private string GetImgRoute(int id)
+    {
+        ShipImageDTO img = Images.Find(x => x.ShipId == id);
+        if (img == null)
+            return "Images/img_not_found.png";
+        else
+            return img.RouteToPic;
     }
 
 }

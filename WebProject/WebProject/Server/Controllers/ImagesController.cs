@@ -20,9 +20,15 @@ namespace WebProject.Server.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetRankingsForShip(int id)
+        public async Task<IActionResult> GetImagesById(int id)
         {
             return Ok(await _shipImageService.GetImagesById(id));
+        }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllImage()
+        {
+            return Ok(await _shipImageService.GetAllImages());
         }
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAi0Y2YKUc0kmoWAqgQ7YCRAAAAAACAAAAAAAQZgAAAAEAACAAAACV7dYTkz35j9z0CVUtxzrERkyJxP7JPsToY7kQiIETdgAAAAAOgAAAAAIAACAAAABxd1BoSYw+AvgyVKAnH96IuMVzGsqrK+TJRje5zEdlG4AAAAB27IFxR9VNfn5zQIaR/FWS1ptx40HgLZppWQhEii9pqP+WrJlsRq/yeCj2J99nSuW3w2NxKabBVY+32gKk3VOVoWSVWGlKYeM+EwWJq9RmxLPyb8ZTrIZ1qqLqtXzjtbED8UydlL0+nvD9ovQTNOaW2ATMRTebaRFidZRzOCSnGUAAAAB9Md3sD3oOEv2rqDU80xywku5oMd5rGEHCDGcoC9DtVOCgdT2+/fQV68gZOzR+uK+lR0/FOne437yOjSPq9oah</EncryptedPassword>
+    <History>True|2021-12-05T13:23:43.1739885Z;True|2021-12-05T14:12:46.0502328+01:00;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:yachtairbnbwasmdbserver.database.windows.net,1433%3bInitial Catalog=WebProject.Server_db%3bUser Id=Renato%40yachtairbnbwasmdbserver%3bPassword=123123Hr</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="WebProject.Server.Data.ApplicationDbContext">
+      <Value>Data Source=tcp:yachtairbnbwasmdbserver.database.windows.net,1433%3bInitial Catalog=WebProject.Server_db%3bUser Id=Renato%40yachtairbnbwasmdbserver%3bPassword=123123Hr</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

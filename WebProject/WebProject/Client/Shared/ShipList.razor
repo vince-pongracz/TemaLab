@@ -1,9 +1,11 @@
-﻿@inject IShipSearchService ShipSearchService
-@inject NavigationManager NavigationManager
+﻿@using WebProject.Client.Services.ShipImageService
 @using BlazorPro.Spinkit
+@inject IShipSearchService ShipSearchService
+@inject NavigationManager NavigationManager
+@inject IShipImageService ShipImageService
 
 <h3>Ship List</h3>
-
+<br>
 @if (Ships == null)
 {
     <SpinLoader IsLoading="true">
@@ -24,11 +26,10 @@ else
 {
     foreach (var item in Ships)
     {
-        <div class="card own-card-style ">
+        <div class="card own-card-style">
             <h5 class="card-header">@item.Name</h5>
-            <div class="card-body">
-
-                <img class="ship-img" src="https://www.vitorlazas.hu/nodepic/950x607/301539.jpg" alt="Image of the ship">
+            <img class="ship-img" src="@GetImgRoute(item.Id)" alt="Image of the ship">
+            <div class="card-body table-responsive">
 
                 <table class="card-table">
                     <tr>
@@ -69,21 +70,31 @@ else
     }
 }
 
-
-
 @code {
     [Parameter]
     public List<ShipDTO> Ships { get; set; }
 
+    private List<ShipImageDTO> Images { get; set; } = new List<ShipImageDTO>();
+
     protected override async Task OnInitializedAsync()
     {
         Ships = await ShipSearchService.GetAvailableShips();
+        Images = await ShipImageService.GetAllImages();
         StateHasChanged();
     }
 
-    void ShowShip(int id)
+    private void ShowShip(int id)
     {
         NavigationManager.NavigateTo($"ships/{id}");
         StateHasChanged();
+    }
+
+    private string GetImgRoute(int id)
+    {
+        ShipImageDTO img = Images.Find(x => x.ShipId == id);
+        if (img == null)
+            return "Images/img_not_found.png";
+        else
+            return img.RouteToPic;
     }
 }

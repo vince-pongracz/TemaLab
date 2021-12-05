@@ -130,7 +130,10 @@ form {
     box-shadow: 0 0 20px 8px #d0d0d0;
     margin-left: 50px;
     margin-top: 55px;
+    margin-bottom: 30px;
     position: absolute;
+    min-width: 300px;
+    max-width: 370px;
 }
 
 .wrapper {
@@ -159,4 +162,11 @@ input:checked ~ label {
 
 .comment-margin{
     margin:0px 0px 400px 0px;
+}
+
+@media (max-width: 640px) {
+    form {
+        margin-left: 0px;
+        position: initial;
+    }
 }

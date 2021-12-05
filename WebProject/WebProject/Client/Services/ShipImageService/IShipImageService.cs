@@ -9,5 +9,6 @@ namespace WebProject.Client.Services.ShipImageService
     interface IShipImageService
     {
         Task<List<ShipImageDTO>> GetImagesById(int shipid);
+        Task<List<ShipImageDTO>> GetAllImages();
     }
 }

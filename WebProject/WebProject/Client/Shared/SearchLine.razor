@@ -7,18 +7,15 @@
 
 <Warning AlertMessage="@AlertMessage" ShowAlert="@ShowAlert" />
 
-<br>
 <div class="container">
-    <div class="wrapper">
-        <div class="search-container">
-            <EditForm Model="@model" OnSubmit="@Search">
-                <InputDate @bind-Value="from" class="date-from" placeholder="from"></InputDate>
-                <InputDate @bind-Value="until" class="date-to" placeholder="until"></InputDate>
-                <InputNumber @bind-Value="maxPersons" class="persons" placeholder="#persons"></InputNumber>
-                <InputText @bind-Value="port" class="search" placeholder="port"></InputText>
-                <button type="submit" class="btn btn-primary">Search!</button>
-            </EditForm>
-        </div>
+    <div class="search-container input-group row">
+        <EditForm Model="@model" OnSubmit="@Search">
+                <input type="date" @bind-value="from" class="form-control date-from" placeholder="From" style="width: auto; display: initial">
+                <input type="date" @bind-value="until" class="form-control date-to" placeholder="Until" style="width: auto; display: initial">
+                <input type="number" @bind-value="maxPersons" class="form-control persons" placeholder="Number of persons" style="width: auto; display: initial">
+                <input type="text" @bind-value="port" class="form-control search" placeholder="Port" style="width: auto; display: initial">
+                <button type="submit" class="search-btn">Search</button>
+        </EditForm>
     </div>
 </div>
 <br>
